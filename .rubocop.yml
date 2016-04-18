@@ -4,6 +4,7 @@ AllCops:
     - db/**/*
     - bin/**
     - config/**/*
+    - Gemfile
   DisplayCopNames: true
 
 Rails:
