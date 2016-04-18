@@ -47,14 +47,14 @@ end
 
 group :development, :test do
   #--- rspec
-  gem 'rspec-rails'           # RSpecラッパー
-  gem 'factory_girl_rails'    # テストデータの生成
-  gem 'spring-commands-rspec' # RspecなどでRailsをプリロード
-  gem 'shoulda-matchers'      # RSpecで使えるActiveRecordのマッチャー集
-  gem 'database_rewinder'     # テストで使うDBのテストデータを削除する
-  gem 'simplecov'             # テストカバレッジ表示
+  gem 'rspec-rails'                # RSpecラッパー
+  gem 'factory_girl_rails'         # テストデータの生成
+  gem 'spring-commands-rspec'      # RspecなどでRailsをプリロード
+  gem 'shoulda-matchers'           # RSpecで使えるActiveRecordのマッチャー集
+  gem 'database_rewinder'          # テストで使うDBのテストデータを削除する
+  gem 'simplecov', require: false  # テストカバレッジ表示
 
-  gem 'rubocop', require: false # コードの自動チェック
+  gem 'rubocop', require: false    # コードの自動チェック
 end
 
 group :development do
