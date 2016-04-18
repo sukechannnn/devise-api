@@ -20,6 +20,10 @@ test:
   host: "localhost"
   database: "new_ferret_test"
 
+staging:
+  <<: *default
+  database: "ferret04"
+
 #production:
 #  <<: *default
 #  database: db/production.sqlite3

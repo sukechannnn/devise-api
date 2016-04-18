@@ -46,14 +46,6 @@ gem 'devise'
 gem 'devise-async'
 gem 'devise-encryptable'
 
-#--- pry
-# railsでpryが使える
-gem 'pry-rails'
-# pryでデバックコマンドが使える
-gem 'pry-byebug'
-gem 'pry-doc'
-gem 'pry-remote'
-
 #--- 設定関係
 # 環境ごとに定数を管理できるプラグイン
 gem 'config'
@@ -61,6 +53,16 @@ gem 'config'
 #--- aws
 # AWS SDK
 gem 'aws-sdk', '~> 2'
+
+group :development, :test, :staging do
+  #--- pry
+  # railsでpryが使える
+  gem 'pry-rails'
+  # pryでデバックコマンドが使える
+  gem 'pry-byebug'
+  gem 'pry-doc'
+  gem 'pry-remote'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
