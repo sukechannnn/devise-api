@@ -3,6 +3,6 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  self.table_name = "mmember"
-  self.primary_key = "uid"
+  self.table_name = 'mmember'
+  self.primary_key = 'uid'
 end
