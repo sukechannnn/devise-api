@@ -7,8 +7,9 @@ gem 'rails', '4.2.6'
 #gem 'sqlite3'
 gem 'mysql2'
 # Use SCSS for stylesheets
-gem 'slim-rails'               # HTMLを簡潔に書ける
-gem 'sass-rails', '~> 5.0'     # Sass
+gem 'sass-rails', '~> 5.0'
+# HTMLテンプレート
+gem 'slim-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -34,14 +35,54 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+#--- Json
+# JSON Web Token
+gem 'jwt'
+# JSON Schema tools and doc generation for HTTP APIs
+gem 'prmd'
+
+#--- ユーザ認証
+gem 'devise'
+# 非同期でユーザにメールを送信
+gem 'devise-async'
+gem 'devise-encryptable'
+
+#--- pry
+# railsでpryが使える
+gem 'pry-rails'
+# pryでデバックコマンドが使える
+gem 'pry-byebug'
+gem 'pry-doc'
+gem 'pry-remote'
+
+#--- 設定関係
+# 環境ごとに定数を管理できるプラグイン
+gem 'config'
+
+#--- aws
+# AWS SDK
+gem 'aws-sdk', '~> 2'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  
+  #--- rspec
+  # Rails用機能を追加するRSpecラッハー
+  gem 'rspec-rails'
+  # テストデータの生成
+  gem 'factory_girl_rails'
+  # RspecなどでRailsをプリロードする
+  gem 'spring-commands-rspec'  
+  # RSpecで使えるActiveRecordのマッチャー集
+  gem 'shoulda-matchers'
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+  # アセットログの抑制
+  gem 'quiet_assets'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
