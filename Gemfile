@@ -1,90 +1,67 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
-# Use sqlite3 as the database for Active Record
-# gem 'sqlite3'
-gem 'mysql2'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
-# HTMLテンプレート
-gem 'slim-rails'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
 
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
+#--- DB
+gem 'mysql2' # MySQL library
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+#--- view
+gem 'sass-rails', '~> 5.0' # Use SCSS for stylesheets
+gem 'slim-rails'           # Slim templates generator
 
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+#--- JavaScript
+gem 'uglifier', '>= 1.3.0'     # Use Uglifier as compressor for JavaScript assets
+gem 'coffee-rails', '~> 4.1.0' # Use CoffeeScript for .coffee assets and views
+gem 'therubyracer'             # See https://github.com/rails/execjs#readme for more supported runtimes
+gem 'jquery-rails'             # Use jquery as the JavaScript library
+gem 'turbolinks'               # Turbolinks makes following links in your web application faster
+gem 'jbuilder', '~> 2.0'       # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 
 #--- Json
-# JSON Web Token
-gem 'jwt'
-# JSON Schema tools and doc generation for HTTP APIs
-gem 'prmd'
+gem 'jwt'  # JSON Web Token
+gem 'prmd' # JSON Schema tools and doc generation for HTTP APIs
 
 #--- ユーザ認証
 gem 'devise'
-# 非同期でユーザにメールを送信
 gem 'devise-async'
-gem 'devise-encryptable'
-
-#--- pry
-# railsでpryが使える
-gem 'pry-rails'
-# pryでデバックコマンドが使える
-gem 'pry-byebug'
-gem 'pry-doc'
-gem 'pry-remote'
+gem 'devise-encryptable' # deviseの暗号化処理を変更
 
 #--- 設定関係
-# 環境ごとに定数を管理できるプラグイン
-gem 'config'
+gem 'config'       # 環境ごとに定数を管理
+gem 'dotenv-rails' # 環境変数管理
 
 #--- aws
-# AWS SDK
 gem 'aws-sdk', '~> 2'
 
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+#--- ドキュメント
+# bundle exec rake doc:rails generates the API under doc/api.
+gem 'sdoc', '~> 0.4.0', group: :doc
 
-  #--- rspec
-  # Rails用機能を追加するRSpecラッハー
-  gem 'rspec-rails'
-  # テストデータの生成
-  gem 'factory_girl_rails'
-  # RspecなどでRailsをプリロードする
-  gem 'spring-commands-rspec'
-  # RSpecで使えるActiveRecordのマッチャー集
-  gem 'shoulda-matchers'
-  # コードの自動チェック
-  gem 'rubocop', require: false
+group :development, :test, :staging do
+  #--- pry
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'pry-doc'
+  gem 'pry-remote'
+end
+
+group :development, :test do
+  #--- rspec  
+  gem 'rspec-rails'           # RSpecラッパー
+  gem 'factory_girl_rails'    # テストデータの生成
+  gem 'spring-commands-rspec' # RspecなどでRailsをプリロード
+  gem 'shoulda-matchers'      # RSpecで使えるActiveRecordのマッチャー集
+  
+  gem 'rubocop', require: false # コードの自動チェック
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-  # アセットログの抑制
-  gem 'quiet_assets'
-
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'quiet_assets' # アセットログの抑制
 end
+
+#--- TODO: stg/pro環境設定時に合わせて対応
+# Use Capistrano for deployment
+# gem 'capistrano-rails', group: :development
+
+# Use Unicorn as the app server
+# gem 'unicorn'
