@@ -57,7 +57,7 @@ gem 'pry-remote'
 
 #--- 設定関係
 # 環境ごとに定数を管理できるプラグイン
-gem 'rails_config'
+gem 'config'
 
 #--- aws
 # AWS SDK
