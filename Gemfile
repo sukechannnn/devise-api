@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use sqlite3 as the database for Active Record
-#gem 'sqlite3'
+# gem 'sqlite3'
 gem 'mysql2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -66,16 +65,18 @@ gem 'aws-sdk', '~> 2'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  
+
   #--- rspec
   # Rails用機能を追加するRSpecラッハー
   gem 'rspec-rails'
   # テストデータの生成
   gem 'factory_girl_rails'
   # RspecなどでRailsをプリロードする
-  gem 'spring-commands-rspec'  
+  gem 'spring-commands-rspec'
   # RSpecで使えるActiveRecordのマッチャー集
   gem 'shoulda-matchers'
+  # コードの自動チェック
+  gem 'rubocop', require: false
 end
 
 group :development do
@@ -87,4 +88,3 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-
