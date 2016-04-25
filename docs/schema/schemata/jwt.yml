@@ -2,7 +2,7 @@
 "$schema": http://json-schema.org/draft-04/hyper-schema
 title: JSON Web Token for User Management
 description: ユーザー情報の入ったJWT
-id: schemata/user
+id: schemata/token
 stability: prototype
 strictProperties: true
 type:
@@ -22,7 +22,7 @@ definitions:
     - string
   identity:
     anyOf:
-    - "$ref": "/schemata/user#/definitions/token"
+    - "$ref": "/schemata/token#/definitions/token"
 
 # DEVISEに従ったRouting
 links:
@@ -33,24 +33,11 @@ links:
   schema:
     properties:
       token:
-        "$ref": "/schemata/user#/definitions/token"
+        "$ref": "/schemata/token#/definitions/token"
     required: ["token"]
     type:
     - object
   title: New
-
-- description: user_session
-  href: "/users/sign_in"
-  method: POST
-  rel: create
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/user#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-  title: Create
 
 - description: destroy_user_session
   href: "/users/sign_out"
@@ -59,24 +46,11 @@ links:
   schema:
     properties:
       token:
-        "$ref": "/schemata/user#/definitions/token"
+        "$ref": "/schemata/token#/definitions/token"
     required: ["token"]
     type:
     - object
   title: Destroy
-
-- description: user_password
-  href: "/users/password"
-  method: POST
-  rel: create
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/user#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-  title: Create
 
 - description: new_user_password
   href: "/users/password/new"
@@ -85,7 +59,7 @@ links:
   schema:
     properties:
       token:
-        "$ref": "/schemata/user#/definitions/token"
+        "$ref": "/schemata/token#/definitions/token"
     required: ["token"]
     type:
     - object
@@ -98,37 +72,11 @@ links:
   schema:
     properties:
       token:
-        "$ref": "/schemata/user#/definitions/token"
+        "$ref": "/schemata/token#/definitions/token"
     required: ["token"]
     type:
     - object
   title: Edit
-
-- description: edit_user_password update
-  href: "/users/password"
-  method: PATCH
-  rel: update
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/user#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-  title: Update
-
-- description: edit_user_password update
-  href: "/users/password"
-  method: PUT
-  rel: update
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/user#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-  title: Update
 
 - description: cancel_user_registration
   href: "/users/cancel"
@@ -137,24 +85,11 @@ links:
   schema:
     properties:
       token:
-        "$ref": "/schemata/user#/definitions/token"
+        "$ref": "/schemata/token#/definitions/token"
     required: ["token"]
     type:
     - object
   title: Cancel
-
-- description: user_registration
-  href: "/users"
-  method: POST
-  rel: create
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/user#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-  title: Create
 
 - description: new_user_registration
   href: "/users/sign_up"
@@ -163,7 +98,7 @@ links:
   schema:
     properties:
       token:
-        "$ref": "/schemata/user#/definitions/token"
+        "$ref": "/schemata/token#/definitions/token"
     required: ["token"]
     type:
     - object
@@ -176,51 +111,12 @@ links:
   schema:
     properties:
       token:
-        "$ref": "/schemata/user#/definitions/token"
+        "$ref": "/schemata/token#/definitions/token"
     required: ["token"]
     type:
     - object
   title: Edit
 
-- description: edit_user_registration update
-  href: "/users"
-  method: PATCH
-  rel: update
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/user#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-  title: Update
-
-- description: edit_user_registration update
-  href: "/users"
-  method: PUT
-  rel: update
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/user#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-  title: Update
-
-- description: edit_user_registration delete
-  href: "/users"
-  method: DELETE
-  rel: destroy
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/user#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-    title: Destroy
-
 properties:
   token:
-    "$ref": "/schemata/user#/definitions/token"
+    "$ref": "/schemata/token#/definitions/token"

@@ -1,0 +1,572 @@
+---
+"$schema": http://json-schema.org/draft-04/hyper-schema
+title: User Parameter
+description: mmemberのスキーマを定義
+id: schemata/user
+stability: prototype
+strictProperties: true
+type:
+- object
+
+definitions:
+  uid:
+    description: unique identifier of user
+    example: 1
+    readOnly: true
+    type:
+    - integer
+  email1:
+    description: email address
+    format: email
+    readOnly: true
+    type:
+    - "null"
+    - string
+  email2:
+    description: email address
+    format: email
+    readOnly: true
+    type:
+    - "null"
+    - string
+  passwd:
+    description: password
+    readOnly: true
+    type:
+    - "null"
+    - string
+  memstate:
+    description: 会員か無効会員かどうか
+    readOnly: true
+    type:
+    - "null"
+    - integer
+  regdate:
+    description: 登録日
+    readOnly: true
+    type:
+    - "null"
+    - string
+  nname:
+    description: unique name of user
+    example: 'Tanaka'
+    readOnly: true
+    type:
+    - "null"
+    - string
+  corporation:
+    description: 会社名
+    readOnly: true
+    type:
+    - "null"
+    - string
+  byear:
+    description: 誕生年
+    readOnly: true
+    type:
+    - "null"
+    - integer
+  bmon:
+    description: 誕生月
+    readOnly: true
+    type:
+    - "null"
+    - integer
+  sex:
+    description: 性別
+    readOnly: true
+    type:
+    - "null"
+    - integer
+  addr1:
+    description: エリア1
+    readOnly: true
+    type:
+    - "null"
+    - string
+  addr2:
+    description: エリア2
+    readOnly: true
+    type:
+    - "null"
+    - string
+  addr3:
+    description: エリア3
+    readOnly: true
+    type:
+    - "null"
+    - string
+  job:
+    description: 職業
+    readOnly: true
+    type:
+    - "null"
+    - string
+  marry:
+    description: 結婚
+    readOnly: true
+    type:
+    - "null"
+    - integer
+  ref:
+    description: 参考
+    readOnly: true
+    type:
+    - "null"
+    - integer
+  service:
+    description: どのツールか
+    readOnly: true
+    type:
+    - "null"
+    - integer
+  url1:
+    description: URL1
+    format: uri
+    readOnly: true
+    type:
+    - "null"
+    - string
+  url2:
+    description: URL2
+    format: uri
+    readOnly: true
+    type:
+    - "null"
+    - string
+  url3:
+    description: URL3
+    format: uri
+    readOnly: true
+    type:
+    - "null"
+    - string
+  url4:
+    description: URL4
+    format: uri
+    readOnly: true
+    type:
+    - "null"
+    - string
+  url5:
+    description: URL5
+    format: uri
+    readOnly: true
+    type:
+    - "null"
+    - string
+  last_login_date:
+    description: 最後にログインした日時
+    format: date-time
+    readOnly: true
+    type:
+    - string
+  basic_flg:
+    description: ベーシックのユーザーかどうか
+    readOnly: true
+    type:
+    - "null"
+    - integer
+  oauth:
+    description: 認証
+    readOnly: true
+    type:
+    - "null"
+    - string
+  id_facebook:
+    description: 旧ferret facebook認証
+    readOnly: true
+    type:
+    - "null"
+    - string
+  id_twitter:
+    description: 旧ferret twitter認証
+    readOnly: true
+    type:
+    - "null"
+    - string
+  reset_password_token:
+    description: DEVISE
+    readOnly: true
+    type:
+    - "null"
+    - string
+  reset_password_sent_at:
+    description: DEVISE
+    format: date-time
+    readOnly: true
+    type:
+    - "null"
+    - string
+  remember_created_at:
+    description: DEVISE
+    format: date-time
+    readOnly: true
+    type:
+    - "null"
+    - string
+  sign_in_count:
+    description: DEVISE
+    readOnly: true
+    type:
+    - integer
+  current_sign_in_at:
+    description: DEVISE
+    format: date-time
+    readOnly: true
+    type:
+    - "null"
+    - string
+  last_sign_in_at:
+    description: DEVISE
+    format: date-time
+    readOnly: true
+    type:
+    - "null"
+    - string
+  current_sign_in_ip:
+    description: DEVISE
+    readOnly: true
+    type:
+    - "null"
+    - string
+  last_sign_in_ip:
+    description: DEVISE
+    readOnly: true
+    type:
+    - "null"
+    - string
+  confirmation_token:
+    description: DEVISE
+    readOnly: true
+    type:
+    - "null"
+    - string
+  confirmed_at:
+    description: DEVISE
+    format: date-time
+    readOnly: true
+    type:
+    - "null"
+    - string
+  confirmation_sent_at:
+    description: DEVISE
+    format: date-time
+    readOnly: true
+    type:
+    - "null"
+    - string
+  unconfirmed_email:
+    description: DEVISE
+    readOnly: true
+    type:
+    - "null"
+    - string
+  facebook_id:
+    description: 新ferret facebookログイン
+    readOnly: true
+    type:
+    - "null"
+    - string
+  twitter_id:
+    description: 新ferret twitterログイン
+    readOnly: true
+    type:
+    - "null"
+    - string
+  yahoojp_id:
+    description: Yahooログイン
+    readOnly: true
+    type:
+    - "null"
+    - string
+  mail_magazine_flg:
+    description: メルマガ可否
+    readOnly: true
+    type:
+    - "null"
+    - string
+  created_at:
+    description: when user was created
+    format: date-time
+    readOnly: true
+    type:
+    - string
+  updated_at:
+    description: when user was updated
+    format: date-time
+    readOnly: true
+    type:
+    - string
+  identity:
+    anyOf:
+    - "$ref": "/schemata/user#/definitions/uid"
+
+# DEVISEに従ったRouting
+links:
+- description: user_session
+  href: "/users/sign_in"
+  method: POST
+  rel: create
+  schema:
+    properties:
+      email1:
+        "$ref": "/schemata/user#/definitions/email1"
+      passwd:
+        "$ref": "/schemata/user#/definitions/passwd"
+    required: ["email1", "passwd"]
+    type:
+    - object
+  title: Create
+
+- description: user_password
+  href: "/users/password"
+  method: POST
+  rel: create
+  schema:
+    properties:
+      email1:
+        "$ref": "/schemata/user#/definitions/email1"
+      passwd:
+        "$ref": "/schemata/user#/definitions/passwd"
+    required: ["passwd"]
+    type:
+    - object
+  title: Create
+
+- description: edit_user_password update
+  href: "/users/password"
+  method: PATCH
+  rel: update
+  schema:
+    properties:
+      email1:
+        "$ref": "/schemata/user#/definitions/email1"
+      passwd:
+        "$ref": "/schemata/user#/definitions/passwd"
+    required: ["passwd"]
+    type:
+    - object
+  title: Update
+
+- description: edit_user_password update
+  href: "/users/password"
+  method: PUT
+  rel: update
+  schema:
+    properties:
+      email1:
+        "$ref": "/schemata/user#/definitions/email1"
+      passwd:
+        "$ref": "/schemata/user#/definitions/passwd"
+    required: ["passwd"]
+    type:
+    - object
+  title: Update
+
+- description: user_registration
+  href: "/users"
+  method: POST
+  rel: create
+  schema:
+    properties:
+      email1:
+        "$ref": "/schemata/user#/definitions/email1"
+      passwd:
+        "$ref": "/schemata/user#/definitions/passwd"
+      service:
+        "$ref": "/schemata/user#/definitions/service"
+    required: ["email1", "passwd"]
+    type:
+    - object
+  title: Create
+
+- description: edit_user_registration update
+  href: "/users"
+  method: PATCH
+  rel: update
+  schema:
+    properties:
+      uid:
+        "$ref": "/schemata/user#/definitions/uid"
+      email1:
+        "$ref": "/schemata/user#/definitions/email1"
+      passwd:
+        "$ref": "/schemata/user#/definitions/passwd"
+      nname:
+        "$ref": "/schemata/user#/definitions/nname"
+      corporation:
+        "$ref": "/schemata/user#/definitions/corporation"
+      byear:
+        "$ref": "/schemata/user#/definitions/byear"
+      bmon:
+        "$ref": "/schemata/user#/definitions/bmon"
+      sex:
+        "$ref": "/schemata/user#/definitions/sex"
+      addr1:
+        "$ref": "/schemata/user#/definitions/addr1"
+      addr2:
+        "$ref": "/schemata/user#/definitions/addr2"
+      addr3:
+        "$ref": "/schemata/user#/definitions/addr3"
+      job:
+        "$ref": "/schemata/user#/definitions/job"
+      marry:
+        "$ref": "/schemata/user#/definitions/marry"
+      ref:
+        "$ref": "/schemata/user#/definitions/ref"
+      url1:
+        "$ref": "/schemata/user#/definitions/url1"
+      url2:
+        "$ref": "/schemata/user#/definitions/url2"
+      url3:
+        "$ref": "/schemata/user#/definitions/url3"
+      url4:
+        "$ref": "/schemata/user#/definitions/url4"
+      url5:
+        "$ref": "/schemata/user#/definitions/url5"
+    type:
+    - object
+  title: Update
+
+- description: edit_user_registration update
+  href: "/users"
+  method: PUT
+  rel: update
+  schema:
+    properties:
+      uid:
+        "$ref": "/schemata/user#/definitions/uid"
+      email1:
+        "$ref": "/schemata/user#/definitions/email1"
+      passwd:
+        "$ref": "/schemata/user#/definitions/passwd"
+      nname:
+        "$ref": "/schemata/user#/definitions/nname"
+      corporation:
+        "$ref": "/schemata/user#/definitions/corporation"
+      byear:
+        "$ref": "/schemata/user#/definitions/byear"
+      bmon:
+        "$ref": "/schemata/user#/definitions/bmon"
+      sex:
+        "$ref": "/schemata/user#/definitions/sex"
+      addr1:
+        "$ref": "/schemata/user#/definitions/addr1"
+      addr2:
+        "$ref": "/schemata/user#/definitions/addr2"
+      addr3:
+        "$ref": "/schemata/user#/definitions/addr3"
+      job:
+        "$ref": "/schemata/user#/definitions/job"
+      marry:
+        "$ref": "/schemata/user#/definitions/marry"
+      ref:
+        "$ref": "/schemata/user#/definitions/ref"
+      url1:
+        "$ref": "/schemata/user#/definitions/url1"
+      url2:
+        "$ref": "/schemata/user#/definitions/url2"
+      url3:
+        "$ref": "/schemata/user#/definitions/url3"
+      url4:
+        "$ref": "/schemata/user#/definitions/url4"
+      url5:
+        "$ref": "/schemata/user#/definitions/url5"
+    type:
+    - object
+  title: Update
+
+properties:
+  uid:
+    "$ref": "/schemata/user#/definitions/uid"
+  email1:
+    "$ref": "/schemata/user#/definitions/email1"
+  email2:
+    "$ref": "/schemata/user#/definitions/email2"
+  passwd:
+    "$ref": "/schemata/user#/definitions/passwd"
+  memstate:
+    "$ref": "/schemata/user#/definitions/memstate"
+  regdate:
+    "$ref": "/schemata/user#/definitions/regdate"
+  nname:
+    "$ref": "/schemata/user#/definitions/nname"
+  corporation:
+    "$ref": "/schemata/user#/definitions/corporation"
+  byear:
+    "$ref": "/schemata/user#/definitions/byear"
+  bmon:
+    "$ref": "/schemata/user#/definitions/bmon"
+  sex:
+    "$ref": "/schemata/user#/definitions/sex"
+  addr1:
+    "$ref": "/schemata/user#/definitions/addr1"
+  addr2:
+    "$ref": "/schemata/user#/definitions/addr2"
+  addr3:
+    "$ref": "/schemata/user#/definitions/addr3"
+  job:
+    "$ref": "/schemata/user#/definitions/job"
+  marry:
+    "$ref": "/schemata/user#/definitions/marry"
+  ref:
+    "$ref": "/schemata/user#/definitions/ref"
+  service:
+    "$ref": "/schemata/user#/definitions/service"
+  url1:
+    "$ref": "/schemata/user#/definitions/url1"
+  url2:
+    "$ref": "/schemata/user#/definitions/url2"
+  url3:
+    "$ref": "/schemata/user#/definitions/url3"
+  url4:
+    "$ref": "/schemata/user#/definitions/url4"
+  url5:
+    "$ref": "/schemata/user#/definitions/url5"
+  last_login_date:
+    "$ref": "/schemata/user#/definitions/last_login_date"
+  basic_flg:
+    "$ref": "/schemata/user#/definitions/basic_flg"
+  oauth:
+    "$ref": "/schemata/user#/definitions/oauth"
+  id_facebook:
+    "$ref": "/schemata/user#/definitions/id_facebook"
+  id_twitter:
+    "$ref": "/schemata/user#/definitions/id_twitter"
+  reset_password_token:
+    "$ref": "/schemata/user#/definitions/reset_password_token"
+  reset_password_sent_at:
+    "$ref": "/schemata/user#/definitions/reset_password_sent_at"
+  remember_created_at:
+    "$ref": "/schemata/user#/definitions/remember_created_at"
+  sign_in_count:
+    "$ref": "/schemata/user#/definitions/sign_in_count"
+  current_sign_in_at:
+    "$ref": "/schemata/user#/definitions/current_sign_in_at"
+  last_sign_in_at:
+    "$ref": "/schemata/user#/definitions/last_sign_in_at"
+  current_sign_in_ip:
+    "$ref": "/schemata/user#/definitions/current_sign_in_ip"
+  last_sign_in_ip:
+    "$ref": "/schemata/user#/definitions/last_sign_in_ip"
+  confirmation_token:
+    "$ref": "/schemata/user#/definitions/confirmation_token"
+  confirmed_at:
+    "$ref": "/schemata/user#/definitions/confirmed_at"
+  confirmation_sent_at:
+    "$ref": "/schemata/user#/definitions/confirmation_sent_at"
+  unconfirmed_email:
+    "$ref": "/schemata/user#/definitions/unconfirmed_email"
+  facebook_id:
+    "$ref": "/schemata/user#/definitions/facebook_id"
+  twitter_id:
+    "$ref": "/schemata/user#/definitions/twitter_id"
+  yahoojp_id:
+    "$ref": "/schemata/user#/definitions/yahoojp_id"
+  mail_magazine_flg:
+    "$ref": "/schemata/user#/definitions/mail_magazine_flg"
+  created_at:
+    "$ref": "/schemata/user#/definitions/created_at"
+  updated_at:
+    "$ref": "/schemata/user#/definitions/updated_at"
