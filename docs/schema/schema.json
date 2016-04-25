@@ -188,7 +188,7 @@
         "object"
       ],
       "definitions": {
-        "uid": {
+        "id": {
           "description": "unique identifier of user",
           "example": 1,
           "readOnly": true,
@@ -196,135 +196,48 @@
             "integer"
           ]
         },
-        "email1": {
+        "authenticity_token": {
+          "description": "認証トークン",
+          "readOnly": true,
+          "type": [
+            "string"
+          ]
+        },
+        "email": {
           "description": "email address",
           "format": "email",
           "readOnly": true,
           "type": [
-            "null",
             "string"
           ]
         },
-        "email2": {
-          "description": "email address",
-          "format": "email",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "passwd": {
+        "password": {
           "description": "password",
           "readOnly": true,
           "type": [
-            "null",
             "string"
           ]
         },
-        "memstate": {
-          "description": "会員か無効会員かどうか",
+        "password_confirmation": {
+          "description": "password confirmation",
           "readOnly": true,
           "type": [
-            "null",
-            "integer"
-          ]
-        },
-        "regdate": {
-          "description": "登録日",
-          "readOnly": true,
-          "type": [
-            "null",
             "string"
           ]
         },
-        "nname": {
-          "description": "unique name of user",
-          "example": "Tanaka",
+        "remember_me": {
+          "description": "ログイン記憶",
           "readOnly": true,
           "type": [
-            "null",
             "string"
           ]
         },
-        "corporation": {
-          "description": "会社名",
+        "commit": {
+          "description": "commit",
+          "example": "メールアドレス変更",
           "readOnly": true,
           "type": [
-            "null",
             "string"
-          ]
-        },
-        "byear": {
-          "description": "誕生年",
-          "readOnly": true,
-          "type": [
-            "null",
-            "integer"
-          ]
-        },
-        "bmon": {
-          "description": "誕生月",
-          "readOnly": true,
-          "type": [
-            "null",
-            "integer"
-          ]
-        },
-        "sex": {
-          "description": "性別",
-          "readOnly": true,
-          "type": [
-            "null",
-            "integer"
-          ]
-        },
-        "addr1": {
-          "description": "エリア1",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "addr2": {
-          "description": "エリア2",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "addr3": {
-          "description": "エリア3",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "job": {
-          "description": "職業",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "marry": {
-          "description": "結婚",
-          "readOnly": true,
-          "type": [
-            "null",
-            "integer"
-          ]
-        },
-        "ref": {
-          "description": "参考",
-          "readOnly": true,
-          "type": [
-            "null",
-            "integer"
           ]
         },
         "service": {
@@ -333,247 +246,6 @@
           "type": [
             "null",
             "integer"
-          ]
-        },
-        "url1": {
-          "description": "URL1",
-          "format": "uri",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "url2": {
-          "description": "URL2",
-          "format": "uri",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "url3": {
-          "description": "URL3",
-          "format": "uri",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "url4": {
-          "description": "URL4",
-          "format": "uri",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "url5": {
-          "description": "URL5",
-          "format": "uri",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "last_login_date": {
-          "description": "最後にログインした日時",
-          "format": "date-time",
-          "readOnly": true,
-          "type": [
-            "string"
-          ]
-        },
-        "basic_flg": {
-          "description": "ベーシックのユーザーかどうか",
-          "readOnly": true,
-          "type": [
-            "null",
-            "integer"
-          ]
-        },
-        "oauth": {
-          "description": "認証",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "id_facebook": {
-          "description": "旧ferret facebook認証",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "id_twitter": {
-          "description": "旧ferret twitter認証",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "reset_password_token": {
-          "description": "DEVISE",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "reset_password_sent_at": {
-          "description": "DEVISE",
-          "format": "date-time",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "remember_created_at": {
-          "description": "DEVISE",
-          "format": "date-time",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "sign_in_count": {
-          "description": "DEVISE",
-          "readOnly": true,
-          "type": [
-            "integer"
-          ]
-        },
-        "current_sign_in_at": {
-          "description": "DEVISE",
-          "format": "date-time",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "last_sign_in_at": {
-          "description": "DEVISE",
-          "format": "date-time",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "current_sign_in_ip": {
-          "description": "DEVISE",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "last_sign_in_ip": {
-          "description": "DEVISE",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "confirmation_token": {
-          "description": "DEVISE",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "confirmed_at": {
-          "description": "DEVISE",
-          "format": "date-time",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "confirmation_sent_at": {
-          "description": "DEVISE",
-          "format": "date-time",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "unconfirmed_email": {
-          "description": "DEVISE",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "facebook_id": {
-          "description": "新ferret facebookログイン",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "twitter_id": {
-          "description": "新ferret twitterログイン",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "yahoojp_id": {
-          "description": "Yahooログイン",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "mail_magazine_flg": {
-          "description": "メルマガ可否",
-          "readOnly": true,
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "created_at": {
-          "description": "when user was created",
-          "format": "date-time",
-          "readOnly": true,
-          "type": [
-            "string"
-          ]
-        },
-        "updated_at": {
-          "description": "when user was updated",
-          "format": "date-time",
-          "readOnly": true,
-          "type": [
-            "string"
-          ]
-        },
-        "identity": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/user/definitions/uid"
-            }
           ]
         }
       },
@@ -585,16 +257,23 @@
           "rel": "create",
           "schema": {
             "properties": {
-              "email1": {
-                "$ref": "#/definitions/user/definitions/email1"
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
               },
-              "passwd": {
-                "$ref": "#/definitions/user/definitions/passwd"
+              "email": {
+                "$ref": "#/definitions/user/definitions/email"
+              },
+              "password": {
+                "$ref": "#/definitions/user/definitions/password"
+              },
+              "remember_me": {
+                "$ref": "#/definitions/user/definitions/remember_me"
               }
             },
             "required": [
-              "email1",
-              "passwd"
+              "authenticity_token",
+              "email",
+              "password"
             ],
             "type": [
               "object"
@@ -609,15 +288,24 @@
           "rel": "create",
           "schema": {
             "properties": {
-              "email1": {
-                "$ref": "#/definitions/user/definitions/email1"
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
               },
-              "passwd": {
-                "$ref": "#/definitions/user/definitions/passwd"
+              "email": {
+                "$ref": "#/definitions/user/definitions/email"
+              },
+              "password": {
+                "$ref": "#/definitions/user/definitions/password"
+              },
+              "password_confirmation": {
+                "$ref": "#/definitions/user/definitions/password_confirmation"
               }
             },
             "required": [
-              "passwd"
+              "authenticity_token",
+              "email",
+              "password",
+              "password_confirmation"
             ],
             "type": [
               "object"
@@ -632,15 +320,24 @@
           "rel": "update",
           "schema": {
             "properties": {
-              "email1": {
-                "$ref": "#/definitions/user/definitions/email1"
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
               },
-              "passwd": {
-                "$ref": "#/definitions/user/definitions/passwd"
+              "email": {
+                "$ref": "#/definitions/user/definitions/email"
+              },
+              "password": {
+                "$ref": "#/definitions/user/definitions/password"
+              },
+              "password_confirmation": {
+                "$ref": "#/definitions/user/definitions/password_confirmation"
               }
             },
             "required": [
-              "passwd"
+              "authenticity_token",
+              "email",
+              "password",
+              "password_confirmation"
             ],
             "type": [
               "object"
@@ -655,15 +352,24 @@
           "rel": "update",
           "schema": {
             "properties": {
-              "email1": {
-                "$ref": "#/definitions/user/definitions/email1"
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
               },
-              "passwd": {
-                "$ref": "#/definitions/user/definitions/passwd"
+              "email": {
+                "$ref": "#/definitions/user/definitions/email"
+              },
+              "password": {
+                "$ref": "#/definitions/user/definitions/password"
+              },
+              "password_confirmation": {
+                "$ref": "#/definitions/user/definitions/password_confirmation"
               }
             },
             "required": [
-              "passwd"
+              "authenticity_token",
+              "email",
+              "password",
+              "password_confirmation"
             ],
             "type": [
               "object"
@@ -672,25 +378,30 @@
           "title": "Update"
         },
         {
-          "description": "user_registration",
+          "description": "user_registration create",
           "href": "/users",
           "method": "POST",
           "rel": "create",
           "schema": {
             "properties": {
-              "email1": {
-                "$ref": "#/definitions/user/definitions/email1"
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
               },
-              "passwd": {
-                "$ref": "#/definitions/user/definitions/passwd"
+              "email": {
+                "$ref": "#/definitions/user/definitions/email"
+              },
+              "password": {
+                "$ref": "#/definitions/user/definitions/password"
               },
               "service": {
                 "$ref": "#/definitions/user/definitions/service"
               }
             },
             "required": [
-              "email1",
-              "passwd"
+              "authenticity_token",
+              "email",
+              "password",
+              "service"
             ],
             "type": [
               "object"
@@ -705,64 +416,20 @@
           "rel": "update",
           "schema": {
             "properties": {
-              "uid": {
-                "$ref": "#/definitions/user/definitions/uid"
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
               },
-              "email1": {
-                "$ref": "#/definitions/user/definitions/email1"
+              "email": {
+                "$ref": "#/definitions/user/definitions/email"
               },
-              "passwd": {
-                "$ref": "#/definitions/user/definitions/passwd"
-              },
-              "nname": {
-                "$ref": "#/definitions/user/definitions/nname"
-              },
-              "corporation": {
-                "$ref": "#/definitions/user/definitions/corporation"
-              },
-              "byear": {
-                "$ref": "#/definitions/user/definitions/byear"
-              },
-              "bmon": {
-                "$ref": "#/definitions/user/definitions/bmon"
-              },
-              "sex": {
-                "$ref": "#/definitions/user/definitions/sex"
-              },
-              "addr1": {
-                "$ref": "#/definitions/user/definitions/addr1"
-              },
-              "addr2": {
-                "$ref": "#/definitions/user/definitions/addr2"
-              },
-              "addr3": {
-                "$ref": "#/definitions/user/definitions/addr3"
-              },
-              "job": {
-                "$ref": "#/definitions/user/definitions/job"
-              },
-              "marry": {
-                "$ref": "#/definitions/user/definitions/marry"
-              },
-              "ref": {
-                "$ref": "#/definitions/user/definitions/ref"
-              },
-              "url1": {
-                "$ref": "#/definitions/user/definitions/url1"
-              },
-              "url2": {
-                "$ref": "#/definitions/user/definitions/url2"
-              },
-              "url3": {
-                "$ref": "#/definitions/user/definitions/url3"
-              },
-              "url4": {
-                "$ref": "#/definitions/user/definitions/url4"
-              },
-              "url5": {
-                "$ref": "#/definitions/user/definitions/url5"
+              "commit": {
+                "$ref": "#/definitions/user/definitions/commit"
               }
             },
+            "required": [
+              "authenticity_token",
+              "email"
+            ],
             "type": [
               "object"
             ]
@@ -776,64 +443,20 @@
           "rel": "update",
           "schema": {
             "properties": {
-              "uid": {
-                "$ref": "#/definitions/user/definitions/uid"
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
               },
-              "email1": {
-                "$ref": "#/definitions/user/definitions/email1"
+              "email": {
+                "$ref": "#/definitions/user/definitions/email"
               },
-              "passwd": {
-                "$ref": "#/definitions/user/definitions/passwd"
-              },
-              "nname": {
-                "$ref": "#/definitions/user/definitions/nname"
-              },
-              "corporation": {
-                "$ref": "#/definitions/user/definitions/corporation"
-              },
-              "byear": {
-                "$ref": "#/definitions/user/definitions/byear"
-              },
-              "bmon": {
-                "$ref": "#/definitions/user/definitions/bmon"
-              },
-              "sex": {
-                "$ref": "#/definitions/user/definitions/sex"
-              },
-              "addr1": {
-                "$ref": "#/definitions/user/definitions/addr1"
-              },
-              "addr2": {
-                "$ref": "#/definitions/user/definitions/addr2"
-              },
-              "addr3": {
-                "$ref": "#/definitions/user/definitions/addr3"
-              },
-              "job": {
-                "$ref": "#/definitions/user/definitions/job"
-              },
-              "marry": {
-                "$ref": "#/definitions/user/definitions/marry"
-              },
-              "ref": {
-                "$ref": "#/definitions/user/definitions/ref"
-              },
-              "url1": {
-                "$ref": "#/definitions/user/definitions/url1"
-              },
-              "url2": {
-                "$ref": "#/definitions/user/definitions/url2"
-              },
-              "url3": {
-                "$ref": "#/definitions/user/definitions/url3"
-              },
-              "url4": {
-                "$ref": "#/definitions/user/definitions/url4"
-              },
-              "url5": {
-                "$ref": "#/definitions/user/definitions/url5"
+              "commit": {
+                "$ref": "#/definitions/user/definitions/commit"
               }
             },
+            "required": [
+              "authenticity_token",
+              "email"
+            ],
             "type": [
               "object"
             ]
@@ -842,143 +465,29 @@
         }
       ],
       "properties": {
-        "uid": {
-          "$ref": "#/definitions/user/definitions/uid"
+        "id": {
+          "$ref": "#/definitions/user/definitions/id"
         },
-        "email1": {
-          "$ref": "#/definitions/user/definitions/email1"
+        "authenticity_token": {
+          "$ref": "#/definitions/user/definitions/authenticity_token"
         },
-        "email2": {
-          "$ref": "#/definitions/user/definitions/email2"
+        "email": {
+          "$ref": "#/definitions/user/definitions/email"
         },
-        "passwd": {
-          "$ref": "#/definitions/user/definitions/passwd"
+        "password": {
+          "$ref": "#/definitions/user/definitions/password"
         },
-        "memstate": {
-          "$ref": "#/definitions/user/definitions/memstate"
+        "password_confirmation": {
+          "$ref": "#/definitions/user/definitions/password_confirmation"
         },
-        "regdate": {
-          "$ref": "#/definitions/user/definitions/regdate"
+        "remember_me": {
+          "$ref": "#/definitions/user/definitions/remember_me"
         },
-        "nname": {
-          "$ref": "#/definitions/user/definitions/nname"
-        },
-        "corporation": {
-          "$ref": "#/definitions/user/definitions/corporation"
-        },
-        "byear": {
-          "$ref": "#/definitions/user/definitions/byear"
-        },
-        "bmon": {
-          "$ref": "#/definitions/user/definitions/bmon"
-        },
-        "sex": {
-          "$ref": "#/definitions/user/definitions/sex"
-        },
-        "addr1": {
-          "$ref": "#/definitions/user/definitions/addr1"
-        },
-        "addr2": {
-          "$ref": "#/definitions/user/definitions/addr2"
-        },
-        "addr3": {
-          "$ref": "#/definitions/user/definitions/addr3"
-        },
-        "job": {
-          "$ref": "#/definitions/user/definitions/job"
-        },
-        "marry": {
-          "$ref": "#/definitions/user/definitions/marry"
-        },
-        "ref": {
-          "$ref": "#/definitions/user/definitions/ref"
+        "commit": {
+          "$ref": "#/definitions/user/definitions/commit"
         },
         "service": {
           "$ref": "#/definitions/user/definitions/service"
-        },
-        "url1": {
-          "$ref": "#/definitions/user/definitions/url1"
-        },
-        "url2": {
-          "$ref": "#/definitions/user/definitions/url2"
-        },
-        "url3": {
-          "$ref": "#/definitions/user/definitions/url3"
-        },
-        "url4": {
-          "$ref": "#/definitions/user/definitions/url4"
-        },
-        "url5": {
-          "$ref": "#/definitions/user/definitions/url5"
-        },
-        "last_login_date": {
-          "$ref": "#/definitions/user/definitions/last_login_date"
-        },
-        "basic_flg": {
-          "$ref": "#/definitions/user/definitions/basic_flg"
-        },
-        "oauth": {
-          "$ref": "#/definitions/user/definitions/oauth"
-        },
-        "id_facebook": {
-          "$ref": "#/definitions/user/definitions/id_facebook"
-        },
-        "id_twitter": {
-          "$ref": "#/definitions/user/definitions/id_twitter"
-        },
-        "reset_password_token": {
-          "$ref": "#/definitions/user/definitions/reset_password_token"
-        },
-        "reset_password_sent_at": {
-          "$ref": "#/definitions/user/definitions/reset_password_sent_at"
-        },
-        "remember_created_at": {
-          "$ref": "#/definitions/user/definitions/remember_created_at"
-        },
-        "sign_in_count": {
-          "$ref": "#/definitions/user/definitions/sign_in_count"
-        },
-        "current_sign_in_at": {
-          "$ref": "#/definitions/user/definitions/current_sign_in_at"
-        },
-        "last_sign_in_at": {
-          "$ref": "#/definitions/user/definitions/last_sign_in_at"
-        },
-        "current_sign_in_ip": {
-          "$ref": "#/definitions/user/definitions/current_sign_in_ip"
-        },
-        "last_sign_in_ip": {
-          "$ref": "#/definitions/user/definitions/last_sign_in_ip"
-        },
-        "confirmation_token": {
-          "$ref": "#/definitions/user/definitions/confirmation_token"
-        },
-        "confirmed_at": {
-          "$ref": "#/definitions/user/definitions/confirmed_at"
-        },
-        "confirmation_sent_at": {
-          "$ref": "#/definitions/user/definitions/confirmation_sent_at"
-        },
-        "unconfirmed_email": {
-          "$ref": "#/definitions/user/definitions/unconfirmed_email"
-        },
-        "facebook_id": {
-          "$ref": "#/definitions/user/definitions/facebook_id"
-        },
-        "twitter_id": {
-          "$ref": "#/definitions/user/definitions/twitter_id"
-        },
-        "yahoojp_id": {
-          "$ref": "#/definitions/user/definitions/yahoojp_id"
-        },
-        "mail_magazine_flg": {
-          "$ref": "#/definitions/user/definitions/mail_magazine_flg"
-        },
-        "created_at": {
-          "$ref": "#/definitions/user/definitions/created_at"
-        },
-        "updated_at": {
-          "$ref": "#/definitions/user/definitions/updated_at"
         }
       }
     }
@@ -993,5 +502,5 @@
   },
   "title": "User Management API JSON Schema",
   "description": "In this schema file, we represents the public interface of User Management API in JSON Hyper Schema draft v4.",
-  "id": "schemata/user"
+  "id": "schemata/mmember"
 }

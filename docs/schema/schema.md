@@ -280,52 +280,14 @@ mmemberのスキーマを定義
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **addr1** | *nullable string* | エリア1 | `null` |
-| **addr2** | *nullable string* | エリア2 | `null` |
-| **addr3** | *nullable string* | エリア3 | `null` |
-| **basic_flg** | *nullable integer* | ベーシックのユーザーかどうか | `null` |
-| **bmon** | *nullable integer* | 誕生月 | `null` |
-| **byear** | *nullable integer* | 誕生年 | `null` |
-| **confirmation_sent_at** | *nullable date-time* | DEVISE | `null` |
-| **confirmation_token** | *nullable string* | DEVISE | `null` |
-| **confirmed_at** | *nullable date-time* | DEVISE | `null` |
-| **corporation** | *nullable string* | 会社名 | `null` |
-| **created_at** | *date-time* | when user was created | `"2015-01-01T12:00:00Z"` |
-| **current_sign_in_at** | *nullable date-time* | DEVISE | `null` |
-| **current_sign_in_ip** | *nullable string* | DEVISE | `null` |
-| **email1** | *nullable email* | email address | `null` |
-| **email2** | *nullable email* | email address | `null` |
-| **facebook_id** | *nullable string* | 新ferret facebookログイン | `null` |
-| **id_facebook** | *nullable string* | 旧ferret facebook認証 | `null` |
-| **id_twitter** | *nullable string* | 旧ferret twitter認証 | `null` |
-| **job** | *nullable string* | 職業 | `null` |
-| **last_login_date** | *date-time* | 最後にログインした日時 | `"2015-01-01T12:00:00Z"` |
-| **last_sign_in_at** | *nullable date-time* | DEVISE | `null` |
-| **last_sign_in_ip** | *nullable string* | DEVISE | `null` |
-| **mail_magazine_flg** | *nullable string* | メルマガ可否 | `null` |
-| **marry** | *nullable integer* | 結婚 | `null` |
-| **memstate** | *nullable integer* | 会員か無効会員かどうか | `null` |
-| **nname** | *nullable string* | unique name of user | `"Tanaka"` |
-| **oauth** | *nullable string* | 認証 | `null` |
-| **passwd** | *nullable string* | password | `null` |
-| **ref** | *nullable integer* | 参考 | `null` |
-| **regdate** | *nullable string* | 登録日 | `null` |
-| **remember_created_at** | *nullable date-time* | DEVISE | `null` |
-| **reset_password_sent_at** | *nullable date-time* | DEVISE | `null` |
-| **reset_password_token** | *nullable string* | DEVISE | `null` |
+| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **commit** | *string* | commit | `"メールアドレス変更"` |
+| **email** | *email* | email address | `"username@example.com"` |
+| **id** | *integer* | unique identifier of user | `1` |
+| **password** | *string* | password | `"example"` |
+| **password_confirmation** | *string* | password confirmation | `"example"` |
+| **remember_me** | *string* | ログイン記憶 | `"example"` |
 | **service** | *nullable integer* | どのツールか | `null` |
-| **sex** | *nullable integer* | 性別 | `null` |
-| **sign_in_count** | *integer* | DEVISE | `42` |
-| **twitter_id** | *nullable string* | 新ferret twitterログイン | `null` |
-| **uid** | *integer* | unique identifier of user | `1` |
-| **unconfirmed_email** | *nullable string* | DEVISE | `null` |
-| **updated_at** | *date-time* | when user was updated | `"2015-01-01T12:00:00Z"` |
-| **url1** | *nullable uri* | URL1 | `null` |
-| **url2** | *nullable uri* | URL2 | `null` |
-| **url3** | *nullable uri* | URL3 | `null` |
-| **url4** | *nullable uri* | URL4 | `null` |
-| **url5** | *nullable uri* | URL5 | `null` |
-| **yahoojp_id** | *nullable string* | Yahooログイン | `null` |
 
 ### User Parameter Create
 
@@ -339,9 +301,16 @@ POST /users/sign_in
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **email1** | *nullable email* | email address | `null` |
-| **passwd** | *nullable string* | password | `null` |
+| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **email** | *email* | email address | `"username@example.com"` |
+| **password** | *string* | password | `"example"` |
 
+
+#### Optional Parameters
+
+| Name | Type | Description | Example |
+| ------- | ------- | ------- | ------- |
+| **remember_me** | *string* | ログイン記憶 | `"example"` |
 
 
 #### Curl Example
@@ -349,8 +318,10 @@ POST /users/sign_in
 ```bash
 $ curl -n -X POST /users/sign_in \
   -d '{
-  "email1": "username@example.com",
-  "passwd": null
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "password": "example",
+  "remember_me": "example"
 }' \
   -H "Content-Type: application/json"
 ```
@@ -364,52 +335,14 @@ HTTP/1.1 201 Created
 
 ```json
 {
-  "uid": 1,
-  "email1": "username@example.com",
-  "email2": "username@example.com",
-  "passwd": null,
-  "memstate": null,
-  "regdate": null,
-  "nname": "Tanaka",
-  "corporation": null,
-  "byear": null,
-  "bmon": null,
-  "sex": null,
-  "addr1": null,
-  "addr2": null,
-  "addr3": null,
-  "job": null,
-  "marry": null,
-  "ref": null,
-  "service": null,
-  "url1": null,
-  "url2": null,
-  "url3": null,
-  "url4": null,
-  "url5": null,
-  "last_login_date": "2015-01-01T12:00:00Z",
-  "basic_flg": null,
-  "oauth": null,
-  "id_facebook": null,
-  "id_twitter": null,
-  "reset_password_token": null,
-  "reset_password_sent_at": "2015-01-01T12:00:00Z",
-  "remember_created_at": "2015-01-01T12:00:00Z",
-  "sign_in_count": 42,
-  "current_sign_in_at": "2015-01-01T12:00:00Z",
-  "last_sign_in_at": "2015-01-01T12:00:00Z",
-  "current_sign_in_ip": null,
-  "last_sign_in_ip": null,
-  "confirmation_token": null,
-  "confirmed_at": "2015-01-01T12:00:00Z",
-  "confirmation_sent_at": "2015-01-01T12:00:00Z",
-  "unconfirmed_email": null,
-  "facebook_id": null,
-  "twitter_id": null,
-  "yahoojp_id": null,
-  "mail_magazine_flg": null,
-  "created_at": "2015-01-01T12:00:00Z",
-  "updated_at": "2015-01-01T12:00:00Z"
+  "id": 1,
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "password": "example",
+  "password_confirmation": "example",
+  "remember_me": "example",
+  "commit": "メールアドレス変更",
+  "service": null
 }
 ```
 
@@ -425,14 +358,11 @@ POST /users/password
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **passwd** | *nullable string* | password | `null` |
+| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **email** | *email* | email address | `"username@example.com"` |
+| **password** | *string* | password | `"example"` |
+| **password_confirmation** | *string* | password confirmation | `"example"` |
 
-
-#### Optional Parameters
-
-| Name | Type | Description | Example |
-| ------- | ------- | ------- | ------- |
-| **email1** | *nullable email* | email address | `null` |
 
 
 #### Curl Example
@@ -440,8 +370,10 @@ POST /users/password
 ```bash
 $ curl -n -X POST /users/password \
   -d '{
-  "email1": "username@example.com",
-  "passwd": null
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "password": "example",
+  "password_confirmation": "example"
 }' \
   -H "Content-Type: application/json"
 ```
@@ -455,52 +387,14 @@ HTTP/1.1 201 Created
 
 ```json
 {
-  "uid": 1,
-  "email1": "username@example.com",
-  "email2": "username@example.com",
-  "passwd": null,
-  "memstate": null,
-  "regdate": null,
-  "nname": "Tanaka",
-  "corporation": null,
-  "byear": null,
-  "bmon": null,
-  "sex": null,
-  "addr1": null,
-  "addr2": null,
-  "addr3": null,
-  "job": null,
-  "marry": null,
-  "ref": null,
-  "service": null,
-  "url1": null,
-  "url2": null,
-  "url3": null,
-  "url4": null,
-  "url5": null,
-  "last_login_date": "2015-01-01T12:00:00Z",
-  "basic_flg": null,
-  "oauth": null,
-  "id_facebook": null,
-  "id_twitter": null,
-  "reset_password_token": null,
-  "reset_password_sent_at": "2015-01-01T12:00:00Z",
-  "remember_created_at": "2015-01-01T12:00:00Z",
-  "sign_in_count": 42,
-  "current_sign_in_at": "2015-01-01T12:00:00Z",
-  "last_sign_in_at": "2015-01-01T12:00:00Z",
-  "current_sign_in_ip": null,
-  "last_sign_in_ip": null,
-  "confirmation_token": null,
-  "confirmed_at": "2015-01-01T12:00:00Z",
-  "confirmation_sent_at": "2015-01-01T12:00:00Z",
-  "unconfirmed_email": null,
-  "facebook_id": null,
-  "twitter_id": null,
-  "yahoojp_id": null,
-  "mail_magazine_flg": null,
-  "created_at": "2015-01-01T12:00:00Z",
-  "updated_at": "2015-01-01T12:00:00Z"
+  "id": 1,
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "password": "example",
+  "password_confirmation": "example",
+  "remember_me": "example",
+  "commit": "メールアドレス変更",
+  "service": null
 }
 ```
 
@@ -516,14 +410,11 @@ PATCH /users/password
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **passwd** | *nullable string* | password | `null` |
+| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **email** | *email* | email address | `"username@example.com"` |
+| **password** | *string* | password | `"example"` |
+| **password_confirmation** | *string* | password confirmation | `"example"` |
 
-
-#### Optional Parameters
-
-| Name | Type | Description | Example |
-| ------- | ------- | ------- | ------- |
-| **email1** | *nullable email* | email address | `null` |
 
 
 #### Curl Example
@@ -531,8 +422,10 @@ PATCH /users/password
 ```bash
 $ curl -n -X PATCH /users/password \
   -d '{
-  "email1": "username@example.com",
-  "passwd": null
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "password": "example",
+  "password_confirmation": "example"
 }' \
   -H "Content-Type: application/json"
 ```
@@ -546,52 +439,14 @@ HTTP/1.1 200 OK
 
 ```json
 {
-  "uid": 1,
-  "email1": "username@example.com",
-  "email2": "username@example.com",
-  "passwd": null,
-  "memstate": null,
-  "regdate": null,
-  "nname": "Tanaka",
-  "corporation": null,
-  "byear": null,
-  "bmon": null,
-  "sex": null,
-  "addr1": null,
-  "addr2": null,
-  "addr3": null,
-  "job": null,
-  "marry": null,
-  "ref": null,
-  "service": null,
-  "url1": null,
-  "url2": null,
-  "url3": null,
-  "url4": null,
-  "url5": null,
-  "last_login_date": "2015-01-01T12:00:00Z",
-  "basic_flg": null,
-  "oauth": null,
-  "id_facebook": null,
-  "id_twitter": null,
-  "reset_password_token": null,
-  "reset_password_sent_at": "2015-01-01T12:00:00Z",
-  "remember_created_at": "2015-01-01T12:00:00Z",
-  "sign_in_count": 42,
-  "current_sign_in_at": "2015-01-01T12:00:00Z",
-  "last_sign_in_at": "2015-01-01T12:00:00Z",
-  "current_sign_in_ip": null,
-  "last_sign_in_ip": null,
-  "confirmation_token": null,
-  "confirmed_at": "2015-01-01T12:00:00Z",
-  "confirmation_sent_at": "2015-01-01T12:00:00Z",
-  "unconfirmed_email": null,
-  "facebook_id": null,
-  "twitter_id": null,
-  "yahoojp_id": null,
-  "mail_magazine_flg": null,
-  "created_at": "2015-01-01T12:00:00Z",
-  "updated_at": "2015-01-01T12:00:00Z"
+  "id": 1,
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "password": "example",
+  "password_confirmation": "example",
+  "remember_me": "example",
+  "commit": "メールアドレス変更",
+  "service": null
 }
 ```
 
@@ -607,14 +462,11 @@ PUT /users/password
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **passwd** | *nullable string* | password | `null` |
+| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **email** | *email* | email address | `"username@example.com"` |
+| **password** | *string* | password | `"example"` |
+| **password_confirmation** | *string* | password confirmation | `"example"` |
 
-
-#### Optional Parameters
-
-| Name | Type | Description | Example |
-| ------- | ------- | ------- | ------- |
-| **email1** | *nullable email* | email address | `null` |
 
 
 #### Curl Example
@@ -622,8 +474,10 @@ PUT /users/password
 ```bash
 $ curl -n -X PUT /users/password \
   -d '{
-  "email1": "username@example.com",
-  "passwd": null
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "password": "example",
+  "password_confirmation": "example"
 }' \
   -H "Content-Type: application/json"
 ```
@@ -637,58 +491,20 @@ HTTP/1.1 200 OK
 
 ```json
 {
-  "uid": 1,
-  "email1": "username@example.com",
-  "email2": "username@example.com",
-  "passwd": null,
-  "memstate": null,
-  "regdate": null,
-  "nname": "Tanaka",
-  "corporation": null,
-  "byear": null,
-  "bmon": null,
-  "sex": null,
-  "addr1": null,
-  "addr2": null,
-  "addr3": null,
-  "job": null,
-  "marry": null,
-  "ref": null,
-  "service": null,
-  "url1": null,
-  "url2": null,
-  "url3": null,
-  "url4": null,
-  "url5": null,
-  "last_login_date": "2015-01-01T12:00:00Z",
-  "basic_flg": null,
-  "oauth": null,
-  "id_facebook": null,
-  "id_twitter": null,
-  "reset_password_token": null,
-  "reset_password_sent_at": "2015-01-01T12:00:00Z",
-  "remember_created_at": "2015-01-01T12:00:00Z",
-  "sign_in_count": 42,
-  "current_sign_in_at": "2015-01-01T12:00:00Z",
-  "last_sign_in_at": "2015-01-01T12:00:00Z",
-  "current_sign_in_ip": null,
-  "last_sign_in_ip": null,
-  "confirmation_token": null,
-  "confirmed_at": "2015-01-01T12:00:00Z",
-  "confirmation_sent_at": "2015-01-01T12:00:00Z",
-  "unconfirmed_email": null,
-  "facebook_id": null,
-  "twitter_id": null,
-  "yahoojp_id": null,
-  "mail_magazine_flg": null,
-  "created_at": "2015-01-01T12:00:00Z",
-  "updated_at": "2015-01-01T12:00:00Z"
+  "id": 1,
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "password": "example",
+  "password_confirmation": "example",
+  "remember_me": "example",
+  "commit": "メールアドレス変更",
+  "service": null
 }
 ```
 
 ### User Parameter Create
 
-user_registration
+user_registration create
 
 ```
 POST /users
@@ -698,15 +514,11 @@ POST /users
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **email1** | *nullable email* | email address | `null` |
-| **passwd** | *nullable string* | password | `null` |
-
-
-#### Optional Parameters
-
-| Name | Type | Description | Example |
-| ------- | ------- | ------- | ------- |
+| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **email** | *email* | email address | `"username@example.com"` |
+| **password** | *string* | password | `"example"` |
 | **service** | *nullable integer* | どのツールか | `null` |
+
 
 
 #### Curl Example
@@ -714,8 +526,9 @@ POST /users
 ```bash
 $ curl -n -X POST /users \
   -d '{
-  "email1": "username@example.com",
-  "passwd": null,
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "password": "example",
   "service": null
 }' \
   -H "Content-Type: application/json"
@@ -730,52 +543,14 @@ HTTP/1.1 201 Created
 
 ```json
 {
-  "uid": 1,
-  "email1": "username@example.com",
-  "email2": "username@example.com",
-  "passwd": null,
-  "memstate": null,
-  "regdate": null,
-  "nname": "Tanaka",
-  "corporation": null,
-  "byear": null,
-  "bmon": null,
-  "sex": null,
-  "addr1": null,
-  "addr2": null,
-  "addr3": null,
-  "job": null,
-  "marry": null,
-  "ref": null,
-  "service": null,
-  "url1": null,
-  "url2": null,
-  "url3": null,
-  "url4": null,
-  "url5": null,
-  "last_login_date": "2015-01-01T12:00:00Z",
-  "basic_flg": null,
-  "oauth": null,
-  "id_facebook": null,
-  "id_twitter": null,
-  "reset_password_token": null,
-  "reset_password_sent_at": "2015-01-01T12:00:00Z",
-  "remember_created_at": "2015-01-01T12:00:00Z",
-  "sign_in_count": 42,
-  "current_sign_in_at": "2015-01-01T12:00:00Z",
-  "last_sign_in_at": "2015-01-01T12:00:00Z",
-  "current_sign_in_ip": null,
-  "last_sign_in_ip": null,
-  "confirmation_token": null,
-  "confirmed_at": "2015-01-01T12:00:00Z",
-  "confirmation_sent_at": "2015-01-01T12:00:00Z",
-  "unconfirmed_email": null,
-  "facebook_id": null,
-  "twitter_id": null,
-  "yahoojp_id": null,
-  "mail_magazine_flg": null,
-  "created_at": "2015-01-01T12:00:00Z",
-  "updated_at": "2015-01-01T12:00:00Z"
+  "id": 1,
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "password": "example",
+  "password_confirmation": "example",
+  "remember_me": "example",
+  "commit": "メールアドレス変更",
+  "service": null
 }
 ```
 
@@ -787,29 +562,19 @@ edit_user_registration update
 PATCH /users
 ```
 
+#### Required Parameters
+
+| Name | Type | Description | Example |
+| ------- | ------- | ------- | ------- |
+| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **email** | *email* | email address | `"username@example.com"` |
+
+
 #### Optional Parameters
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **addr1** | *nullable string* | エリア1 | `null` |
-| **addr2** | *nullable string* | エリア2 | `null` |
-| **addr3** | *nullable string* | エリア3 | `null` |
-| **bmon** | *nullable integer* | 誕生月 | `null` |
-| **byear** | *nullable integer* | 誕生年 | `null` |
-| **corporation** | *nullable string* | 会社名 | `null` |
-| **email1** | *nullable email* | email address | `null` |
-| **job** | *nullable string* | 職業 | `null` |
-| **marry** | *nullable integer* | 結婚 | `null` |
-| **nname** | *nullable string* | unique name of user | `"Tanaka"` |
-| **passwd** | *nullable string* | password | `null` |
-| **ref** | *nullable integer* | 参考 | `null` |
-| **sex** | *nullable integer* | 性別 | `null` |
-| **uid** | *integer* | unique identifier of user | `1` |
-| **url1** | *nullable uri* | URL1 | `null` |
-| **url2** | *nullable uri* | URL2 | `null` |
-| **url3** | *nullable uri* | URL3 | `null` |
-| **url4** | *nullable uri* | URL4 | `null` |
-| **url5** | *nullable uri* | URL5 | `null` |
+| **commit** | *string* | commit | `"メールアドレス変更"` |
 
 
 #### Curl Example
@@ -817,25 +582,9 @@ PATCH /users
 ```bash
 $ curl -n -X PATCH /users \
   -d '{
-  "uid": 1,
-  "email1": "username@example.com",
-  "passwd": null,
-  "nname": "Tanaka",
-  "corporation": null,
-  "byear": null,
-  "bmon": null,
-  "sex": null,
-  "addr1": null,
-  "addr2": null,
-  "addr3": null,
-  "job": null,
-  "marry": null,
-  "ref": null,
-  "url1": null,
-  "url2": null,
-  "url3": null,
-  "url4": null,
-  "url5": null
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "commit": "メールアドレス変更"
 }' \
   -H "Content-Type: application/json"
 ```
@@ -849,52 +598,14 @@ HTTP/1.1 200 OK
 
 ```json
 {
-  "uid": 1,
-  "email1": "username@example.com",
-  "email2": "username@example.com",
-  "passwd": null,
-  "memstate": null,
-  "regdate": null,
-  "nname": "Tanaka",
-  "corporation": null,
-  "byear": null,
-  "bmon": null,
-  "sex": null,
-  "addr1": null,
-  "addr2": null,
-  "addr3": null,
-  "job": null,
-  "marry": null,
-  "ref": null,
-  "service": null,
-  "url1": null,
-  "url2": null,
-  "url3": null,
-  "url4": null,
-  "url5": null,
-  "last_login_date": "2015-01-01T12:00:00Z",
-  "basic_flg": null,
-  "oauth": null,
-  "id_facebook": null,
-  "id_twitter": null,
-  "reset_password_token": null,
-  "reset_password_sent_at": "2015-01-01T12:00:00Z",
-  "remember_created_at": "2015-01-01T12:00:00Z",
-  "sign_in_count": 42,
-  "current_sign_in_at": "2015-01-01T12:00:00Z",
-  "last_sign_in_at": "2015-01-01T12:00:00Z",
-  "current_sign_in_ip": null,
-  "last_sign_in_ip": null,
-  "confirmation_token": null,
-  "confirmed_at": "2015-01-01T12:00:00Z",
-  "confirmation_sent_at": "2015-01-01T12:00:00Z",
-  "unconfirmed_email": null,
-  "facebook_id": null,
-  "twitter_id": null,
-  "yahoojp_id": null,
-  "mail_magazine_flg": null,
-  "created_at": "2015-01-01T12:00:00Z",
-  "updated_at": "2015-01-01T12:00:00Z"
+  "id": 1,
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "password": "example",
+  "password_confirmation": "example",
+  "remember_me": "example",
+  "commit": "メールアドレス変更",
+  "service": null
 }
 ```
 
@@ -906,29 +617,19 @@ edit_user_registration update
 PUT /users
 ```
 
+#### Required Parameters
+
+| Name | Type | Description | Example |
+| ------- | ------- | ------- | ------- |
+| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **email** | *email* | email address | `"username@example.com"` |
+
+
 #### Optional Parameters
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **addr1** | *nullable string* | エリア1 | `null` |
-| **addr2** | *nullable string* | エリア2 | `null` |
-| **addr3** | *nullable string* | エリア3 | `null` |
-| **bmon** | *nullable integer* | 誕生月 | `null` |
-| **byear** | *nullable integer* | 誕生年 | `null` |
-| **corporation** | *nullable string* | 会社名 | `null` |
-| **email1** | *nullable email* | email address | `null` |
-| **job** | *nullable string* | 職業 | `null` |
-| **marry** | *nullable integer* | 結婚 | `null` |
-| **nname** | *nullable string* | unique name of user | `"Tanaka"` |
-| **passwd** | *nullable string* | password | `null` |
-| **ref** | *nullable integer* | 参考 | `null` |
-| **sex** | *nullable integer* | 性別 | `null` |
-| **uid** | *integer* | unique identifier of user | `1` |
-| **url1** | *nullable uri* | URL1 | `null` |
-| **url2** | *nullable uri* | URL2 | `null` |
-| **url3** | *nullable uri* | URL3 | `null` |
-| **url4** | *nullable uri* | URL4 | `null` |
-| **url5** | *nullable uri* | URL5 | `null` |
+| **commit** | *string* | commit | `"メールアドレス変更"` |
 
 
 #### Curl Example
@@ -936,25 +637,9 @@ PUT /users
 ```bash
 $ curl -n -X PUT /users \
   -d '{
-  "uid": 1,
-  "email1": "username@example.com",
-  "passwd": null,
-  "nname": "Tanaka",
-  "corporation": null,
-  "byear": null,
-  "bmon": null,
-  "sex": null,
-  "addr1": null,
-  "addr2": null,
-  "addr3": null,
-  "job": null,
-  "marry": null,
-  "ref": null,
-  "url1": null,
-  "url2": null,
-  "url3": null,
-  "url4": null,
-  "url5": null
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "commit": "メールアドレス変更"
 }' \
   -H "Content-Type: application/json"
 ```
@@ -968,53 +653,13 @@ HTTP/1.1 200 OK
 
 ```json
 {
-  "uid": 1,
-  "email1": "username@example.com",
-  "email2": "username@example.com",
-  "passwd": null,
-  "memstate": null,
-  "regdate": null,
-  "nname": "Tanaka",
-  "corporation": null,
-  "byear": null,
-  "bmon": null,
-  "sex": null,
-  "addr1": null,
-  "addr2": null,
-  "addr3": null,
-  "job": null,
-  "marry": null,
-  "ref": null,
-  "service": null,
-  "url1": null,
-  "url2": null,
-  "url3": null,
-  "url4": null,
-  "url5": null,
-  "last_login_date": "2015-01-01T12:00:00Z",
-  "basic_flg": null,
-  "oauth": null,
-  "id_facebook": null,
-  "id_twitter": null,
-  "reset_password_token": null,
-  "reset_password_sent_at": "2015-01-01T12:00:00Z",
-  "remember_created_at": "2015-01-01T12:00:00Z",
-  "sign_in_count": 42,
-  "current_sign_in_at": "2015-01-01T12:00:00Z",
-  "last_sign_in_at": "2015-01-01T12:00:00Z",
-  "current_sign_in_ip": null,
-  "last_sign_in_ip": null,
-  "confirmation_token": null,
-  "confirmed_at": "2015-01-01T12:00:00Z",
-  "confirmation_sent_at": "2015-01-01T12:00:00Z",
-  "unconfirmed_email": null,
-  "facebook_id": null,
-  "twitter_id": null,
-  "yahoojp_id": null,
-  "mail_magazine_flg": null,
-  "created_at": "2015-01-01T12:00:00Z",
-  "updated_at": "2015-01-01T12:00:00Z"
+  "id": 1,
+  "authenticity_token": "example",
+  "email": "username@example.com",
+  "password": "example",
+  "password_confirmation": "example",
+  "remember_me": "example",
+  "commit": "メールアドレス変更",
+  "service": null
 }
 ```
-
-
