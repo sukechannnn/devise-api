@@ -1,0 +1,226 @@
+---
+"$schema": http://json-schema.org/draft-04/hyper-schema
+title: JSON Web Token for User Management
+description: ユーザー情報の入ったJWT
+id: schemata/user
+stability: prototype
+strictProperties: true
+type:
+- object
+
+definitions:
+  token:
+    description: ユーザー情報の入ったJWT
+    example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.\
+    eyJpZCI6MSwibmFtZSI6InRhbmFrYSIsInBhc3N3b3JkIjoiamF1MDMyOHVyYTBqcmRzZjMifQ.\
+    n6peT2Ji3muMwFuD-eoQnp-hbFW1VFO4I4XOzNm1GoSyUKKpT8EN3Ya56HTxqvmI8D9LX_4tNbAMC1qa2vGH_67_I7y7s_b\
+    LRMwntBaa1jhw7AmI2cniVNYWL4oFAdfSBBLAGhCKa5taB3WKeOwheVoh0fbWbpo9OALLvklExjKGYSpyz2O5HJZ-Qm0CHd\
+    uMMw9ydsXWPmUoKj8WNodvCCIFU-9HKlS-55bMYP-AqzPXrofSrmfemRRyAnf9rnavyvPBCSFEakOfMEPbOAno58L18nepq\
+    llr6RRiIPLsLtKbGmgrqHsQyESndL_yxol8MFCGJTNu8Lgy7hBrhioX5g"
+    readOnly: true
+    type:
+    - string
+  identity:
+    anyOf:
+    - "$ref": "/schemata/user#/definitions/token"
+
+# DEVISEに従ったRouting
+links:
+- description: new_user_session
+  href: "/users/sign_in"
+  method: GET
+  rel: new
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: New
+
+- description: user_session
+  href: "/users/sign_in"
+  method: POST
+  rel: create
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: Create
+
+- description: destroy_user_session
+  href: "/users/sign_out"
+  method: GET
+  rel: destroy
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: Destroy
+
+- description: user_password
+  href: "/users/password"
+  method: POST
+  rel: create
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: Create
+
+- description: new_user_password
+  href: "/users/password/new"
+  method: GET
+  rel: new
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: New
+
+- description: edit_user_password
+  href: "/users/password/edit"
+  method: GET
+  rel: edit
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: Edit
+
+- description: edit_user_password update
+  href: "/users/password"
+  method: PATCH
+  rel: update
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: Update
+
+- description: edit_user_password update
+  href: "/users/password"
+  method: PUT
+  rel: update
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: Update
+
+- description: cancel_user_registration
+  href: "/users/cancel"
+  method: GET
+  rel: cancel
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: Cancel
+
+- description: user_registration
+  href: "/users"
+  method: POST
+  rel: create
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: Create
+
+- description: new_user_registration
+  href: "/users/sign_up"
+  method: GET
+  rel: new
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: New
+
+- description: edit_user_registration
+  href: "/users/edit"
+  method: GET
+  rel: edit
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: Edit
+
+- description: edit_user_registration update
+  href: "/users"
+  method: PATCH
+  rel: update
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: Update
+
+- description: edit_user_registration update
+  href: "/users"
+  method: PUT
+  rel: update
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+  title: Update
+
+- description: edit_user_registration delete
+  href: "/users"
+  method: DELETE
+  rel: destroy
+  schema:
+    properties:
+      token:
+        "$ref": "/schemata/user#/definitions/token"
+    required: ["token"]
+    type:
+    - object
+    title: Destroy
+
+properties:
+  token:
+    "$ref": "/schemata/user#/definitions/token"
