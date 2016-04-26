@@ -17,6 +17,7 @@ definitions:
     - integer
   authenticity_token:
     description: 認証トークン
+    example: efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=
     readOnly: true
     type:
     - string
@@ -25,22 +26,26 @@ definitions:
     - array
     email:
       description: email address
+      example: email@example.com
       format: email
       readOnly: true
       type:
       - string
     password:
       description: password
+      example: nfho084j
       readOnly: true
       type:
       - string
     password_confirmation:
       description:   password confirmation
+      example: nfho084j
       readOnly: true
       type:
       - string
     remember_me:
       description: ログイン記憶
+      example: 0
       readOnly: true
       type:
       - string
@@ -52,6 +57,7 @@ definitions:
     - string
   service:
     description: どのツールか
+    example: 1
     readOnly: true
     type:
     - "null"

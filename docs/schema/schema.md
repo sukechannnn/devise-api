@@ -8,10 +8,10 @@ mmemberのスキーマを定義
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **authenticity_token** | *string* | 認証トークン | `"efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8="` |
 | **commit** | *string* | commit | `"メールアドレス変更"` |
 | **id** | *integer* | unique identifier of user | `1` |
-| **service** | *nullable integer* | どのツールか | `null` |
+| **service** | *nullable integer* | どのツールか | `1` |
 | **user** | *array* |  |  |
 
 ### User Parameter Create
@@ -26,7 +26,7 @@ POST /users/sign_in
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **authenticity_token** | *string* | 認証トークン | `"efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8="` |
 
 
 #### Optional Parameters
@@ -41,7 +41,7 @@ POST /users/sign_in
 ```bash
 $ curl -n -X POST /users/sign_in \
   -d '{
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null
 }' \
   -H "Content-Type: application/json"
@@ -57,10 +57,10 @@ HTTP/1.1 201 Created
 ```json
 {
   "id": 1,
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null,
   "commit": "メールアドレス変更",
-  "service": null
+  "service": 1
 }
 ```
 
@@ -76,7 +76,7 @@ POST /users/password
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **authenticity_token** | *string* | 認証トークン | `"efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8="` |
 
 
 #### Optional Parameters
@@ -91,7 +91,7 @@ POST /users/password
 ```bash
 $ curl -n -X POST /users/password \
   -d '{
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null
 }' \
   -H "Content-Type: application/json"
@@ -107,10 +107,10 @@ HTTP/1.1 201 Created
 ```json
 {
   "id": 1,
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null,
   "commit": "メールアドレス変更",
-  "service": null
+  "service": 1
 }
 ```
 
@@ -126,7 +126,7 @@ PATCH /users/password
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **authenticity_token** | *string* | 認証トークン | `"efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8="` |
 
 
 #### Optional Parameters
@@ -141,7 +141,7 @@ PATCH /users/password
 ```bash
 $ curl -n -X PATCH /users/password \
   -d '{
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null
 }' \
   -H "Content-Type: application/json"
@@ -157,10 +157,10 @@ HTTP/1.1 200 OK
 ```json
 {
   "id": 1,
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null,
   "commit": "メールアドレス変更",
-  "service": null
+  "service": 1
 }
 ```
 
@@ -176,7 +176,7 @@ PUT /users/password
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **authenticity_token** | *string* | 認証トークン | `"efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8="` |
 
 
 #### Optional Parameters
@@ -191,7 +191,7 @@ PUT /users/password
 ```bash
 $ curl -n -X PUT /users/password \
   -d '{
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null
 }' \
   -H "Content-Type: application/json"
@@ -207,10 +207,10 @@ HTTP/1.1 200 OK
 ```json
 {
   "id": 1,
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null,
   "commit": "メールアドレス変更",
-  "service": null
+  "service": 1
 }
 ```
 
@@ -226,8 +226,8 @@ POST /users
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **authenticity_token** | *string* | 認証トークン | `"example"` |
-| **service** | *nullable integer* | どのツールか | `null` |
+| **authenticity_token** | *string* | 認証トークン | `"efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8="` |
+| **service** | *nullable integer* | どのツールか | `1` |
 
 
 #### Optional Parameters
@@ -242,9 +242,9 @@ POST /users
 ```bash
 $ curl -n -X POST /users \
   -d '{
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null,
-  "service": null
+  "service": 1
 }' \
   -H "Content-Type: application/json"
 ```
@@ -259,10 +259,10 @@ HTTP/1.1 201 Created
 ```json
 {
   "id": 1,
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null,
   "commit": "メールアドレス変更",
-  "service": null
+  "service": 1
 }
 ```
 
@@ -278,7 +278,7 @@ PATCH /users
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **authenticity_token** | *string* | 認証トークン | `"efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8="` |
 
 
 #### Optional Parameters
@@ -294,7 +294,7 @@ PATCH /users
 ```bash
 $ curl -n -X PATCH /users \
   -d '{
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null,
   "commit": "メールアドレス変更"
 }' \
@@ -311,10 +311,10 @@ HTTP/1.1 200 OK
 ```json
 {
   "id": 1,
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null,
   "commit": "メールアドレス変更",
-  "service": null
+  "service": 1
 }
 ```
 
@@ -330,7 +330,7 @@ PUT /users
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **authenticity_token** | *string* | 認証トークン | `"example"` |
+| **authenticity_token** | *string* | 認証トークン | `"efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8="` |
 
 
 #### Optional Parameters
@@ -346,7 +346,7 @@ PUT /users
 ```bash
 $ curl -n -X PUT /users \
   -d '{
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null,
   "commit": "メールアドレス変更"
 }' \
@@ -363,9 +363,11 @@ HTTP/1.1 200 OK
 ```json
 {
   "id": 1,
-  "authenticity_token": "example",
+  "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
   "user": null,
   "commit": "メールアドレス変更",
-  "service": null
+  "service": 1
 }
 ```
+
+
