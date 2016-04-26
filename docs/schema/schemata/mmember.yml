@@ -23,7 +23,7 @@ definitions:
     - string
   user:
     description: ユーザー情報の配列
-    example: 
+    example: '{"email"=>"email@example.com", "password"=>"[FILTERED]", "remember_me"=>"0"}'
     type:
     - array
     email:

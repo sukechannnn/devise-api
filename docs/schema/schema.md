@@ -12,7 +12,7 @@ mmemberのスキーマを定義
 | **commit** | *string* | commit | `"メールアドレス変更"` |
 | **id** | *integer* | unique identifier of user | `1` |
 | **service** | *nullable integer* | どのツールか | `1` |
-| **user** | *array* | ユーザー情報の配列 | `null` |
+| **user** | *array* | ユーザー情報の配列 | `"{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"` |
 
 ### User Parameter Create
 
@@ -33,7 +33,7 @@ POST /users/sign_in
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **user** | *array* | ユーザー情報の配列 | `null` |
+| **user** | *array* | ユーザー情報の配列 | `"{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"` |
 
 
 #### Curl Example
@@ -42,7 +42,7 @@ POST /users/sign_in
 $ curl -n -X POST /users/sign_in \
   -d '{
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"
 }' \
   -H "Content-Type: application/json"
 ```
@@ -58,7 +58,7 @@ HTTP/1.1 201 Created
 {
   "id": 1,
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null,
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
   "commit": "メールアドレス変更",
   "service": 1
 }
@@ -83,7 +83,7 @@ POST /users/password
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **user** | *array* | ユーザー情報の配列 | `null` |
+| **user** | *array* | ユーザー情報の配列 | `"{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"` |
 
 
 #### Curl Example
@@ -92,7 +92,7 @@ POST /users/password
 $ curl -n -X POST /users/password \
   -d '{
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"
 }' \
   -H "Content-Type: application/json"
 ```
@@ -108,7 +108,7 @@ HTTP/1.1 201 Created
 {
   "id": 1,
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null,
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
   "commit": "メールアドレス変更",
   "service": 1
 }
@@ -133,7 +133,7 @@ PATCH /users/password
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **user** | *array* | ユーザー情報の配列 | `null` |
+| **user** | *array* | ユーザー情報の配列 | `"{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"` |
 
 
 #### Curl Example
@@ -142,7 +142,7 @@ PATCH /users/password
 $ curl -n -X PATCH /users/password \
   -d '{
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"
 }' \
   -H "Content-Type: application/json"
 ```
@@ -158,7 +158,7 @@ HTTP/1.1 200 OK
 {
   "id": 1,
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null,
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
   "commit": "メールアドレス変更",
   "service": 1
 }
@@ -183,7 +183,7 @@ PUT /users/password
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **user** | *array* | ユーザー情報の配列 | `null` |
+| **user** | *array* | ユーザー情報の配列 | `"{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"` |
 
 
 #### Curl Example
@@ -192,7 +192,7 @@ PUT /users/password
 $ curl -n -X PUT /users/password \
   -d '{
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"
 }' \
   -H "Content-Type: application/json"
 ```
@@ -208,7 +208,7 @@ HTTP/1.1 200 OK
 {
   "id": 1,
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null,
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
   "commit": "メールアドレス変更",
   "service": 1
 }
@@ -234,7 +234,7 @@ POST /users
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **user** | *array* | ユーザー情報の配列 | `null` |
+| **user** | *array* | ユーザー情報の配列 | `"{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"` |
 
 
 #### Curl Example
@@ -243,7 +243,7 @@ POST /users
 $ curl -n -X POST /users \
   -d '{
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null,
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
   "service": 1
 }' \
   -H "Content-Type: application/json"
@@ -260,7 +260,7 @@ HTTP/1.1 201 Created
 {
   "id": 1,
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null,
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
   "commit": "メールアドレス変更",
   "service": 1
 }
@@ -286,7 +286,7 @@ PATCH /users
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
 | **commit** | *string* | commit | `"メールアドレス変更"` |
-| **user** | *array* | ユーザー情報の配列 | `null` |
+| **user** | *array* | ユーザー情報の配列 | `"{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"` |
 
 
 #### Curl Example
@@ -295,7 +295,7 @@ PATCH /users
 $ curl -n -X PATCH /users \
   -d '{
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null,
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
   "commit": "メールアドレス変更"
 }' \
   -H "Content-Type: application/json"
@@ -312,7 +312,7 @@ HTTP/1.1 200 OK
 {
   "id": 1,
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null,
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
   "commit": "メールアドレス変更",
   "service": 1
 }
@@ -338,7 +338,7 @@ PUT /users
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
 | **commit** | *string* | commit | `"メールアドレス変更"` |
-| **user** | *array* | ユーザー情報の配列 | `null` |
+| **user** | *array* | ユーザー情報の配列 | `"{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"` |
 
 
 #### Curl Example
@@ -347,7 +347,7 @@ PUT /users
 $ curl -n -X PUT /users \
   -d '{
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null,
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
   "commit": "メールアドレス変更"
 }' \
   -H "Content-Type: application/json"
@@ -364,7 +364,7 @@ HTTP/1.1 200 OK
 {
   "id": 1,
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": null,
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
   "commit": "メールアドレス変更",
   "service": 1
 }
