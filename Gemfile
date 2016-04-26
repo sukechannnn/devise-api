@@ -27,6 +27,9 @@ gem 'devise'
 gem 'devise-async'
 gem 'devise-encryptable' # deviseの暗号化処理を変更
 
+#--- バリデーション
+gem 'email_validator', require: 'email_validator/strict'
+
 #--- 設定関係
 gem 'config'       # 環境ごとに定数を管理
 gem 'dotenv-rails' # 環境変数管理
@@ -59,6 +62,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'thin'         # アプリケーションサーバ
   gem 'quiet_assets' # アセットログの抑制
 end
 
