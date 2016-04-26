@@ -25,9 +25,13 @@ doc/
 .idea
 .secret
 
+# local file
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
 
 # simplecov
 /coverage
+
+# Dotenv
+.env
