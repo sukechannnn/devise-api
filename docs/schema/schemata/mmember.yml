@@ -22,6 +22,8 @@ definitions:
     type:
     - string
   user:
+    description: ユーザー情報の配列
+    example: 
     type:
     - array
     email:

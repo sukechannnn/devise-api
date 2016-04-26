@@ -31,6 +31,8 @@
           ]
         },
         "user": {
+          "description": "ユーザー情報の配列",
+          "example": null,
           "type": [
             "array"
           ],

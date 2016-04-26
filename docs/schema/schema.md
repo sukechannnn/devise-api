@@ -12,7 +12,7 @@ mmemberのスキーマを定義
 | **commit** | *string* | commit | `"メールアドレス変更"` |
 | **id** | *integer* | unique identifier of user | `1` |
 | **service** | *nullable integer* | どのツールか | `1` |
-| **user** | *array* |  |  |
+| **user** | *array* | ユーザー情報の配列 | `null` |
 
 ### User Parameter Create
 
@@ -33,7 +33,7 @@ POST /users/sign_in
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **user** | *array* |  |  |
+| **user** | *array* | ユーザー情報の配列 | `null` |
 
 
 #### Curl Example
@@ -83,7 +83,7 @@ POST /users/password
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **user** | *array* |  |  |
+| **user** | *array* | ユーザー情報の配列 | `null` |
 
 
 #### Curl Example
@@ -133,7 +133,7 @@ PATCH /users/password
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **user** | *array* |  |  |
+| **user** | *array* | ユーザー情報の配列 | `null` |
 
 
 #### Curl Example
@@ -183,7 +183,7 @@ PUT /users/password
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **user** | *array* |  |  |
+| **user** | *array* | ユーザー情報の配列 | `null` |
 
 
 #### Curl Example
@@ -234,7 +234,7 @@ POST /users
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **user** | *array* |  |  |
+| **user** | *array* | ユーザー情報の配列 | `null` |
 
 
 #### Curl Example
@@ -286,7 +286,7 @@ PATCH /users
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
 | **commit** | *string* | commit | `"メールアドレス変更"` |
-| **user** | *array* |  |  |
+| **user** | *array* | ユーザー情報の配列 | `null` |
 
 
 #### Curl Example
@@ -338,7 +338,7 @@ PUT /users
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
 | **commit** | *string* | commit | `"メールアドレス変更"` |
-| **user** | *array* |  |  |
+| **user** | *array* | ユーザー情報の配列 | `null` |
 
 
 #### Curl Example
