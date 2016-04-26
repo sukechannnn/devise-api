@@ -20,27 +20,30 @@ definitions:
     readOnly: true
     type:
     - string
-  email:
-    description: email address
-    format: email
-    readOnly: true
+  user:
     type:
-    - string
-  password:
-    description: password
-    readOnly: true
-    type:
-    - string
-  password_confirmation:
-    description:   password confirmation
-    readOnly: true
-    type:
-    - string
-  remember_me:
-    description: ログイン記憶
-    readOnly: true
-    type:
-    - string
+    - array
+    email:
+      description: email address
+      format: email
+      readOnly: true
+      type:
+      - string
+    password:
+      description: password
+      readOnly: true
+      type:
+      - string
+    password_confirmation:
+      description:   password confirmation
+      readOnly: true
+      type:
+      - string
+    remember_me:
+      description: ログイン記憶
+      readOnly: true
+      type:
+      - string
   commit:
     description: commit
     example: メールアドレス変更
@@ -64,12 +67,14 @@ links:
     properties:
       authenticity_token:
         "$ref": "/schemata/user#/definitions/authenticity_token"
-      email:
-        "$ref": "/schemata/user#/definitions/email"
-      password:
-        "$ref": "/schemata/user#/definitions/password"
-      remember_me:
-        "$ref": "/schemata/user#/definitions/remember_me"
+      user:
+        "$ref": "/schemata/user#/definitions/user"
+        email:
+          "$ref": "/schemata/user#/definitions/user/email"
+        password:
+          "$ref": "/schemata/user#/definitions/user/password"
+        remember_me:
+          "$ref": "/schemata/user#/definitions/user/remember_me"
     required: ["authenticity_token", "email", "password"]
     type:
     - object
@@ -83,12 +88,14 @@ links:
     properties:
       authenticity_token:
         "$ref": "/schemata/user#/definitions/authenticity_token"
-      email:
-        "$ref": "/schemata/user#/definitions/email"
-      password:
-        "$ref": "/schemata/user#/definitions/password"
-      password_confirmation:
-        "$ref": "/schemata/user#/definitions/password_confirmation"
+      user:
+        "$ref": "/schemata/user#/definitions/user"
+        email:
+          "$ref": "/schemata/user#/definitions/user/email"
+        password:
+          "$ref": "/schemata/user#/definitions/user/password"
+        password_confirmation:
+          "$ref": "/schemata/user#/definitions/user/password_confirmation"
     required: ["authenticity_token", "email", "password", "password_confirmation"]
     type:
     - object
@@ -102,12 +109,14 @@ links:
     properties:
       authenticity_token:
         "$ref": "/schemata/user#/definitions/authenticity_token"
-      email:
-        "$ref": "/schemata/user#/definitions/email"
-      password:
-        "$ref": "/schemata/user#/definitions/password"
-      password_confirmation:
-        "$ref": "/schemata/user#/definitions/password_confirmation"
+      user:
+        "$ref": "/schemata/user#/definitions/user"
+        email:
+          "$ref": "/schemata/user#/definitions/user/email"
+        password:
+          "$ref": "/schemata/user#/definitions/user/password"
+        password_confirmation:
+          "$ref": "/schemata/user#/definitions/user/password_confirmation"
     required: ["authenticity_token", "email", "password", "password_confirmation"]
     type:
     - object
@@ -121,12 +130,14 @@ links:
     properties:
       authenticity_token:
         "$ref": "/schemata/user#/definitions/authenticity_token"
-      email:
-        "$ref": "/schemata/user#/definitions/email"
-      password:
-        "$ref": "/schemata/user#/definitions/password"
-      password_confirmation:
-        "$ref": "/schemata/user#/definitions/password_confirmation"
+      user:
+        "$ref": "/schemata/user#/definitions/user"
+        email:
+          "$ref": "/schemata/user#/definitions/user/email"
+        password:
+          "$ref": "/schemata/user#/definitions/user/password"
+        password_confirmation:
+          "$ref": "/schemata/user#/definitions/user/password_confirmation"
     required: ["authenticity_token", "email", "password", "password_confirmation"]
     type:
     - object
@@ -140,10 +151,12 @@ links:
     properties:
       authenticity_token:
         "$ref": "/schemata/user#/definitions/authenticity_token"
-      email:
-        "$ref": "/schemata/user#/definitions/email"
-      password:
-        "$ref": "/schemata/user#/definitions/password"
+      user:
+        "$ref": "/schemata/user#/definitions/user"
+        email:
+          "$ref": "/schemata/user#/definitions/user/email"
+        password:
+          "$ref": "/schemata/user#/definitions/user/password"
       service:
         "$ref": "/schemata/user#/definitions/service"
     required: ["authenticity_token", "email", "password", "service"]
@@ -159,8 +172,10 @@ links:
     properties:
       authenticity_token:
         "$ref": "/schemata/user#/definitions/authenticity_token"
-      email:
-        "$ref": "/schemata/user#/definitions/email"
+      user:
+        "$ref": "/schemata/user#/definitions/user"
+        email:
+          "$ref": "/schemata/user#/definitions/user/email"
       commit:
         "$ref": "/schemata/user#/definitions/commit"
     required: ["authenticity_token", "email"]
@@ -176,8 +191,10 @@ links:
     properties:
       authenticity_token:
         "$ref": "/schemata/user#/definitions/authenticity_token"
-      email:
-        "$ref": "/schemata/user#/definitions/email"
+      user:
+        "$ref": "/schemata/user#/definitions/user"
+        email:
+          "$ref": "/schemata/user#/definitions/user/email"
       commit:
         "$ref": "/schemata/user#/definitions/commit"
     required: ["authenticity_token", "email"]
@@ -190,14 +207,16 @@ properties:
     "$ref": "/schemata/user#/definitions/id"
   authenticity_token:
     "$ref": "/schemata/user#/definitions/authenticity_token"
-  email:
-    "$ref": "/schemata/user#/definitions/email"
-  password:
-    "$ref": "/schemata/user#/definitions/password"
-  password_confirmation:
-    "$ref": "/schemata/user#/definitions/password_confirmation"
-  remember_me:
-    "$ref": "/schemata/user#/definitions/remember_me"
+  user:
+    "$ref": "/schemata/user#/definitions/user"
+    email:
+      "$ref": "/schemata/user#/definitions/user/email"
+    password:
+      "$ref": "/schemata/user#/definitions/user/password"
+    password_confirmation:
+      "$ref": "/schemata/user#/definitions/user/password_confirmation"
+    remember_me:
+      "$ref": "/schemata/user#/definitions/user/remember_me"
   commit:
     "$ref": "/schemata/user#/definitions/commit"
   service:
