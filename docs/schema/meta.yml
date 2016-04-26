@@ -1,0 +1,6 @@
+---
+"$schema": http://json-schema.org/draft-04/hyper-schema
+title: User Management API JSON Schema
+description: In this schema file, we represents the public interface of User Management API in JSON Hyper Schema draft v4.
+id: schemata/token
+id: schemata/mmember

@@ -1,0 +1,526 @@
+{
+  "$schema": "http://json-schema.org/draft-04/hyper-schema",
+  "type": [
+    "object"
+  ],
+  "definitions": {
+    "token": {
+      "$schema": "http://json-schema.org/draft-04/hyper-schema",
+      "title": "JSON Web Token for User Management",
+      "description": "ユーザー情報の入ったJWT",
+      "stability": "prototype",
+      "strictProperties": true,
+      "type": [
+        "object"
+      ],
+      "definitions": {
+        "token": {
+          "description": "ユーザー情報の入ったJWT",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpZCI6MSwibmFtZSI6InRhbmFrYSIsInBhc3N3b3JkIjoiamF1MDMyOHVyYTBqcmRzZjMifQ.n6peT2Ji3muMwFuD-eoQnp-hbFW1VFO4I4XOzNm1GoSyUKKpT8EN3Ya56HTxqvmI8D9LX_4tNbAMC1qa2vGH_67_I7y7s_bLRMwntBaa1jhw7AmI2cniVNYWL4oFAdfSBBLAGhCKa5taB3WKeOwheVoh0fbWbpo9OALLvklExjKGYSpyz2O5HJZ-Qm0CHduMMw9ydsXWPmUoKj8WNodvCCIFU-9HKlS-55bMYP-AqzPXrofSrmfemRRyAnf9rnavyvPBCSFEakOfMEPbOAno58L18nepqllr6RRiIPLsLtKbGmgrqHsQyESndL_yxol8MFCGJTNu8Lgy7hBrhioX5g",
+          "readOnly": true,
+          "type": [
+            "string"
+          ]
+        },
+        "identity": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/token/definitions/token"
+            }
+          ]
+        }
+      },
+      "links": [
+        {
+          "description": "new_user_session",
+          "href": "/users/sign_in",
+          "method": "GET",
+          "rel": "new",
+          "schema": {
+            "properties": {
+              "token": {
+                "$ref": "#/definitions/token/definitions/token"
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "New"
+        },
+        {
+          "description": "destroy_user_session",
+          "href": "/users/sign_out",
+          "method": "GET",
+          "rel": "destroy",
+          "schema": {
+            "properties": {
+              "token": {
+                "$ref": "#/definitions/token/definitions/token"
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "Destroy"
+        },
+        {
+          "description": "new_user_password",
+          "href": "/users/password/new",
+          "method": "GET",
+          "rel": "new",
+          "schema": {
+            "properties": {
+              "token": {
+                "$ref": "#/definitions/token/definitions/token"
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "New"
+        },
+        {
+          "description": "edit_user_password",
+          "href": "/users/password/edit",
+          "method": "GET",
+          "rel": "edit",
+          "schema": {
+            "properties": {
+              "token": {
+                "$ref": "#/definitions/token/definitions/token"
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "Edit"
+        },
+        {
+          "description": "cancel_user_registration",
+          "href": "/users/cancel",
+          "method": "GET",
+          "rel": "cancel",
+          "schema": {
+            "properties": {
+              "token": {
+                "$ref": "#/definitions/token/definitions/token"
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "Cancel"
+        },
+        {
+          "description": "new_user_registration",
+          "href": "/users/sign_up",
+          "method": "GET",
+          "rel": "new",
+          "schema": {
+            "properties": {
+              "token": {
+                "$ref": "#/definitions/token/definitions/token"
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "New"
+        },
+        {
+          "description": "edit_user_registration",
+          "href": "/users/edit",
+          "method": "GET",
+          "rel": "edit",
+          "schema": {
+            "properties": {
+              "token": {
+                "$ref": "#/definitions/token/definitions/token"
+              }
+            },
+            "required": [
+              "token"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "Edit"
+        }
+      ],
+      "properties": {
+        "token": {
+          "$ref": "#/definitions/token/definitions/token"
+        }
+      }
+    },
+    "user": {
+      "$schema": "http://json-schema.org/draft-04/hyper-schema",
+      "title": "User Parameter",
+      "description": "mmemberのスキーマを定義",
+      "stability": "prototype",
+      "strictProperties": true,
+      "type": [
+        "object"
+      ],
+      "definitions": {
+        "id": {
+          "description": "unique identifier of user",
+          "example": 1,
+          "readOnly": true,
+          "type": [
+            "integer"
+          ]
+        },
+        "authenticity_token": {
+          "description": "認証トークン",
+          "example": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
+          "readOnly": true,
+          "type": [
+            "string"
+          ]
+        },
+        "user": {
+          "description": "ユーザー情報の配列",
+          "example": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
+          "type": [
+            "array"
+          ],
+          "email": {
+            "description": "email address",
+            "example": "email@example.com",
+            "format": "email",
+            "readOnly": true,
+            "type": [
+              "string"
+            ]
+          },
+          "password": {
+            "description": "password",
+            "example": "nfho084j",
+            "readOnly": true,
+            "type": [
+              "string"
+            ]
+          },
+          "password_confirmation": {
+            "description": "password confirmation",
+            "example": "nfho084j",
+            "readOnly": true,
+            "type": [
+              "string"
+            ]
+          },
+          "remember_me": {
+            "description": "ログイン記憶",
+            "example": 0,
+            "readOnly": true,
+            "type": [
+              "string"
+            ]
+          }
+        },
+        "service": {
+          "description": "どのツールか",
+          "example": 1,
+          "readOnly": true,
+          "type": [
+            "null",
+            "integer"
+          ]
+        }
+      },
+      "links": [
+        {
+          "description": "user_session",
+          "href": "/users/sign_in",
+          "method": "POST",
+          "rel": "create",
+          "schema": {
+            "properties": {
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
+              },
+              "user": {
+                "$ref": "#/definitions/user/definitions/user",
+                "email": {
+                  "$ref": "#/definitions/user/definitions/user/email"
+                },
+                "password": {
+                  "$ref": "#/definitions/user/definitions/user/password"
+                },
+                "remember_me": {
+                  "$ref": "#/definitions/user/definitions/user/remember_me"
+                }
+              }
+            },
+            "required": [
+              "authenticity_token",
+              "email",
+              "password"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "Create"
+        },
+        {
+          "description": "user_password",
+          "href": "/users/password",
+          "method": "POST",
+          "rel": "create",
+          "schema": {
+            "properties": {
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
+              },
+              "user": {
+                "$ref": "#/definitions/user/definitions/user",
+                "email": {
+                  "$ref": "#/definitions/user/definitions/user/email"
+                },
+                "password": {
+                  "$ref": "#/definitions/user/definitions/user/password"
+                },
+                "password_confirmation": {
+                  "$ref": "#/definitions/user/definitions/user/password_confirmation"
+                }
+              }
+            },
+            "required": [
+              "authenticity_token",
+              "email",
+              "password",
+              "password_confirmation"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "Create"
+        },
+        {
+          "description": "edit_user_password update",
+          "href": "/users/password",
+          "method": "PATCH",
+          "rel": "update",
+          "schema": {
+            "properties": {
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
+              },
+              "user": {
+                "$ref": "#/definitions/user/definitions/user",
+                "email": {
+                  "$ref": "#/definitions/user/definitions/user/email"
+                },
+                "password": {
+                  "$ref": "#/definitions/user/definitions/user/password"
+                },
+                "password_confirmation": {
+                  "$ref": "#/definitions/user/definitions/user/password_confirmation"
+                }
+              }
+            },
+            "required": [
+              "authenticity_token",
+              "email",
+              "password",
+              "password_confirmation"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "Update"
+        },
+        {
+          "description": "edit_user_password update",
+          "href": "/users/password",
+          "method": "PUT",
+          "rel": "update",
+          "schema": {
+            "properties": {
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
+              },
+              "user": {
+                "$ref": "#/definitions/user/definitions/user",
+                "email": {
+                  "$ref": "#/definitions/user/definitions/user/email"
+                },
+                "password": {
+                  "$ref": "#/definitions/user/definitions/user/password"
+                },
+                "password_confirmation": {
+                  "$ref": "#/definitions/user/definitions/user/password_confirmation"
+                }
+              }
+            },
+            "required": [
+              "authenticity_token",
+              "email",
+              "password",
+              "password_confirmation"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "Update"
+        },
+        {
+          "description": "user_registration create",
+          "href": "/users",
+          "method": "POST",
+          "rel": "create",
+          "schema": {
+            "properties": {
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
+              },
+              "user": {
+                "$ref": "#/definitions/user/definitions/user",
+                "email": {
+                  "$ref": "#/definitions/user/definitions/user/email"
+                },
+                "password": {
+                  "$ref": "#/definitions/user/definitions/user/password"
+                }
+              },
+              "service": {
+                "$ref": "#/definitions/user/definitions/service"
+              }
+            },
+            "required": [
+              "authenticity_token",
+              "email",
+              "password",
+              "service"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "Create"
+        },
+        {
+          "description": "edit_user_registration update",
+          "href": "/users",
+          "method": "PATCH",
+          "rel": "update",
+          "schema": {
+            "properties": {
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
+              },
+              "user": {
+                "$ref": "#/definitions/user/definitions/user",
+                "email": {
+                  "$ref": "#/definitions/user/definitions/user/email"
+                }
+              }
+            },
+            "required": [
+              "authenticity_token",
+              "email"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "Update"
+        },
+        {
+          "description": "edit_user_registration update",
+          "href": "/users",
+          "method": "PUT",
+          "rel": "update",
+          "schema": {
+            "properties": {
+              "authenticity_token": {
+                "$ref": "#/definitions/user/definitions/authenticity_token"
+              },
+              "user": {
+                "$ref": "#/definitions/user/definitions/user",
+                "email": {
+                  "$ref": "#/definitions/user/definitions/user/email"
+                }
+              }
+            },
+            "required": [
+              "authenticity_token",
+              "email"
+            ],
+            "type": [
+              "object"
+            ]
+          },
+          "title": "Update"
+        }
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/user/definitions/id"
+        },
+        "authenticity_token": {
+          "$ref": "#/definitions/user/definitions/authenticity_token"
+        },
+        "user": {
+          "$ref": "#/definitions/user/definitions/user"
+        },
+        "email": {
+          "$ref": "#/definitions/user/definitions/user/email"
+        },
+        "password": {
+          "$ref": "#/definitions/user/definitions/user/password"
+        },
+        "password_confirmation": {
+          "$ref": "#/definitions/user/definitions/user/password_confirmation"
+        },
+        "remember_me": {
+          "$ref": "#/definitions/user/definitions/user/remember_me"
+        },
+        "service": {
+          "$ref": "#/definitions/user/definitions/service"
+        }
+      }
+    }
+  },
+  "properties": {
+    "token": {
+      "$ref": "#/definitions/token"
+    },
+    "user": {
+      "$ref": "#/definitions/user"
+    }
+  },
+  "title": "User Management API JSON Schema",
+  "description": "In this schema file, we represents the public interface of User Management API in JSON Hyper Schema draft v4.",
+  "id": "schemata/mmember"
+}
