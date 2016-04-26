@@ -281,7 +281,6 @@ mmemberのスキーマを定義
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
 | **authenticity_token** | *string* | 認証トークン | `"efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8="` |
-| **commit** | *string* | commit | `"メールアドレス変更"` |
 | **email** | *email* | email address | `"email@example.com"` |
 | **id** | *integer* | unique identifier of user | `1` |
 | **password** | *string* | password | `"nfho084j"` |
@@ -339,7 +338,6 @@ HTTP/1.1 201 Created
   "password": "nfho084j",
   "password_confirmation": "nfho084j",
   "remember_me": 0,
-  "commit": "メールアドレス変更",
   "service": 1
 }
 ```
@@ -393,7 +391,6 @@ HTTP/1.1 201 Created
   "password": "nfho084j",
   "password_confirmation": "nfho084j",
   "remember_me": 0,
-  "commit": "メールアドレス変更",
   "service": 1
 }
 ```
@@ -447,7 +444,6 @@ HTTP/1.1 200 OK
   "password": "nfho084j",
   "password_confirmation": "nfho084j",
   "remember_me": 0,
-  "commit": "メールアドレス変更",
   "service": 1
 }
 ```
@@ -501,7 +497,6 @@ HTTP/1.1 200 OK
   "password": "nfho084j",
   "password_confirmation": "nfho084j",
   "remember_me": 0,
-  "commit": "メールアドレス変更",
   "service": 1
 }
 ```
@@ -557,7 +552,6 @@ HTTP/1.1 201 Created
   "password": "nfho084j",
   "password_confirmation": "nfho084j",
   "remember_me": 0,
-  "commit": "メールアドレス変更",
   "service": 1
 }
 ```
@@ -581,7 +575,6 @@ PATCH /users
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **commit** | *string* | commit | `"メールアドレス変更"` |
 | **user** | *array* | ユーザー情報の配列 | `"{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"` |
 
 
@@ -591,8 +584,7 @@ PATCH /users
 $ curl -n -X PATCH /users \
   -d '{
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
-  "commit": "メールアドレス変更"
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"
 }' \
   -H "Content-Type: application/json"
 ```
@@ -613,7 +605,6 @@ HTTP/1.1 200 OK
   "password": "nfho084j",
   "password_confirmation": "nfho084j",
   "remember_me": 0,
-  "commit": "メールアドレス変更",
   "service": 1
 }
 ```
@@ -637,7 +628,6 @@ PUT /users
 
 | Name | Type | Description | Example |
 | ------- | ------- | ------- | ------- |
-| **commit** | *string* | commit | `"メールアドレス変更"` |
 | **user** | *array* | ユーザー情報の配列 | `"{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"` |
 
 
@@ -647,8 +637,7 @@ PUT /users
 $ curl -n -X PUT /users \
   -d '{
   "authenticity_token": "efDkcanZLLCduSjzF81mrjzsFOLRZoQcWnwyJV9Vuy8=",
-  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}",
-  "commit": "メールアドレス変更"
+  "user": "{\"email\"=>\"email@example.com\", \"password\"=>\"[FILTERED]\", \"remember_me\"=>\"0\"}"
 }' \
   -H "Content-Type: application/json"
 ```
@@ -669,7 +658,6 @@ HTTP/1.1 200 OK
   "password": "nfho084j",
   "password_confirmation": "nfho084j",
   "remember_me": 0,
-  "commit": "メールアドレス変更",
   "service": 1
 }
 ```
