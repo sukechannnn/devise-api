@@ -20,11 +20,15 @@ RSpec.describe 'Users', type: :request do
       end
     end
 
-    # NameError: uninitialized constant Resque になる
+    # TODO: edit password
     # context 'POST /users/password' do
-    #   before { create(:user) }
+    #   before do
+    #     create(:user)
+    #     post '/users/sign_in', user: { email: 'username+1@basicinc.jp', password: 'password',
+    #     remember_me: 0}
+    #   end
     #   it 'should be valid' do
-    #     post '/users/password', user: { email: 'username+1@basicinc.jp', password: 'password' }
+    #     post '/users/password', user: { email: 'new_address@basicinc.jp', password: 'password' }
     #     expect(response.body).to eq(200)
     #   end
     # end
