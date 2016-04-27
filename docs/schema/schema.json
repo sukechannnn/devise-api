@@ -244,14 +244,6 @@
             ]
           }
         },
-        "commit": {
-          "description": "commit",
-          "example": "メールアドレス変更",
-          "readOnly": true,
-          "type": [
-            "string"
-          ]
-        },
         "service": {
           "description": "どのツールか",
           "example": 1,
@@ -452,9 +444,6 @@
                 "email": {
                   "$ref": "#/definitions/user/definitions/user/email"
                 }
-              },
-              "commit": {
-                "$ref": "#/definitions/user/definitions/commit"
               }
             },
             "required": [
@@ -482,9 +471,6 @@
                 "email": {
                   "$ref": "#/definitions/user/definitions/user/email"
                 }
-              },
-              "commit": {
-                "$ref": "#/definitions/user/definitions/commit"
               }
             },
             "required": [
@@ -519,9 +505,6 @@
         },
         "remember_me": {
           "$ref": "#/definitions/user/definitions/user/remember_me"
-        },
-        "commit": {
-          "$ref": "#/definitions/user/definitions/commit"
         },
         "service": {
           "$ref": "#/definitions/user/definitions/service"
