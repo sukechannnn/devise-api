@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20151006070138) do
     t.text     "url3"
     t.text     "url4"
     t.text     "url5"
-    t.datetime "last_login_date"
+    t.datetime "last_login_date",        null: false, default: Time.zone.now
     t.string   "basic_flg",              limit: 1,   default: "0"
     t.string   "oauth",                  limit: 1,   default: "0"
     t.string   "id_facebook"
