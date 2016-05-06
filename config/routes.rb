@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :users, defaults: { format: :html }, controllers: {
+  devise_for :users, defaults: { format: :json }, controllers: {
     registrations: 'users/registrations'
     }
   # The priority is based upon order of creation: first created -> highest priority.

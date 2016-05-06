@@ -29,9 +29,10 @@ RSpec.describe 'Users', type: :request do
       before { create(:user) }
       it 'should be valid' do
         sign_in(User.first)
-        patch '/users', user: { email: 'username+1@basicinc.jp', password: 'password',
+        patch '/users', user: { email: 'changed@basicinc.jp', password: 'password',
                                 password_confirmation: 'password', current_password: 'password' }
-        expect(response.status).to eq(302)
+        expect(response.status).to eq(204)
+        expect(User.first.email1).to eq('changed@basicinc.jp')
       end
     end
   end
