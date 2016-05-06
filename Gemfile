@@ -20,6 +20,7 @@ gem 'jbuilder', '~> 2.0'       # Build JSON APIs with ease. Read more: https://g
 #--- Json
 gem 'jwt'  # JSON Web Token
 gem 'prmd' # JSON Schema tools and doc generation for HTTP APIs
+gem 'rack-json_schema' # validation & test json schema
 
 #--- ユーザ認証
 gem 'devise'

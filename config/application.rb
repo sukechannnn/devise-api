@@ -31,7 +31,7 @@ module FerretOauthApi
     config.i18n.fallbacks = {'ja' => 'en'}
 
     Slim::Engine.set_default_options :pretty => true unless Rails.env == 'production'
-    
+
     config.generators do |g|
       g.test_framework :rspec,
         fixtures: false,
@@ -42,7 +42,7 @@ module FerretOauthApi
         request_specs: false
       g.fixture_replacement :factory_girl, dir: "spec/factories"
     end
-    
+
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
   end
