@@ -24,10 +24,6 @@ RSpec.describe 'Users', type: :request do
       end
     end
 
-    context 'ClassMethods' do
-      user_login
-    end
-
     # TODO: edit password
     # context 'POST /users/password' do
     #   user_login
