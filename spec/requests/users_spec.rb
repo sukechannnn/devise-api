@@ -1,7 +1,10 @@
 require 'rails_helper'
-include RequestMacros
+require 'support/shared_contexts'
 
 RSpec.describe 'Users', type: :request do
+  include_context "api request authentication helper methods"
+  include_context "api request global before and after hooks"
+
   let(:user_params) do
     { user: { email: 'username+1@basicinc.jp', password: 'password' } }
   end
@@ -22,11 +25,13 @@ RSpec.describe 'Users', type: :request do
       end
     end
 
-    # TODO: edit password
     context 'PATCH /users' do
+      before { create(:user) }
       it 'should be valid' do
-        get '/users/edit'
-        expect(response.body).to eq(200)
+        sign_in(User.first)
+        patch '/users', user: { email: 'username+1@basicinc.jp', password: 'password',
+                                password_confirmation: 'password', current_password: 'password' }
+        expect(response.status).to eq(302)
       end
     end
   end
