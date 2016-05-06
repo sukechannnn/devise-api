@@ -7,15 +7,15 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :async, :registerable,
          :rememberable, :trackable, :validatable, :encryptable,
-         :recoverable#, :confirmable
+         :recoverable # , :confirmable
 
   self.table_name = 'mmember'
   self.primary_key = 'uid'
 
-  validates_presence_of   :email1
-  validates_uniqueness_of :email1, allow_blank: true, if: :email1_changed?
-  validates_format_of     :email1, with: email_regexp, allow_blank: true, if: :email1_changed?
-  validates               :email1, email: { strict_mode: true }
+  validates :email1, presence: true
+  validates :email1, uniqueness: true, allow_blank: true, if: :email1_changed?
+  validates :email1, format: { with: email_regexp }, allow_blank: true, if: :email1_changed?
+  validates :email1, email: { strict_mode: true }
 
   # 会員
   scope :normal, -> { where(memstate: 1) }
@@ -120,34 +120,33 @@ class User < ActiveRecord::Base
   def password_salt=(new_salt)
   end
 
-# TODO: Pardot通知対応
-   # Pardotへメール配信可否を送信
-#  def pardot_mail_opt_update(flag)
-#    pardot = Api::Pardot.new(self.email1)
-#    if "1" == flag
-#      pardot.optin
-#    else
-#      pardot.optout
-#    end
-#  end
+  # TODO: Pardot通知対応
+  # Pardotへメール配信可否を送信
+  #  def pardot_mail_opt_update(flag)
+  #    pardot = Api::Pardot.new(self.email1)
+  #    if "1" == flag
+  #      pardot.optin
+  #    else
+  #      pardot.optout
+  #    end
+  #  end
 
-   # Pardotへメールアドレスの変更を送信（すでにFerretDB上では新しいメールになってる／非同期）
-#  def pardot_mail_update(old_email)
-#    pardot = Api::Pardot.new(old_email)
-#    pardot.email_change(self.email1)
-#  end
+  # Pardotへメールアドレスの変更を送信（すでにFerretDB上では新しいメールになってる／非同期）
+  #  def pardot_mail_update(old_email)
+  #    pardot = Api::Pardot.new(old_email)
+  #    pardot.email_change(self.email1)
+  #  end
 
-   # Pardotへニックネームの変更を送信
-#  def pardot_nickname_update(nickname)
-#    pardot = Api::Pardot.new(self.email1)
-#    pardot.nickname_change(nickname)
-#  end
+  # Pardotへニックネームの変更を送信
+  #  def pardot_nickname_update(nickname)
+  #    pardot = Api::Pardot.new(self.email1)
+  #    pardot.nickname_change(nickname)
+  #  end
 
   # Pardotへ退会通知
-#  def pardot_delete(param)
-#    return unless param["email1"].present?
-#    pardot = Api::Pardot.new(param["email1"])
-#    pardot.delete
-#  end
-
+  #  def pardot_delete(param)
+  #    return unless param["email1"].present?
+  #    pardot = Api::Pardot.new(param["email1"])
+  #    pardot.delete
+  #  end
 end
