@@ -10,8 +10,7 @@ RSpec.describe 'Users', type: :request do
     context 'POST /users' do
       it 'should be valid' do
         post '/users', user_params
-        expect(response.status).to eq(302)
-        expect(response).to redirect_to '/'
+        expect(response.status).to eq(201)
       end
     end
 
@@ -19,18 +18,16 @@ RSpec.describe 'Users', type: :request do
       before { create(:user) }
       it 'should be valid' do
         post '/users/sign_in', user_params.deep_merge(user: { remember_me: 0 })
-        expect(response.status).to eq(302)
-        expect(response).to redirect_to '/'
+        expect(response.status).to eq(201)
       end
     end
 
     # TODO: edit password
-    # context 'POST /users/password' do
-    #   user_login
-    #   it 'should be valid' do
-    #     post '/users/password', user: { email: 'new_address@basicinc.jp', password: 'password' }
-    #     expect(response.body).to eq(200)
-    #   end
-    # end
+    context 'PATCH /users' do
+      it 'should be valid' do
+        get '/users/edit'
+        expect(response.body).to eq(200)
+      end
+    end
   end
 end
