@@ -10,14 +10,24 @@ RSpec.describe 'Users', type: :request do
   end
 
   describe 'JWT' do
-    context 'POST /users' do
+    context 'POST /users (ユーザー登録)' do
       it 'should be valid' do
         post '/users', user_params
         expect(response.status).to eq(201)
       end
     end
 
-    context 'POST /users/sign_in' do
+    context 'DELETE /users (ユーザー削除)' do
+      before { create(:user) }
+      it 'should be valid' do
+        sign_in(User.first)
+        delete '/users'
+        expect(response.status).to eq(302)
+        expect(User.first).to be_nil
+      end
+    end
+
+    context 'POST /users/sign_in (ログイン)' do
       before { create(:user) }
       it 'should be valid' do
         post '/users/sign_in', user_params.deep_merge(user: { remember_me: 0 })
@@ -25,7 +35,16 @@ RSpec.describe 'Users', type: :request do
       end
     end
 
-    context 'PATCH /users' do
+    context 'GET /users/sign_out (ログアウト)' do
+      before { create(:user) }
+      it 'should be valid' do
+        sign_in(User.first)
+        get '/users/sign_out'
+        expect(response.status).to eq(302)
+      end
+    end
+
+    context 'PATCH /users (ユーザー情報の更新)' do
       before { create(:user) }
       it 'should be valid' do
         sign_in(User.first)
