@@ -2,7 +2,6 @@ module RequestMacros
   extend ActiveSupport::Concern
 
   module ClassMethods
-
     def user_login
       context 'POST /users/sign_in' do
         before { create(:user) }

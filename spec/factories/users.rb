@@ -3,15 +3,15 @@ FactoryGirl.define do
     # sequence(:uid) {|n| n}
     # sequence(:email1) {|n|"username+#{n}@basicinc.jp"}
     uid 1
-    email1 "username+1@basicinc.jp"
+    email1 'username+1@basicinc.jp'
     # email1 "username@basicinc.jp"
     # email2 nil
-    password "password"
+    password 'password'
     # encrypted_password "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8"
-    password_confirmation "password"
+    password_confirmation 'password'
     # memstate 1
     # regdate nil
-    nname "username"
+    nname 'username'
     # corporation nil
     # byear 0
     # bmon 0
@@ -28,7 +28,7 @@ FactoryGirl.define do
     # url3 nil
     # url4 nil
     # url5 nil
-    last_login_date Time.now
+    last_login_date Time.zone.now
     # basic_flg "0"
     # oauth "0"
     # id_facebook nil
@@ -37,12 +37,12 @@ FactoryGirl.define do
     # reset_password_sent_at nil
     # remember_created_at nil
     # sign_in_count 1
-    current_sign_in_at Time.now
-    last_sign_in_at Time.now
+    current_sign_in_at Time.zone.now
+    last_sign_in_at Time.zone.now
     # current_sign_in_ip "127.0.0.1"
     # last_sign_in_ip "127.0.0.1"
-    created_at Time.now
-    updated_at Time.now
+    created_at Time.zone.now
+    updated_at Time.zone.now
     # confirmation_token "token..."
     # confirmed_at nil
     # confirmation_sent_at "2015-07-31 06:52:35"
