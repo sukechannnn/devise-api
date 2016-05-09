@@ -8,7 +8,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super
+    super do
+      if resource.persisted?
+        if resource.active_for_authentication?
+          sign_up(resource_name, resource)
+          generate_token = GenerateToken.new
+          jwt = generate_token.generate_jwt_token(current_user.uid, current_user.email1)
+          render(json: { token: jwt }.to_json) && return
+        end
+      end
+    end
   end
 
   # GET /resource/edit
@@ -19,12 +28,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   # def update
   #   super
+  #   binding.pry
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+    super do
+      jwt = ''
+      render(json: { token: jwt }.to_json) && return
+    end
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
