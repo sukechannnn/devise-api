@@ -16,7 +16,6 @@ class User < ActiveRecord::Base
   validates :email1, uniqueness: true, allow_blank: true, if: :email1_changed?
   validates :email1, format: { with: email_regexp }, allow_blank: true, if: :email1_changed?
   validates :email1, email: { strict_mode: true }
-  validates :authentication_token, uniqueness: true, allow_nil: true
 
   # 会員
   scope :normal, -> { where(memstate: 1) }
