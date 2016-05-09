@@ -28,7 +28,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   # def update
   #   super
-  #   binding.pry
   # end
 
   # DELETE /resource
