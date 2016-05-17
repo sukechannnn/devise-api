@@ -1,14 +1,14 @@
 ---
 "$schema": http://json-schema.org/draft-04/hyper-schema
-title: JSON Web Token for User Management
-description: ユーザー情報の入ったJWT
-id: schemata/token
+title: JWT Parameter
+description: Json Web Tokenが返ってくることを定義
+id: schemata/jwt
 stability: prototype
 strictProperties: true
 type:
 - object
 
-definitions:
+properties:
   token:
     description: ユーザー情報の入ったJWT
     example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.\
@@ -20,103 +20,28 @@ definitions:
     readOnly: true
     type:
     - string
-  identity:
-    anyOf:
-    - "$ref": "/schemata/token#/definitions/token"
+    pattern: !ruby/regexp /\w\.+/
 
 # DEVISEに従ったRouting
 links:
-- description: new_user_session
+- description: user_session
   href: "/users/sign_in"
-  method: GET
-  rel: new
+  method: POST
+  rel: create
   schema:
-    properties:
-      token:
-        "$ref": "/schemata/token#/definitions/token"
+    "$ref": "#"
     required: ["token"]
     type:
-    - object
-  title: New
+    - string
+  title: Create
 
-- description: destroy_user_session
-  href: "/users/sign_out"
-  method: GET
-  rel: destroy
+- description: user_registration create
+  href: "/users"
+  method: POST
+  rel: create
   schema:
-    properties:
-      token:
-        "$ref": "/schemata/token#/definitions/token"
+    "$ref": "#"
     required: ["token"]
     type:
-    - object
-  title: Destroy
-
-- description: new_user_password
-  href: "/users/password/new"
-  method: GET
-  rel: new
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/token#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-  title: New
-
-- description: edit_user_password
-  href: "/users/password/edit"
-  method: GET
-  rel: edit
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/token#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-  title: Edit
-
-- description: cancel_user_registration
-  href: "/users/cancel"
-  method: GET
-  rel: cancel
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/token#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-  title: Cancel
-
-- description: new_user_registration
-  href: "/users/sign_up"
-  method: GET
-  rel: new
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/token#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-  title: New
-
-- description: edit_user_registration
-  href: "/users/edit"
-  method: GET
-  rel: edit
-  schema:
-    properties:
-      token:
-        "$ref": "/schemata/token#/definitions/token"
-    required: ["token"]
-    type:
-    - object
-  title: Edit
-
-properties:
-  token:
-    "$ref": "/schemata/token#/definitions/token"
+    - string
+  title: Create
