@@ -75,7 +75,8 @@ class User < ActiveRecord::Base
   end
 
   def email=(new_email1)
-    return false if new_email1.blank?
+    # もしemailが空の時にバリデーションに引っかからずエラーになるようなら、この下の部分コメントアウト
+    # return false if new_email1.blank?
     self.email1 = new_email1
     names = new_email1.split('@')
     names[0] ||= ''
