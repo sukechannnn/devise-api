@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/shared_contexts'
 
 RSpec.describe 'Users Sessions', type: :request do
   include_context 'api request authentication helper methods'
@@ -13,7 +12,12 @@ RSpec.describe 'Users Sessions', type: :request do
     before { create(:user) }
     it 'should be valid' do
       post '/users/sign_in', user_params.deep_merge(user: { remember_me: 0 })
-      expect(response.status).to eq 201
+      rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
+      session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
+      expect(response.status).to eq 200
+      p response.body
+      p session_data.first.deep_symbolize_keys
+      expect(session_data.first.deep_symbolize_keys[:email]).to eq 'username+1@basicinc.jp'
     end
   end
 
@@ -22,7 +26,8 @@ RSpec.describe 'Users Sessions', type: :request do
     it 'should be valid' do
       sign_in(User.first)
       get '/users/sign_out'
-      expect(response.status).to eq 302
+      expect(response.status).to eq 200
+      expect(JSON.parse(response.body)['token']).to eq ''
     end
   end
 end

@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/shared_contexts'
 
 RSpec.describe 'Users Registrations', type: :request do
   include_context 'api request authentication helper methods'
