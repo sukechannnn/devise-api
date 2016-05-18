@@ -18,7 +18,7 @@ RSpec.describe 'Users Sessions', type: :request do
       p response.body
       p session_data.first.deep_symbolize_keys
       expect(session_data.first.deep_symbolize_keys[:email]).to eq 'username+1@basicinc.jp'
-      expect(response).to match_response_schema("/users/sign_in")
+      expect(response).to match_response_schema('/users/sign_in')
     end
   end
 
