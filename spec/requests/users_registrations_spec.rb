@@ -66,8 +66,10 @@ RSpec.describe 'Users Registrations', type: :request do
     it 'should be valid' do
       sign_in(User.first)
       delete '/users'
+      post '/users', user_params
       expect(response.status).to eq 200
       expect(JSON.parse(response.body)['token']).to eq ''
+      expect(User.first.uid).to eq 1
       expect(User.first.nname).to eq 'DELETE'
       expect(User.first.email1).to eq '000@000.000'
       expect(User.first.memstate).to eq 9

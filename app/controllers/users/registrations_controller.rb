@@ -34,6 +34,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def destroy
     super do
       delete_resource = resource.dup
+      delete_resource.uid = resource.uid
       delete_resource.email1 = '000@000.000'
       delete_resource.memstate = 9
       delete_resource.nname = 'DELETE'
