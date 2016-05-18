@@ -29,56 +29,56 @@ RSpec.describe 'Users Registrations', type: :request do
     end
   end
 
-  # context 'POST /users (ユーザー登録) & user is persisted' do
-  #   before { create(:user) }
-  #   it 'should be invalid' do
-  #     post '/users', user_params
-  #     expect(response.status).to eq(422)
-  #     expect(response.body).to be_include('has already been taken')
-  #   end
-  # end
-  #
-  # context 'POST /users (ユーザー登録) & email is blank' do
-  #   it 'should be invalid' do
-  #     post '/users', user: { email: '', password: 'password' }
-  #     expect(response.status).to eq 422
-  #     expect(response.body).to be_include("can't be blank")
-  #   end
-  # end
-  #
-  # context 'PATCH /users (ユーザー情報の更新)' do
-  #   before { create(:user) }
-  #   it 'should be valid' do
-  #     sign_in(User.first)
-  #     patch '/users', user: { email: 'changed@basicinc.jp', password: 'password',
-  #                             password_confirmation: 'password', current_password: 'password' }
-  #     expect(response.status).to eq 204
-  #     expect(User.first.email1).to eq('changed@basicinc.jp')
-  #     expect(flash[:notice]).to eq 'アカウント情報を更新しました。'
-  #   end
-  # end
-  #
-  # context 'PATCH /users (ユーザー情報の更新) & email is blank' do
-  #   before { create(:user) }
-  #   it 'should be invalid' do
-  #     sign_in(User.first)
-  #     patch '/users', user: { email: '', password: 'password',
-  #                             password_confirmation: 'password', current_password: 'password' }
-  #     expect(response.status).to eq 422
-  #     expect(response.body).to be_include("can't be blank")
-  #   end
-  # end
-  #
-  # context 'DELETE /users (ユーザー削除)' do
-  #   before { create(:user) }
-  #   it 'should be valid' do
-  #     sign_in(User.first)
-  #     delete '/users'
-  #     expect(response.status).to eq 200
-  #     expect(JSON.parse(response.body)['token']).to eq ''
-  #     expect(User.first.nname).to eq 'DELETE'
-  #     expect(User.first.email1).to eq '000@000.000'
-  #     expect(User.first.memstate).to eq 9
-  #   end
-  # end
+  context 'POST /users (ユーザー登録) & user is persisted' do
+    before { create(:user) }
+    it 'should be invalid' do
+      post '/users', user_params
+      expect(response.status).to eq(422)
+      expect(response.body).to be_include('has already been taken')
+    end
+  end
+
+  context 'POST /users (ユーザー登録) & email is blank' do
+    it 'should be invalid' do
+      post '/users', user: { email: '', password: 'password' }
+      expect(response.status).to eq 422
+      expect(response.body).to be_include("can't be blank")
+    end
+  end
+
+  context 'PATCH /users (ユーザー情報の更新)' do
+    before { create(:user) }
+    it 'should be valid' do
+      sign_in(User.first)
+      patch '/users', user: { email: 'changed@basicinc.jp', password: 'password',
+                              password_confirmation: 'password', current_password: 'password' }
+      expect(response.status).to eq 204
+      expect(User.first.email1).to eq('changed@basicinc.jp')
+      expect(flash[:notice]).to eq 'アカウント情報を更新しました。'
+    end
+  end
+
+  context 'PATCH /users (ユーザー情報の更新) & email is blank' do
+    before { create(:user) }
+    it 'should be invalid' do
+      sign_in(User.first)
+      patch '/users', user: { email: '', password: 'password',
+                              password_confirmation: 'password', current_password: 'password' }
+      expect(response.status).to eq 422
+      expect(response.body).to be_include("can't be blank")
+    end
+  end
+
+  context 'DELETE /users (ユーザー削除)' do
+    before { create(:user) }
+    it 'should be valid' do
+      sign_in(User.first)
+      delete '/users'
+      expect(response.status).to eq 200
+      expect(JSON.parse(response.body)['token']).to eq ''
+      expect(User.first.nname).to eq 'DELETE'
+      expect(User.first.email1).to eq '000@000.000'
+      expect(User.first.memstate).to eq 9
+    end
+  end
 end
