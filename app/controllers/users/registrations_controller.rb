@@ -10,11 +10,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super do
       if resource.persisted?
+        resource.service = params['user']['service'].to_i
         if resource.active_for_authentication?
           sign_up(resource_name, resource)
           generate_token = GenerateToken.new
           jwt = generate_token.generate_jwt_token(current_user.uid, current_user.email1)
           render(json: { token: jwt }.to_json) && return
+        else
+          flash[:alert] = '本登録を行ってください。'
+          render(json: flash.to_hash, status: :ok) && return
         end
       end
     end
@@ -33,13 +37,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # DELETE /resource
   def destroy
     super do
-      delete_resource = resource.dup
-      delete_resource.email1 = '000@000.000'
-      delete_resource.memstate = 9
-      delete_resource.nname = 'DELETE'
-      delete_resource.save(validate: false)
-      Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-      set_flash_message :notice, :destroyed
       jwt = ''
       render(json: { token: jwt }.to_json) && return
     end

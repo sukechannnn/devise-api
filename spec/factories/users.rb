@@ -22,7 +22,7 @@ FactoryGirl.define do
     # job nil
     # marry 0
     # ref 0
-    # service 4
+    service 4
     # url1 nil
     # url2 nil
     # url3 nil
@@ -44,7 +44,7 @@ FactoryGirl.define do
     created_at Time.zone.now
     updated_at Time.zone.now
     # confirmation_token "token..."
-    # confirmed_at nil
+    confirmed_at Time.zone.now
     # confirmation_sent_at "2015-07-31 06:52:35"
     # unconfirmed_email nil
     # mail_magazine_flg "1"
@@ -53,5 +53,15 @@ FactoryGirl.define do
     # yahoojp_id nil
     # google_id nil
     # google_oauth2_id nil
+
+    factory :service_27_not_registration do
+      service 2
+      confirmed_at nil
+    end
+
+    factory :service_27_registration do
+      service 2
+      confirmed_at Time.zone.now
+    end
   end
 end
