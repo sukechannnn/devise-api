@@ -76,9 +76,7 @@ RSpec.describe 'Users Registrations', type: :request do
       delete '/users'
       expect(response.status).to eq 200
       expect(JSON.parse(response.body)['token']).to eq ''
-      expect(User.first.nname).to eq 'DELETE'
-      expect(User.first.email1).to eq '000@000.000'
-      expect(User.first.memstate).to eq 9
+      expect(User.first).to be_nil
     end
   end
 end
