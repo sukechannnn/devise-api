@@ -32,18 +32,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # DELETE /resource
   def destroy
-    super do
-      delete_resource = resource.dup
-      delete_resource.uid = resource.uid
-      delete_resource.email1 = '000@000.000'
-      delete_resource.memstate = 9
-      delete_resource.nname = 'DELETE'
-      delete_resource.save(validate: false)
-      Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-      set_flash_message :notice, :destroyed
-      jwt = ''
-      render(json: { token: jwt }.to_json) && return
-    end
+    resource.email1 = '000@000.000'
+    resource.memstate = 9
+    resource.nname = 'DELETE'
+    resource.save(validate: false)
+    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+    set_flash_message :notice, :destroyed
+    jwt = ''
+    render(json: { token: jwt }.to_json) && return
   end
 
   # GET /resource/cancel
