@@ -25,6 +25,7 @@ RSpec.describe 'Users Registrations', type: :request do
       post '/users', user_params.deep_merge(user: { service: 2 })
       expect(response.status).to eq 200
       expect(flash[:alert]).to be_include '本登録を行ってください。'
+      expect(User.first.service).to eq 2
       expect(User.first.confirmed_at.nil?).to eq true
     end
   end

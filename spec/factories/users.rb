@@ -44,7 +44,7 @@ FactoryGirl.define do
     created_at Time.zone.now
     updated_at Time.zone.now
     # confirmation_token "token..."
-    confirmed_at Time.zone.now
+    confirmed_at nil
     # confirmation_sent_at "2015-07-31 06:52:35"
     # unconfirmed_email nil
     # mail_magazine_flg "1"
