@@ -70,8 +70,6 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
-    devise-async (0.10.1)
-      devise (~> 3.2)
     devise-encryptable (0.2.0)
       devise (>= 2.1.0)
     diff-lcs (1.2.5)
@@ -108,6 +106,13 @@ GEM
     json_pure (1.8.3)
     json_schema (0.12.2)
     jwt (1.5.4)
+    launchy (2.4.3)
+      addressable (~> 2.3)
+    letter_opener (1.4.1)
+      launchy (~> 2.2)
+    letter_opener_web (1.2.3)
+      letter_opener (~> 1.0)
+      rails (>= 3.2)
     libv8 (3.16.14.13)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -273,7 +278,6 @@ DEPENDENCIES
   config
   database_rewinder
   devise
-  devise-async
   devise-encryptable
   dotenv-rails
   email_validator
@@ -282,6 +286,7 @@ DEPENDENCIES
   jquery-rails
   json-schema
   jwt
+  letter_opener_web
   mysql2
   prmd
   pry-byebug

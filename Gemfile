@@ -24,7 +24,7 @@ gem 'json-schema' # validation & test json schema
 
 #--- ユーザ認証
 gem 'devise'
-gem 'devise-async'
+# gem 'devise-async'
 gem 'devise-encryptable' # deviseの暗号化処理を変更
 
 #--- バリデーション
@@ -59,6 +59,8 @@ group :development, :test do
   gem 'simplecov', require: false  # テストカバレッジ表示
 
   gem 'rubocop', require: false    # コードの自動チェック
+
+  gem 'letter_opener_web'          # メールのテスト用
 end
 
 group :development do
