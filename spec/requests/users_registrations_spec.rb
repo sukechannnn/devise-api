@@ -9,7 +9,7 @@ RSpec.describe 'Users Registrations', type: :request do
   end
 
   context 'POST /users (ユーザー登録) when no need mail registration ' do
-    it 'should be valid' do
+    it '登録完了' do
       post '/users', user_params
       rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
       session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
@@ -21,12 +21,22 @@ RSpec.describe 'Users Registrations', type: :request do
   end
 
   context 'POST /users (ユーザー登録) when need mail registration ' do
-    it 'should be invalid' do
+    it '本登録が必要なこと' do
       post '/users', user_params.deep_merge(user: { service: 2 })
       expect(response.status).to eq 200
       expect(flash[:alert]).to be_include '本登録を行ってください。'
       expect(User.first.service).to eq 2
       expect(User.first.confirmed_at.nil?).to eq true
+    end
+  end
+
+  context 'POST /users (ユーザー登録) when need mail registration ' do
+    it 'メール認証が通ること' do
+      post '/users', user_params.deep_merge(user: { service: 2 })
+      authenticate_url = URI.extract(ActionMailer::Base.deliveries.first.body.raw_source, ['http']).first.to_s
+      p authenticate_url
+      get authenticate_url
+      expect(flash[:notice]).to eq 'アカウント登録が完了しました。'
     end
   end
 
