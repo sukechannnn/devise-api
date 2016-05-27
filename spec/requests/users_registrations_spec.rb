@@ -31,12 +31,36 @@ RSpec.describe 'Users Registrations', type: :request do
   end
 
   context 'POST /users (ユーザー登録) when need mail registration ' do
+    it '本登録が必要でログイン出来ないこと' do
+      post '/users', user_params.deep_merge(user: { service: 2 })
+      post '/users/sign_in', user_params.deep_merge(user: { service: 2, remember_me: 0 })
+      expect(response.status).to eq 302
+      expect(flash[:alert]).to be_include '本登録を行ってください。'
+    end
+  end
+
+  context 'POST /users (ユーザー登録) when need mail registration ' do
     it 'メール認証が通ること' do
       post '/users', user_params.deep_merge(user: { service: 2 })
-      authenticate_url = URI.extract(ActionMailer::Base.deliveries.first.body.raw_source, ['http']).first.to_s
-      p authenticate_url
+      mail_id = User.first.uid - 1
+      authenticate_url = URI.extract(ActionMailer::Base.deliveries[mail_id].body.raw_source, ['http']).first.to_s
       get authenticate_url
       expect(flash[:notice]).to eq 'アカウント登録が完了しました。'
+    end
+  end
+
+  context 'POST /users (ユーザー登録) when need mail registration ' do
+    it 'メール認証が通りログイン出来ること' do
+      post '/users', user_params.deep_merge(user: { service: 2 })
+      mail_id = User.first.uid - 1
+      authenticate_url = URI.extract(ActionMailer::Base.deliveries[mail_id].body.raw_source, ['http']).first.to_s
+      get authenticate_url
+      post '/users/sign_in', user_params.deep_merge(user: { service: 2, remember_me: 0 })
+      rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
+      session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
+      expect(response.status).to eq 200
+      expect(session_data.first.deep_symbolize_keys[:email]).to eq 'username+1@basicinc.jp'
+      expect(response).to match_response_schema('/users')
     end
   end
 
@@ -59,7 +83,7 @@ RSpec.describe 'Users Registrations', type: :request do
 
   context 'PATCH /users (ユーザー情報の更新)' do
     before { create(:user) }
-    it 'should be valid' do
+    it 'ユーザ情報が更新出来ること' do
       sign_in(User.first)
       patch '/users', user: { email: 'changed@basicinc.jp', password: 'password',
                               password_confirmation: 'password', current_password: 'password' }
@@ -82,7 +106,7 @@ RSpec.describe 'Users Registrations', type: :request do
 
   context 'DELETE /users (ユーザー削除)' do
     before { create(:user) }
-    it 'should be valid' do
+    it '論理削除出来ること' do
       sign_in(User.first)
       delete '/users'
       expect(response.status).to eq 200

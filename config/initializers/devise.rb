@@ -267,7 +267,7 @@ end
 
 Devise::Models::Confirmable.module_eval do
   def active_for_authentication?
-    super && confirmation_service # && (!confirmation_required? || confirmed? || confirmation_period_valid?)
+    super && (confirmation_service || confirmed?) # && (!confirmation_required? || confirmed? || confirmation_period_valid?)
   end
 
   def confirmation_service
