@@ -35,8 +35,8 @@ RSpec.describe 'Users Sessions', type: :request do
     it 'should be invalid' do
       post '/users/sign_in', user: { email: 'incorrect@basicinc.jp', password: '', remember_me: 0 }
       expect(response.status).to eq 422
-      expect(JSON.parse(response.body)['alert']).to eq 'メールアドレスまたはパスワードが違います。'
-      expect(flash[:alert]).to eq 'メールアドレスまたはパスワードが違います。'
+      expect(JSON.parse(response.body)['alert']).to eq I18n.t 'devise.failure.invalid'
+      expect(flash[:alert]).to eq I18n.t 'devise.failure.invalid'
     end
   end
 
@@ -45,8 +45,8 @@ RSpec.describe 'Users Sessions', type: :request do
     it 'should be invalid' do
       post '/users/sign_in', user: { email: '', password: 'password', remember_me: 0 }
       expect(response.status).to eq 422
-      expect(JSON.parse(response.body)['alert']).to eq 'メールアドレスまたはパスワードが違います。'
-      expect(flash[:alert]).to eq 'メールアドレスまたはパスワードが違います。'
+      expect(JSON.parse(response.body)['alert']).to eq I18n.t 'devise.failure.invalid'
+      expect(flash[:alert]).to eq I18n.t 'devise.failure.invalid'
     end
   end
 
@@ -55,8 +55,8 @@ RSpec.describe 'Users Sessions', type: :request do
     it 'should be invalid' do
       post '/users/sign_in', user: { email: 'incorrect@basicinc.jp', password: 'password', remember_me: 0 }
       expect(response.status).to eq 422
-      expect(JSON.parse(response.body)['alert']).to eq 'メールアドレスまたはパスワードが違います。'
-      expect(flash[:alert]).to eq 'メールアドレスまたはパスワードが違います。'
+      expect(JSON.parse(response.body)['alert']).to eq I18n.t 'devise.failure.invalid'
+      expect(flash[:alert]).to eq I18n.t 'devise.failure.invalid'
     end
   end
 
@@ -65,8 +65,8 @@ RSpec.describe 'Users Sessions', type: :request do
     it 'should be invalid' do
       post '/users/sign_in', user: { email: 'username+1@basicinc.jp', password: 'incorrect', remember_me: 0 }
       expect(response.status).to eq 422
-      expect(JSON.parse(response.body)['alert']).to eq 'メールアドレスまたはパスワードが違います。'
-      expect(flash[:alert]).to eq 'メールアドレスまたはパスワードが違います。'
+      expect(JSON.parse(response.body)['alert']).to eq I18n.t 'devise.failure.invalid'
+      expect(flash[:alert]).to eq I18n.t 'devise.failure.invalid'
     end
   end
 
@@ -77,8 +77,8 @@ RSpec.describe 'Users Sessions', type: :request do
       get '/users/sign_out'
       expect(response.status).to eq 200
       expect(JSON.parse(response.body)['token']).to eq ''
-      expect(JSON.parse(response.body)['notice']).to eq 'ログアウトしました。'
-      expect(flash[:notice]).to eq 'ログアウトしました。'
+      expect(JSON.parse(response.body)['notice']).to eq I18n.t 'devise.sessions.signed_out'
+      expect(flash[:notice]).to eq I18n.t 'devise.sessions.signed_out'
     end
   end
 end
