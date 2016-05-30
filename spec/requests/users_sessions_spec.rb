@@ -16,7 +16,7 @@ RSpec.describe 'Users Sessions', type: :request do
       session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
       expect(response.status).to eq 200
       p session_data.first.deep_symbolize_keys
-      expect(session_data.first.deep_symbolize_keys[:email]).to eq 'username+1@basicinc.jp'
+      expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
       expect(response).to match_response_schema('/users/sign_in')
     end
   end

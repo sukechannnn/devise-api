@@ -15,7 +15,7 @@ RSpec.describe 'Users Registrations', type: :request do
       session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
       expect(response.status).to eq 200
       p session_data.first.deep_symbolize_keys
-      expect(session_data.first.deep_symbolize_keys[:email]).to eq 'username+1@basicinc.jp'
+      expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
       expect(response).to match_response_schema('/users')
     end
   end
@@ -59,7 +59,7 @@ RSpec.describe 'Users Registrations', type: :request do
       rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
       session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
       expect(response.status).to eq 200
-      expect(session_data.first.deep_symbolize_keys[:email]).to eq 'username+1@basicinc.jp'
+      expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
       expect(response).to match_response_schema('/users')
     end
   end
@@ -88,7 +88,7 @@ RSpec.describe 'Users Registrations', type: :request do
       patch '/users', user: { email: 'changed@basicinc.jp', password: 'password',
                               password_confirmation: 'password', current_password: 'password' }
       expect(response.status).to eq 204
-      expect(User.first.email1).to eq('changed@basicinc.jp')
+      expect(User.first.email1).to eq 'changed@basicinc.jp'
       expect(flash[:notice]).to eq I18n.t 'devise.registrations.updated'
     end
   end
