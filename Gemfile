@@ -57,8 +57,6 @@ group :development, :test do
   gem 'spring-commands-rspec'      # RspecなどでRailsをプリロード
   gem 'shoulda-matchers'           # RSpecで使えるActiveRecordのマッチャー集
   gem 'database_rewinder'          # テストで使うDBのテストデータを削除する
-  gem 'capybara'                   # E2Eテスト用
-  gem 'poltergeist'                # E2Eテスト用ドライバー
   gem 'simplecov', require: false  # テストカバレッジ表示
 
   gem 'rubocop', require: false    # コードの自動チェック
