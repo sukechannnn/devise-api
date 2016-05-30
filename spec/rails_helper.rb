@@ -2,6 +2,8 @@ ENV['RAILS_ENV'] ||= 'test'
 require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
+require 'capybara/rails'
+require 'capybara/poltergeist'
 require 'database_rewinder'
 require 'json-schema'
 
@@ -18,6 +20,13 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers, type: :request
 
   config.include FactoryGirl::Syntax::Methods
+  config.include Capybara::DSL
+  config.before(:all) do
+    Capybara.javascript_driver = :poltergeist
+    Capybara.register_driver :poltergeist do |app|
+      Capybara::Poltergeist::Driver.new(app, js_errors: true, timeout: 60)
+    end
+  end
 
   config.before(:suite) do
     DatabaseRewinder.clean_all

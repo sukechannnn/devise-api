@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable, # :async,
          :rememberable, :trackable, :validatable, :encryptable,
-         :recoverable, :confirmable
+         :recoverable, :confirmable,
+         :omniauthable, omniauth_providers: [:twitter]
 
   self.table_name = 'mmember'
   self.primary_key = 'uid'
