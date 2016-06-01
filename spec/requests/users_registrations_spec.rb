@@ -22,18 +22,18 @@ RSpec.describe 'Users Registrations', type: :request do
 
   context 'POST /users (ユーザー登録) when need mail registration' do
     it '本登録が必要なこと' do
-      post '/users', user_params.deep_merge(user: { service: 2 })
+      post '/users', user_params.deep_merge(user: { service: 7 })
       expect(response.status).to eq 200
       expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
-      expect(User.first.service).to eq 2
+      expect(User.first.service).to eq 7
       expect(User.first.confirmed_at.nil?).to eq true
     end
   end
 
   context 'POST /users (ユーザー登録) when need mail registration' do
     it '本登録が必要でログイン出来ないこと' do
-      post '/users', user_params.deep_merge(user: { service: 2 })
-      post '/users/sign_in', user_params.deep_merge(user: { service: 2, remember_me: 0 })
+      post '/users', user_params.deep_merge(user: { service: 7 })
+      post '/users/sign_in', user_params.deep_merge(user: { service: 7, remember_me: 0 })
       expect(response.status).to eq 302
       expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
     end
@@ -41,7 +41,7 @@ RSpec.describe 'Users Registrations', type: :request do
 
   context 'POST /users (ユーザー登録) when need mail registration' do
     it 'メール認証が通ること' do
-      post '/users', user_params.deep_merge(user: { service: 2 })
+      post '/users', user_params.deep_merge(user: { service: 7 })
       mail_id = User.first.uid - 1
       authenticate_url = URI.extract(ActionMailer::Base.deliveries[mail_id].body.raw_source, ['http']).first.to_s
       get authenticate_url
@@ -51,11 +51,11 @@ RSpec.describe 'Users Registrations', type: :request do
 
   context 'POST /users (ユーザー登録) when need mail registration' do
     it 'メール認証が通りログイン出来ること' do
-      post '/users', user_params.deep_merge(user: { service: 2 })
+      post '/users', user_params.deep_merge(user: { service: 7 })
       mail_id = User.first.uid - 1
       authenticate_url = URI.extract(ActionMailer::Base.deliveries[mail_id].body.raw_source, ['http']).first.to_s
       get authenticate_url
-      post '/users/sign_in', user_params.deep_merge(user: { service: 2, remember_me: 0 })
+      post '/users/sign_in', user_params.deep_merge(user: { service: 7, remember_me: 0 })
       rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
       session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
       expect(response.status).to eq 200
@@ -65,7 +65,7 @@ RSpec.describe 'Users Registrations', type: :request do
   end
 
   context 'twitter omniauth 認証' do
-    
+
   end
 
   context 'POST /users (ユーザー登録) & user is persisted' do
