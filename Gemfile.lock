@@ -299,6 +299,7 @@ DEPENDENCIES
   jwt
   letter_opener_web
   mysql2
+  omniauth
   omniauth-twitter
   prmd
   pry-byebug
