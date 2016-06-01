@@ -83,6 +83,7 @@ RSpec.describe 'Users Registrations', type: :request do
           expect(response.body).to be_include '123545'
         end
       end
+
       context 'service != 2 のとき' do
         it '正しい twitter_id が返ってくること' do
           get '/users/auth/twitter?service=4'
@@ -90,6 +91,13 @@ RSpec.describe 'Users Registrations', type: :request do
           expect(request.env['omniauth.params']['service'].to_i).to eq 4
           expect(response.body).to be_include 'twitter_id'
           expect(response.body).to be_include '123545'
+        end
+      end
+
+      context 'twitter認証後に登録リクエストが来たとき' do
+        it '登録完了' do
+          post '/users', user_params.deep_merge(user: { twitter_id: '12345' })
+          expect(User.first.twitter_id).to eq '12345'
         end
       end
     end
