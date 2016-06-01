@@ -53,7 +53,7 @@ RSpec.describe 'Users Registrations', type: :request do
     it 'confirmation_tokenが間違っていてメール認証が通らないこと' do
       post '/users', user_params.deep_merge(user: { service: 7 })
       mail_id = User.first.uid - 1
-      authenticate_url = URI.extract(ActionMailer::Base.deliveries.first.body.raw_source, ['http']).first.to_s + 'failure'
+      authenticate_url = URI.extract(ActionMailer::Base.deliveries[mail_id].body.raw_source, ['http']).first.to_s + 'failure'
       get authenticate_url
       expect(response.body).to be_include 'が正しくありません。'
     end
