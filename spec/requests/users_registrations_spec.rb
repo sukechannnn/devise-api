@@ -65,7 +65,19 @@ RSpec.describe 'Users Registrations', type: :request do
   end
 
   context 'twitter omniauth 認証' do
-    
+    it 'omniauth_callbacks_controller にリダイレクトされること' do
+      get '/users/auth/twitter?service=4'
+      expect(response.status).to eq 302
+      expect(response.location).to be_include '/users/auth/twitter/callback'
+    end
+  end
+
+  context 'twitter omniauth 認証' do
+    it 'omniauth_callbacks_controller の twitter メソッドを実行' do
+      get '/users/auth/twitter?service=4'
+      get '/users/auth/twitter/callback'
+      expect(request.env['omniauth.params']['service']).to eq '4'
+    end
   end
 
   context 'POST /users (ユーザー登録) & user is persisted' do
