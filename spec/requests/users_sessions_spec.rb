@@ -9,64 +9,66 @@ RSpec.describe 'Users Sessions', type: :request do
   end
 
   context 'POST /users/sign_in (ログイン)' do
-    before { create(:user) }
-    it 'should be valid' do
-      post '/users/sign_in', user_params.deep_merge(user: { remember_me: 0 })
-      rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
-      session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
-      expect(response.status).to eq 200
-      p session_data.first.deep_symbolize_keys
-      expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
-      expect(response).to match_response_schema('/users/sign_in')
+    context '正しく入力したとき' do
+      before { create(:user) }
+      it 'should be valid' do
+        post '/users/sign_in', user_params.deep_merge(user: { remember_me: 0 })
+        rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
+        session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
+        expect(response.status).to eq 200
+        p session_data.first.deep_symbolize_keys
+        expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
+        expect(response).to match_response_schema('/users/sign_in')
+      end
     end
-  end
 
-  context 'POST /users/sign_in (ログイン) & already signed in' do
-    before { create(:user) }
-    it 'should be valid' do
-      sign_in(User.first)
-      post '/users/sign_in', user_params.deep_merge(user: { remember_me: 0 })
-      expect(response.status).to eq 302
+    context 'already signed in' do
+      before { create(:user) }
+      it 'should be valid' do
+        sign_in(User.first)
+        post '/users/sign_in', user_params.deep_merge(user: { remember_me: 0 })
+        expect(response.status).to eq 302
+      end
     end
-  end
 
-  context 'POST /users/sign_in (ログイン) & password is blank' do
-    before { create(:user) }
-    it 'should be invalid' do
-      post '/users/sign_in', user: { email: 'incorrect@basicinc.jp', password: '', remember_me: 0 }
-      expect(response.status).to eq 422
-      expect(JSON.parse(response.body)['alert']).to eq I18n.t 'devise.failure.invalid'
-      expect(flash[:alert]).to eq I18n.t 'devise.failure.invalid'
+    context 'password is blank' do
+      before { create(:user) }
+      it 'should be invalid' do
+        post '/users/sign_in', user: { email: 'incorrect@basicinc.jp', password: '', remember_me: 0 }
+        expect(response.status).to eq 422
+        expect(JSON.parse(response.body)['alert']).to eq I18n.t 'devise.failure.invalid'
+        expect(flash[:alert]).to eq I18n.t 'devise.failure.invalid'
+      end
     end
-  end
 
-  context 'POST /users/sign_in (ログイン) & email is blank' do
-    before { create(:user) }
-    it 'should be invalid' do
-      post '/users/sign_in', user: { email: '', password: 'password', remember_me: 0 }
-      expect(response.status).to eq 422
-      expect(JSON.parse(response.body)['alert']).to eq I18n.t 'devise.failure.invalid'
-      expect(flash[:alert]).to eq I18n.t 'devise.failure.invalid'
+    context 'email is blank' do
+      before { create(:user) }
+      it 'should be invalid' do
+        post '/users/sign_in', user: { email: '', password: 'password', remember_me: 0 }
+        expect(response.status).to eq 422
+        expect(JSON.parse(response.body)['alert']).to eq I18n.t 'devise.failure.invalid'
+        expect(flash[:alert]).to eq I18n.t 'devise.failure.invalid'
+      end
     end
-  end
 
-  context 'POST /users/sign_in (ログイン) & incorrect email' do
-    before { create(:user) }
-    it 'should be invalid' do
-      post '/users/sign_in', user: { email: 'incorrect@basicinc.jp', password: 'password', remember_me: 0 }
-      expect(response.status).to eq 422
-      expect(JSON.parse(response.body)['alert']).to eq I18n.t 'devise.failure.invalid'
-      expect(flash[:alert]).to eq I18n.t 'devise.failure.invalid'
+    context 'incorrect email' do
+      before { create(:user) }
+      it 'should be invalid' do
+        post '/users/sign_in', user: { email: 'incorrect@basicinc.jp', password: 'password', remember_me: 0 }
+        expect(response.status).to eq 422
+        expect(JSON.parse(response.body)['alert']).to eq I18n.t 'devise.failure.invalid'
+        expect(flash[:alert]).to eq I18n.t 'devise.failure.invalid'
+      end
     end
-  end
 
-  context 'POST /users/sign_in (ログイン) & incorrect password' do
-    before { create(:user) }
-    it 'should be invalid' do
-      post '/users/sign_in', user: { email: 'username+1@basicinc.jp', password: 'incorrect', remember_me: 0 }
-      expect(response.status).to eq 422
-      expect(JSON.parse(response.body)['alert']).to eq I18n.t 'devise.failure.invalid'
-      expect(flash[:alert]).to eq I18n.t 'devise.failure.invalid'
+    context 'incorrect password' do
+      before { create(:user) }
+      it 'should be invalid' do
+        post '/users/sign_in', user: { email: 'username+1@basicinc.jp', password: 'incorrect', remember_me: 0 }
+        expect(response.status).to eq 422
+        expect(JSON.parse(response.body)['alert']).to eq I18n.t 'devise.failure.invalid'
+        expect(flash[:alert]).to eq I18n.t 'devise.failure.invalid'
+      end
     end
   end
 
