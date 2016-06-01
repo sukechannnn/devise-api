@@ -18,7 +18,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
           jwt = generate_token.generate_jwt_token(current_user.uid, current_user.email1)
           render(json: { token: jwt }.to_json) && return
         else
-          flash[:alert] = '本登録を行ってください。'
+          flash[:alert] = I18n.t 'devise.failure.unconfirmed'
           render(json: flash.to_hash, status: :ok) && return
         end
       end
