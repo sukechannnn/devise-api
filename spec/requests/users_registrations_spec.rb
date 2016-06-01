@@ -64,10 +64,6 @@ RSpec.describe 'Users Registrations', type: :request do
     end
   end
 
-  context 'twitter omniauth 認証' do
-
-  end
-
   context 'POST /users (ユーザー登録) & user is persisted' do
     before { create(:user) }
     it 'should be invalid' do
