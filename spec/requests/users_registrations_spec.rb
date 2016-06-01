@@ -55,7 +55,7 @@ RSpec.describe 'Users Registrations', type: :request do
       mail_id = User.first.uid - 1
       authenticate_url = URI.extract(ActionMailer::Base.deliveries[mail_id].body.raw_source, ['http']).first.to_s + 'failure'
       get authenticate_url
-      expect(response.body).to be_include 'が正しくありません。'
+      expect(response.body).to be_include I18n.t 'errors.messages.invalid'
     end
   end
 
@@ -79,7 +79,7 @@ RSpec.describe 'Users Registrations', type: :request do
     it 'should be invalid' do
       post '/users', user_params
       expect(response.status).to eq(422)
-      expect(response.body).to be_include 'はすでに使用されています。'
+      expect(response.body).to be_include I18n.t 'errors.messages.taken'
     end
   end
 
@@ -87,7 +87,7 @@ RSpec.describe 'Users Registrations', type: :request do
     it 'should be invalid' do
       post '/users', user: { email: '', password: 'password' }
       expect(response.status).to eq 422
-      expect(response.body).to be_include 'が記入されていません。'
+      expect(response.body).to be_include I18n.t 'errors.messages.blank'
     end
   end
 
@@ -110,7 +110,7 @@ RSpec.describe 'Users Registrations', type: :request do
       patch '/users', user: { email: '', password: 'password',
                               password_confirmation: 'password', current_password: 'password' }
       expect(response.status).to eq 422
-      expect(response.body).to be_include 'が記入されていません。'
+      expect(response.body).to be_include I18n.t 'errors.messages.blank'
     end
   end
 
