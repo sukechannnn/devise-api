@@ -50,6 +50,16 @@ RSpec.describe 'Users Registrations', type: :request do
   end
 
   context 'POST /users (ユーザー登録) when need mail registration' do
+    it 'confirmation_tokenが間違っていてメール認証が通らないこと' do
+      post '/users', user_params.deep_merge(user: { service: 7 })
+      mail_id = User.first.uid - 1
+      authenticate_url = URI.extract(ActionMailer::Base.deliveries.first.body.raw_source, ['http']).first.to_s + 'failure'
+      get authenticate_url
+      expect(response.body).to be_include 'が正しくありません。'
+    end
+  end
+
+  context 'POST /users (ユーザー登録) when need mail registration' do
     it 'メール認証が通りログイン出来ること' do
       post '/users', user_params.deep_merge(user: { service: 7 })
       mail_id = User.first.uid - 1
@@ -69,7 +79,7 @@ RSpec.describe 'Users Registrations', type: :request do
     it 'should be invalid' do
       post '/users', user_params
       expect(response.status).to eq(422)
-      expect(response.body).to be_include('has already been taken')
+      expect(response.body).to be_include 'はすでに使用されています。'
     end
   end
 
@@ -77,7 +87,7 @@ RSpec.describe 'Users Registrations', type: :request do
     it 'should be invalid' do
       post '/users', user: { email: '', password: 'password' }
       expect(response.status).to eq 422
-      expect(response.body).to be_include("can't be blank")
+      expect(response.body).to be_include 'が記入されていません。'
     end
   end
 
@@ -100,7 +110,7 @@ RSpec.describe 'Users Registrations', type: :request do
       patch '/users', user: { email: '', password: 'password',
                               password_confirmation: 'password', current_password: 'password' }
       expect(response.status).to eq 422
-      expect(response.body).to be_include("can't be blank")
+      expect(response.body).to be_include 'が記入されていません。'
     end
   end
 
