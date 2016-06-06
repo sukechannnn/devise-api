@@ -264,3 +264,13 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 end
+
+Devise::Models::Confirmable.module_eval do
+  def active_for_authentication?
+    super && (confirmation_service || confirmed?) # && (!confirmation_required? || confirmed? || confirmation_period_valid?)
+  end
+
+  def confirmation_service
+    service != 2 && service != 7
+  end
+end

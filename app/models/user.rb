@@ -5,9 +5,9 @@ class User < ActiveRecord::Base
   # devise :database_authenticatable, :registerable,
   #        :recoverable, :rememberable, :trackable, :validatable
 
-  devise :database_authenticatable, :async, :registerable,
+  devise :database_authenticatable, :registerable, # :async,
          :rememberable, :trackable, :validatable, :encryptable,
-         :recoverable # , :confirmable
+         :recoverable, :confirmable
 
   self.table_name = 'mmember'
   self.primary_key = 'uid'
@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
     names[0] ||= ''
     self.nname ||= names[0].gsub(/[^A-Za-z0-9]/, '').slice!(0, 20)
     # TODO: サービスコードはパラメータを参照して入れるようにする
-    self.service ||= 4 # 新ポータルサービスコード
+    # self.service ||= 4 # 新ポータルサービスコード
   end
 
   def encrypted_password

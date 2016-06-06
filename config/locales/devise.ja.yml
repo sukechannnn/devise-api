@@ -56,3 +56,6 @@ ja:
       not_found: は見つかりませんでした
       not_locked: は凍結されていません
       not_saved: '%{count}個のエラーにより%{resource}を保存することができませんでした。'
+      blank: 'が記入されていません。'
+      invalid: 'が正しくありません。'
+      taken: 'はすでに使用されています。'
