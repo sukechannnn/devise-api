@@ -23,7 +23,7 @@ gem 'prmd' # JSON Schema tools and doc generation for HTTP APIs
 gem 'json-schema' # validation & test json schema
 
 #--- ユーザ認証
-gem 'devise'
+gem 'devise', '~> 3.0'
 gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
