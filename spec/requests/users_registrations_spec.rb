@@ -116,6 +116,110 @@ RSpec.describe 'Users Registrations', type: :request do
       end
     end
 
+    context 'facebook認証' do
+      context 'facebook omniauth 認証のリダイレクト' do
+        it 'omniauth_callbacks_controller にリダイレクトされること' do
+          get '/users/auth/facebook?service=4'
+          expect(response.status).to eq 302
+          expect(response.location).to be_include '/users/auth/facebook/callback'
+        end
+      end
+
+      context 'service == 2 のとき' do
+        it '正しい id_facebook が返ってくること' do
+          get '/users/auth/facebook?service=2'
+          get '/users/auth/facebook/callback'
+          expect(request.env['omniauth.params']['service'].to_i).to eq 2
+          expect(response.body).to be_include 'id_facebook'
+          expect(response.body).to be_include '12345'
+        end
+      end
+
+      context 'service != 2 のとき' do
+        it '正しい facebook_id が返ってくること' do
+          get '/users/auth/facebook?service=4'
+          get '/users/auth/facebook/callback'
+          expect(request.env['omniauth.params']['service'].to_i).to eq 4
+          expect(response.body).to be_include 'facebook_id'
+          expect(response.body).to be_include '12345'
+        end
+      end
+
+      context 'facebook認証後に登録リクエストが来たとき' do
+        it '登録完了' do
+          post '/users', user_params.deep_merge(user: { facebook_id: '12345' })
+          expect(User.first.facebook_id).to eq '12345'
+        end
+      end
+
+      context 'facebook認証が既にされているとき' do
+        context 'facebook_idが既に存在するとき' do
+          before { create(:already_confirmed_facebook_user_service4) }
+          it 'should be invalid' do
+            get '/users/auth/facebook?service=4'
+            get '/users/auth/facebook/callback'
+            expect(response.body).to be_include I18n.t 'errors.messages.already_confirmed'
+          end
+        end
+
+        context 'id_facebookが既に存在するとき' do
+          before { create(:already_confirmed_facebook_user_service2) }
+          it 'should be invalid' do
+            get '/users/auth/facebook?service=2'
+            get '/users/auth/facebook/callback'
+            expect(response.body).to be_include I18n.t 'errors.messages.already_confirmed'
+          end
+        end
+      end
+    end
+
+    context 'yahoojp認証' do
+      context 'yahoojp omniauth 認証のリダイレクト' do
+        it 'omniauth_callbacks_controller にリダイレクトされること' do
+          get '/users/auth/yahoojp?service=4'
+          expect(response.status).to eq 302
+          expect(response.location).to be_include '/users/auth/yahoojp/callback'
+        end
+      end
+
+      context 'service != 4 のとき' do
+        it 'アクセス出来ないこと' do
+          get '/users/auth/yahoojp?service=2'
+          get '/users/auth/yahoojp/callback'
+          expect(request.env['omniauth.params']['service'].to_i).to eq 2
+          expect(response.status).to eq 403
+        end
+      end
+
+      context 'service == 4 のとき' do
+        it '正しい yahoojp_id が返ってくること' do
+          get '/users/auth/yahoojp?service=4'
+          get '/users/auth/yahoojp/callback'
+          expect(request.env['omniauth.params']['service'].to_i).to eq 4
+          expect(response.body).to be_include 'yahoojp_id'
+          expect(response.body).to be_include '12345'
+        end
+      end
+
+      context 'yahoojp認証後に登録リクエストが来たとき' do
+        it '登録完了' do
+          post '/users', user_params.deep_merge(user: { yahoojp_id: '12345' })
+          expect(User.first.yahoojp_id).to eq '12345'
+        end
+      end
+
+      context 'yahoojp認証が既にされているとき' do
+        context 'yahoojp_idが既に存在するとき' do
+          before { create(:already_confirmed_yahoojp_user_service4) }
+          it 'should be invalid' do
+            get '/users/auth/yahoojp?service=4'
+            get '/users/auth/yahoojp/callback'
+            expect(response.body).to be_include I18n.t 'errors.messages.already_confirmed'
+          end
+        end
+      end
+    end
+
     context 'すでにユーザー登録されているとき' do
       before { create(:user) }
       it 'should be invalid' do
