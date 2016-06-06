@@ -11,11 +11,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def all
     service_params = request.env['omniauth.params']['service'].to_i
     auth = request.env['omniauth.auth']
-    if check_omniauth(auth, service_params)
-      response_omniauth(auth, service_params)
-    else
-      flash[:alert] = I18n.t 'errors.messages.already_confirmed'
+    if omniauth_exists?(auth, service_params)
+      flash[:alert] = t 'errors.messages.already_confirmed'
       render(json: flash.to_hash, status: :ok) && return
+    else
+      response_omniauth(auth, service_params)
     end
   end
 
@@ -37,11 +37,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   alias twitter all
   alias facebook all
 
-  def check_omniauth(auth, service_params)
+  def omniauth_exists?(auth, service_params)
     if service_params == 2
-      User.where("id_#{auth.provider}".to_sym == auth.uid).empty?
+      User.exists?("id_#{auth.provider}".to_sym => auth.uid)
     else
-      User.where("#{auth.provider}_id".to_sym == auth.uid).empty?
+      User.exists?("#{auth.provider}_id".to_sym => auth.uid)
     end
   end
 

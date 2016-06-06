@@ -74,7 +74,7 @@ RSpec.describe 'Users Registrations', type: :request do
           get '/users/auth/twitter/callback'
           expect(request.env['omniauth.params']['service'].to_i).to eq 2
           expect(response.body).to be_include 'id_twitter'
-          expect(response.body).to be_include '123545'
+          expect(response.body).to be_include '12345'
         end
       end
 
@@ -84,7 +84,7 @@ RSpec.describe 'Users Registrations', type: :request do
           get '/users/auth/twitter/callback'
           expect(request.env['omniauth.params']['service'].to_i).to eq 4
           expect(response.body).to be_include 'twitter_id'
-          expect(response.body).to be_include '123545'
+          expect(response.body).to be_include '12345'
         end
       end
 
@@ -92,6 +92,15 @@ RSpec.describe 'Users Registrations', type: :request do
         it '登録完了' do
           post '/users', user_params.deep_merge(user: { twitter_id: '12345' })
           expect(User.first.twitter_id).to eq '12345'
+        end
+      end
+
+      context 'twitter認証が既にされているとき' do
+        before { create(:already_confirmed_twitter_user) }
+        it 'should be invalid' do
+          get '/users/auth/twitter?service=4'
+          get '/users/auth/twitter/callback'
+          expect(flash[:alert]).to eq I18n.t 'errors.messages.already_confirmed'
         end
       end
     end
