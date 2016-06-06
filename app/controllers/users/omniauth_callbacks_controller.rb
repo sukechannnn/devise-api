@@ -57,7 +57,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   # oauth yahoojp_id 認証がferret mediaにのみ対応しているので、これだけ別メソッドに切り出し。
-  # 今後他のメディアにも対応した場合は、
   def check_yahoojp(auth, service_params)
     if service_params != 4
       render(json: '403 forbidden', status: :forbidden) && return
