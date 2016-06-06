@@ -21,6 +21,15 @@ RSpec.describe 'Users Registrations', type: :request do
       end
     end
 
+    context 'FerretPLUSのとき' do
+      it '登録日がregdateに入ってcreated_atに入らないこと' do
+        post '/users', user_params.deep_merge(user: { service: 2 })
+        expect(User.first.service).to eq 2
+        expect(User.first.created_at).to be_nil
+        expect(User.first.regdate).not_to be_nil
+      end
+    end
+
     context 'メール認証が必要なとき' do
       it '本登録が必要なこと' do
         post '/users', user_params.deep_merge(user: { service: 2 })
@@ -28,6 +37,8 @@ RSpec.describe 'Users Registrations', type: :request do
         expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
         expect(User.first.service).to eq 2
         expect(User.first.confirmed_at.nil?).to eq true
+        expect(User.first.created_at).to be_nil
+        expect(User.first.regdate).not_to be_nil
       end
 
       it '本登録が必要でログイン出来ないこと' do
@@ -35,6 +46,8 @@ RSpec.describe 'Users Registrations', type: :request do
         post '/users/sign_in', user_params.deep_merge(user: { service: 2, remember_me: 0 })
         expect(response.status).to eq 302
         expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
+        expect(User.first.created_at).to be_nil
+        expect(User.first.regdate).not_to be_nil
       end
 
       it 'メール認証が通ること' do
@@ -43,6 +56,8 @@ RSpec.describe 'Users Registrations', type: :request do
         authenticate_url = URI.extract(ActionMailer::Base.deliveries[mail_id].body.raw_source, ['http']).first.to_s
         get authenticate_url
         expect(flash[:notice]).to eq I18n.t 'devise.confirmations.confirmed'
+        expect(User.first.created_at).to be_nil
+        expect(User.first.regdate).not_to be_nil
       end
 
       it 'メール認証が通りログイン出来ること' do
@@ -56,6 +71,8 @@ RSpec.describe 'Users Registrations', type: :request do
         expect(response.status).to eq 200
         expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
         expect(response).to match_response_schema('/users')
+        expect(User.first.created_at).to be_nil
+        expect(User.first.regdate).not_to be_nil
       end
     end
 
@@ -89,9 +106,16 @@ RSpec.describe 'Users Registrations', type: :request do
       end
 
       context 'twitter認証後に登録リクエストが来たとき' do
-        it '登録完了' do
+        it 'FerretPLUS以外のとき登録完了' do
           post '/users', user_params.deep_merge(user: { twitter_id: '12345' })
           expect(User.first.twitter_id).to eq '12345'
+        end
+
+        it 'FerretPLUSのとき登録完了' do
+          post '/users', user_params.deep_merge(user: { service: 2, twitter_id: '12345' })
+          expect(User.first.twitter_id).to eq '12345'
+          expect(User.first.created_at).to be_nil
+          expect(User.first.regdate).not_to be_nil
         end
       end
 
