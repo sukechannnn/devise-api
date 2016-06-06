@@ -10,10 +10,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super do
       if resource.persisted?
-        resource.service = params['user']['service'].to_i
-        resource.twitter_id = params['user']['twitter_id']
-        resource.id_twitter = params['user']['id_twitter']
-        resource.save
         if resource.active_for_authentication?
           sign_up(resource_name, resource)
           generate_token = GenerateToken.new

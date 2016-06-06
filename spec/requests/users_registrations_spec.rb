@@ -59,15 +59,15 @@ RSpec.describe 'Users Registrations', type: :request do
       end
     end
 
-    context 'twitter omniauth 認証のリダイレクト' do
-      it 'omniauth_callbacks_controller にリダイレクトされること' do
-        get '/users/auth/twitter?service=4'
-        expect(response.status).to eq 302
-        expect(response.location).to be_include '/users/auth/twitter/callback'
+    context 'twitter認証' do
+      context 'twitter omniauth 認証のリダイレクト' do
+        it 'omniauth_callbacks_controller にリダイレクトされること' do
+          get '/users/auth/twitter?service=4'
+          expect(response.status).to eq 302
+          expect(response.location).to be_include '/users/auth/twitter/callback'
+        end
       end
-    end
 
-    context 'twitter omniauth 認証' do
       context 'service == 2 のとき' do
         it '正しい id_twitter が返ってくること' do
           get '/users/auth/twitter?service=2'
@@ -96,11 +96,22 @@ RSpec.describe 'Users Registrations', type: :request do
       end
 
       context 'twitter認証が既にされているとき' do
-        before { create(:already_confirmed_twitter_user) }
-        it 'should be invalid' do
-          get '/users/auth/twitter?service=4'
-          get '/users/auth/twitter/callback'
-          expect(flash[:alert]).to eq I18n.t 'errors.messages.already_confirmed'
+        context 'twitter_idが既に存在するとき' do
+          before { create(:already_confirmed_twitter_user_service4) }
+          it 'should be invalid' do
+            get '/users/auth/twitter?service=4'
+            get '/users/auth/twitter/callback'
+            expect(flash[:alert]).to eq I18n.t 'errors.messages.already_confirmed'
+          end
+        end
+
+        context 'id_twitterが既に存在するとき' do
+          before { create(:already_confirmed_twitter_user_service2) }
+          it 'should be invalid' do
+            get '/users/auth/twitter?service=2'
+            get '/users/auth/twitter/callback'
+            expect(flash[:alert]).to eq I18n.t 'errors.messages.already_confirmed'
+          end
         end
       end
     end
