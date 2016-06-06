@@ -29,18 +29,14 @@ RSpec.describe 'Users Registrations', type: :request do
         expect(User.first.service).to eq 2
         expect(User.first.confirmed_at.nil?).to eq true
       end
-    end
 
-    context 'メール認証が必要なとき' do
       it '本登録が必要でログイン出来ないこと' do
         post '/users', user_params.deep_merge(user: { service: 2 })
         post '/users/sign_in', user_params.deep_merge(user: { service: 2, remember_me: 0 })
         expect(response.status).to eq 302
         expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
       end
-    end
 
-    context 'メール認証が必要なとき' do
       it 'メール認証が通ること' do
         post '/users', user_params.deep_merge(user: { service: 2 })
         mail_id = User.first.uid - 1
@@ -48,9 +44,7 @@ RSpec.describe 'Users Registrations', type: :request do
         get authenticate_url
         expect(flash[:notice]).to eq I18n.t 'devise.confirmations.confirmed'
       end
-    end
 
-    context 'メール認証が必要なとき' do
       it 'メール認証が通りログイン出来ること' do
         post '/users', user_params.deep_merge(user: { service: 2 })
         mail_id = User.first.uid - 1
@@ -65,7 +59,7 @@ RSpec.describe 'Users Registrations', type: :request do
       end
     end
 
-    context 'twitter omniauth 認証' do
+    context 'twitter omniauth 認証のリダイレクト' do
       it 'omniauth_callbacks_controller にリダイレクトされること' do
         get '/users/auth/twitter?service=4'
         expect(response.status).to eq 302
@@ -102,20 +96,20 @@ RSpec.describe 'Users Registrations', type: :request do
       end
     end
 
-    context 'user is persisted' do
+    context 'すでにユーザー登録されているとき' do
       before { create(:user) }
       it 'should be invalid' do
         post '/users', user_params
         expect(response.status).to eq(422)
-        expect(response.body).to be_include('has already been taken')
+        expect(response.body).to be_include I18n.t 'errors.messages.taken'
       end
     end
 
-    context 'email is blank' do
+    context 'メールが空のとき' do
       it 'should be invalid' do
         post '/users', user: { email: '', password: 'password' }
         expect(response.status).to eq 422
-        expect(response.body).to be_include("can't be blank")
+        expect(response.body).to be_include I18n.t 'errors.messages.blank'
       end
     end
   end
@@ -133,14 +127,14 @@ RSpec.describe 'Users Registrations', type: :request do
       end
     end
 
-    context 'email is blank' do
+    context 'メールが空のとき' do
       before { create(:user) }
       it 'should be invalid' do
         sign_in(User.first)
         patch '/users', user: { email: '', password: 'password',
                                 password_confirmation: 'password', current_password: 'password' }
         expect(response.status).to eq 422
-        expect(response.body).to be_include("can't be blank")
+        expect(response.body).to be_include I18n.t 'errors.messages.blank'
       end
     end
   end
