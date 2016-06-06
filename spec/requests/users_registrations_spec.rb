@@ -74,7 +74,7 @@ RSpec.describe 'Users Registrations', type: :request do
           get '/users/auth/twitter/callback'
           expect(request.env['omniauth.params']['service'].to_i).to eq 2
           expect(response.body).to be_include 'id_twitter'
-          expect(response.body).to be_include '12345'
+          expect(response.body).to be_include 'twitter12345'
         end
       end
 
@@ -84,14 +84,14 @@ RSpec.describe 'Users Registrations', type: :request do
           get '/users/auth/twitter/callback'
           expect(request.env['omniauth.params']['service'].to_i).to eq 4
           expect(response.body).to be_include 'twitter_id'
-          expect(response.body).to be_include '12345'
+          expect(response.body).to be_include 'twitter12345'
         end
       end
 
       context 'twitter認証後に登録リクエストが来たとき' do
         it '登録完了' do
-          post '/users', user_params.deep_merge(user: { twitter_id: '12345' })
-          expect(User.first.twitter_id).to eq '12345'
+          post '/users', user_params.deep_merge(user: { twitter_id: 'twitter12345' })
+          expect(User.first.twitter_id).to eq 'twitter12345'
         end
       end
 
@@ -131,7 +131,7 @@ RSpec.describe 'Users Registrations', type: :request do
           get '/users/auth/facebook/callback'
           expect(request.env['omniauth.params']['service'].to_i).to eq 2
           expect(response.body).to be_include 'id_facebook'
-          expect(response.body).to be_include '12345'
+          expect(response.body).to be_include 'facebook12345'
         end
       end
 
@@ -141,14 +141,14 @@ RSpec.describe 'Users Registrations', type: :request do
           get '/users/auth/facebook/callback'
           expect(request.env['omniauth.params']['service'].to_i).to eq 4
           expect(response.body).to be_include 'facebook_id'
-          expect(response.body).to be_include '12345'
+          expect(response.body).to be_include 'facebook12345'
         end
       end
 
       context 'facebook認証後に登録リクエストが来たとき' do
         it '登録完了' do
-          post '/users', user_params.deep_merge(user: { facebook_id: '12345' })
-          expect(User.first.facebook_id).to eq '12345'
+          post '/users', user_params.deep_merge(user: { facebook_id: 'facebook12345' })
+          expect(User.first.facebook_id).to eq 'facebook12345'
         end
       end
 
@@ -197,14 +197,14 @@ RSpec.describe 'Users Registrations', type: :request do
           get '/users/auth/yahoojp/callback'
           expect(request.env['omniauth.params']['service'].to_i).to eq 4
           expect(response.body).to be_include 'yahoojp_id'
-          expect(response.body).to be_include '12345'
+          expect(response.body).to be_include 'yahoojp12345'
         end
       end
 
       context 'yahoojp認証後に登録リクエストが来たとき' do
         it '登録完了' do
-          post '/users', user_params.deep_merge(user: { yahoojp_id: '12345' })
-          expect(User.first.yahoojp_id).to eq '12345'
+          post '/users', user_params.deep_merge(user: { yahoojp_id: 'yahoojp12345' })
+          expect(User.first.yahoojp_id).to eq 'yahoojp12345'
         end
       end
 
