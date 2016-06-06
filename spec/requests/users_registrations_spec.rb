@@ -101,7 +101,7 @@ RSpec.describe 'Users Registrations', type: :request do
           it 'should be invalid' do
             get '/users/auth/twitter?service=4'
             get '/users/auth/twitter/callback'
-            expect(flash[:alert]).to eq I18n.t 'errors.messages.already_confirmed'
+            expect(response.body).to be_include I18n.t 'errors.messages.already_confirmed'
           end
         end
 
@@ -110,7 +110,7 @@ RSpec.describe 'Users Registrations', type: :request do
           it 'should be invalid' do
             get '/users/auth/twitter?service=2'
             get '/users/auth/twitter/callback'
-            expect(flash[:alert]).to eq I18n.t 'errors.messages.already_confirmed'
+            expect(response.body).to be_include I18n.t 'errors.messages.already_confirmed'
           end
         end
       end
