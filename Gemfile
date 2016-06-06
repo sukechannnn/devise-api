@@ -26,6 +26,8 @@ gem 'json-schema' # validation & test json schema
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+gem 'omniauth-yahoojp'
 # gem 'devise-async'
 gem 'devise-encryptable' # deviseの暗号化処理を変更
 
