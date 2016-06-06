@@ -8,109 +8,154 @@ RSpec.describe 'Users Registrations', type: :request do
     { user: { email: 'username+1@basicinc.jp', password: 'password', service: 4 } }
   end
 
-  context 'POST /users (ユーザー登録) when no need mail registration' do
-    it '登録完了' do
-      post '/users', user_params
-      rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
-      session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
-      expect(response.status).to eq 200
-      p session_data.first.deep_symbolize_keys
-      expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
-      expect(response).to match_response_schema('/users')
+  context 'POST /users (ユーザー登録)' do
+    context 'メール認証が不要なとき' do
+      it '登録完了' do
+        post '/users', user_params
+        rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
+        session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
+        expect(response.status).to eq 200
+        p session_data.first.deep_symbolize_keys
+        expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
+        expect(response).to match_response_schema('/users')
+      end
     end
-  end
 
-  context 'POST /users (ユーザー登録) when need mail registration' do
-    it '本登録が必要なこと' do
-      post '/users', user_params.deep_merge(user: { service: 7 })
-      expect(response.status).to eq 200
-      expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
-      expect(User.first.service).to eq 7
-      expect(User.first.confirmed_at.nil?).to eq true
+    context 'メール認証が必要なとき' do
+      it '本登録が必要なこと' do
+        post '/users', user_params.deep_merge(user: { service: 2 })
+        expect(response.status).to eq 200
+        expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
+        expect(User.first.service).to eq 2
+        expect(User.first.confirmed_at.nil?).to eq true
+      end
+
+      it '本登録が必要でログイン出来ないこと' do
+        post '/users', user_params.deep_merge(user: { service: 2 })
+        post '/users/sign_in', user_params.deep_merge(user: { service: 2, remember_me: 0 })
+        expect(response.status).to eq 302
+        expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
+      end
+
+      it 'メール認証が通ること' do
+        post '/users', user_params.deep_merge(user: { service: 2 })
+        mail_id = User.first.uid - 1
+        authenticate_url = URI.extract(ActionMailer::Base.deliveries[mail_id].body.raw_source, ['http']).first.to_s
+        get authenticate_url
+        expect(flash[:notice]).to eq I18n.t 'devise.confirmations.confirmed'
+      end
+
+      it 'メール認証が通りログイン出来ること' do
+        post '/users', user_params.deep_merge(user: { service: 2 })
+        mail_id = User.first.uid - 1
+        authenticate_url = URI.extract(ActionMailer::Base.deliveries[mail_id].body.raw_source, ['http']).first.to_s
+        get authenticate_url
+        post '/users/sign_in', user_params.deep_merge(user: { service: 2, remember_me: 0 })
+        rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
+        session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
+        expect(response.status).to eq 200
+        expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
+        expect(response).to match_response_schema('/users')
+      end
     end
-  end
 
-  context 'POST /users (ユーザー登録) when need mail registration' do
-    it '本登録が必要でログイン出来ないこと' do
-      post '/users', user_params.deep_merge(user: { service: 7 })
-      post '/users/sign_in', user_params.deep_merge(user: { service: 7, remember_me: 0 })
-      expect(response.status).to eq 302
-      expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
+    context 'twitter認証' do
+      context 'twitter omniauth 認証のリダイレクト' do
+        it 'omniauth_callbacks_controller にリダイレクトされること' do
+          get '/users/auth/twitter?service=4'
+          expect(response.status).to eq 302
+          expect(response.location).to be_include '/users/auth/twitter/callback'
+        end
+      end
+
+      context 'service == 2 のとき' do
+        it '正しい id_twitter が返ってくること' do
+          get '/users/auth/twitter?service=2'
+          get '/users/auth/twitter/callback'
+          expect(request.env['omniauth.params']['service'].to_i).to eq 2
+          expect(response.body).to be_include 'id_twitter'
+          expect(response.body).to be_include '12345'
+        end
+      end
+
+      context 'service != 2 のとき' do
+        it '正しい twitter_id が返ってくること' do
+          get '/users/auth/twitter?service=4'
+          get '/users/auth/twitter/callback'
+          expect(request.env['omniauth.params']['service'].to_i).to eq 4
+          expect(response.body).to be_include 'twitter_id'
+          expect(response.body).to be_include '12345'
+        end
+      end
+
+      context 'twitter認証後に登録リクエストが来たとき' do
+        it '登録完了' do
+          post '/users', user_params.deep_merge(user: { twitter_id: '12345' })
+          expect(User.first.twitter_id).to eq '12345'
+        end
+      end
+
+      context 'twitter認証が既にされているとき' do
+        context 'twitter_idが既に存在するとき' do
+          before { create(:already_confirmed_twitter_user_service4) }
+          it 'should be invalid' do
+            get '/users/auth/twitter?service=4'
+            get '/users/auth/twitter/callback'
+            expect(response.body).to be_include I18n.t 'errors.messages.already_confirmed'
+          end
+        end
+
+        context 'id_twitterが既に存在するとき' do
+          before { create(:already_confirmed_twitter_user_service2) }
+          it 'should be invalid' do
+            get '/users/auth/twitter?service=2'
+            get '/users/auth/twitter/callback'
+            expect(response.body).to be_include I18n.t 'errors.messages.already_confirmed'
+          end
+        end
+      end
     end
-  end
 
-  context 'POST /users (ユーザー登録) when need mail registration' do
-    it 'メール認証が通ること' do
-      post '/users', user_params.deep_merge(user: { service: 7 })
-      mail_id = User.first.uid - 1
-      authenticate_url = URI.extract(ActionMailer::Base.deliveries[mail_id].body.raw_source, ['http']).first.to_s
-      get authenticate_url
-      expect(flash[:notice]).to eq I18n.t 'devise.confirmations.confirmed'
+    context 'すでにユーザー登録されているとき' do
+      before { create(:user) }
+      it 'should be invalid' do
+        post '/users', user_params
+        expect(response.status).to eq(422)
+        expect(response.body).to be_include I18n.t 'errors.messages.taken'
+      end
     end
-  end
 
-  context 'POST /users (ユーザー登録) when need mail registration' do
-    it 'confirmation_tokenが間違っていてメール認証が通らないこと' do
-      post '/users', user_params.deep_merge(user: { service: 7 })
-      mail_id = User.first.uid - 1
-      authenticate_url = URI.extract(ActionMailer::Base.deliveries[mail_id].body.raw_source, ['http']).first.to_s + 'failure'
-      get authenticate_url
-      expect(response.body).to be_include I18n.t 'errors.messages.invalid'
-    end
-  end
-
-  context 'POST /users (ユーザー登録) when need mail registration' do
-    it 'メール認証が通りログイン出来ること' do
-      post '/users', user_params.deep_merge(user: { service: 7 })
-      mail_id = User.first.uid - 1
-      authenticate_url = URI.extract(ActionMailer::Base.deliveries[mail_id].body.raw_source, ['http']).first.to_s
-      get authenticate_url
-      post '/users/sign_in', user_params.deep_merge(user: { service: 7, remember_me: 0 })
-      rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
-      session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
-      expect(response.status).to eq 200
-      expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
-      expect(response).to match_response_schema('/users')
-    end
-  end
-
-  context 'POST /users (ユーザー登録) & user is persisted' do
-    before { create(:user) }
-    it 'should be invalid' do
-      post '/users', user_params
-      expect(response.status).to eq(422)
-      expect(response.body).to be_include I18n.t 'errors.messages.taken'
-    end
-  end
-
-  context 'POST /users (ユーザー登録) & email is blank' do
-    it 'should be invalid' do
-      post '/users', user: { email: '', password: 'password' }
-      expect(response.status).to eq 422
-      expect(response.body).to be_include I18n.t 'errors.messages.blank'
+    context 'メールが空のとき' do
+      it 'should be invalid' do
+        post '/users', user: { email: '', password: 'password' }
+        expect(response.status).to eq 422
+        expect(response.body).to be_include I18n.t 'errors.messages.blank'
+      end
     end
   end
 
   context 'PATCH /users (ユーザー情報の更新)' do
-    before { create(:user) }
-    it 'ユーザ情報が更新出来ること' do
-      sign_in(User.first)
-      patch '/users', user: { email: 'changed@basicinc.jp', password: 'password',
-                              password_confirmation: 'password', current_password: 'password' }
-      expect(response.status).to eq 204
-      expect(User.first.email1).to eq 'changed@basicinc.jp'
-      expect(flash[:notice]).to eq I18n.t 'devise.registrations.updated'
+    context '未記入がない場合' do
+      before { create(:user) }
+      it 'ユーザ情報が更新出来ること' do
+        sign_in(User.first)
+        patch '/users', user: { email: 'changed@basicinc.jp', password: 'password',
+                                password_confirmation: 'password', current_password: 'password' }
+        expect(response.status).to eq 204
+        expect(User.first.email1).to eq 'changed@basicinc.jp'
+        expect(flash[:notice]).to eq I18n.t 'devise.registrations.updated'
+      end
     end
-  end
 
-  context 'PATCH /users (ユーザー情報の更新) & email is blank' do
-    before { create(:user) }
-    it 'should be invalid' do
-      sign_in(User.first)
-      patch '/users', user: { email: '', password: 'password',
-                              password_confirmation: 'password', current_password: 'password' }
-      expect(response.status).to eq 422
-      expect(response.body).to be_include I18n.t 'errors.messages.blank'
+    context 'メールが空のとき' do
+      before { create(:user) }
+      it 'should be invalid' do
+        sign_in(User.first)
+        patch '/users', user: { email: '', password: 'password',
+                                password_confirmation: 'password', current_password: 'password' }
+        expect(response.status).to eq 422
+        expect(response.body).to be_include I18n.t 'errors.messages.blank'
+      end
     end
   end
 

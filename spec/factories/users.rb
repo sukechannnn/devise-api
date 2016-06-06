@@ -63,5 +63,13 @@ FactoryGirl.define do
       service 2
       confirmed_at Time.zone.now
     end
+
+    factory :already_confirmed_twitter_user_service4 do
+      twitter_id 12345
+    end
+
+    factory :already_confirmed_twitter_user_service2 do
+      id_twitter 12345
+    end
   end
 end

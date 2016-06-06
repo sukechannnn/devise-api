@@ -10,15 +10,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super do
       if resource.persisted?
-        resource.service = params['user']['service'].to_i
-        resource.save
         if resource.active_for_authentication?
           sign_up(resource_name, resource)
           generate_token = GenerateToken.new
           jwt = generate_token.generate_jwt_token(current_user.uid, current_user.email1)
           render(json: { token: jwt }.to_json) && return
         else
-          flash[:alert] = '本登録を行ってください。'
+          flash[:alert] = t 'devise.failure.unconfirmed'
           render(json: flash.to_hash, status: :ok) && return
         end
       end
