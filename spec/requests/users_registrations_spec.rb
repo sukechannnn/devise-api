@@ -188,6 +188,7 @@ RSpec.describe 'Users Registrations', type: :request do
           get '/users/auth/yahoojp/callback'
           expect(request.env['omniauth.params']['service'].to_i).to eq 2
           expect(response.status).to eq 403
+          expect(response.body).to be_include '403 アクセス許可がありません'
         end
       end
 
