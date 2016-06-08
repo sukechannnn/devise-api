@@ -274,6 +274,6 @@ Devise::Models::Confirmable.module_eval do
   end
 
   def confirmation_service
-    service != 2 && service != 7
+    service != Settings.ferret.plus && service != Settings.ferret.contents_writing
   end
 end
