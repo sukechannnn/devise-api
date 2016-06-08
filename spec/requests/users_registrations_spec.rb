@@ -112,8 +112,8 @@ RSpec.describe 'Users Registrations', type: :request do
         end
 
         it 'FerretPLUSのとき登録完了' do
-          post '/users', user_params.deep_merge(user: { service: 2, twitter_id: '12345' })
-          expect(User.first.twitter_id).to eq '12345'
+          post '/users', user_params.deep_merge(user: { service: 2, id_twitter: '12345' })
+          expect(User.first.id_twitter).to eq '12345'
           expect(User.first.created_at).to be_nil
           expect(User.first.regdate).not_to be_nil
         end
