@@ -206,16 +206,6 @@ RSpec.describe 'Users Registrations', type: :request do
         end
       end
 
-      context 'service が ferret media 以外のとき' do
-        it 'アクセス出来ないこと' do
-          get '/users/auth/yahoojp?service=2'
-          get '/users/auth/yahoojp/callback'
-          expect(request.env['omniauth.params']['service'].to_i).to eq 2
-          expect(response.status).to eq 403
-          expect(response.body).to be_include I18n.t 'errors.messages.forbidden'
-        end
-      end
-
       context 'service が ferret media のとき' do
         it '正しい yahoojp_id が返ってくること' do
           get '/users/auth/yahoojp?service=4'
@@ -223,6 +213,16 @@ RSpec.describe 'Users Registrations', type: :request do
           expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.media
           expect(response.body).to be_include 'yahoojp_id'
           expect(response.body).to be_include 'yahoojp12345'
+        end
+      end
+
+      context 'service が ferret media 以外のとき' do
+        it 'アクセス出来ないこと' do
+          get '/users/auth/yahoojp?service=2'
+          get '/users/auth/yahoojp/callback'
+          expect(request.env['omniauth.params']['service'].to_i).to eq 2
+          expect(response.status).to eq 403
+          expect(response.body).to be_include I18n.t 'errors.messages.forbidden'
         end
       end
 
