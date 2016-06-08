@@ -10,5 +10,8 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) << :service
     devise_parameter_sanitizer.for(:sign_up) << :twitter_id
     devise_parameter_sanitizer.for(:sign_up) << :id_twitter
+    devise_parameter_sanitizer.for(:sign_up) << :facebook_id
+    devise_parameter_sanitizer.for(:sign_up) << :id_facebook
+    devise_parameter_sanitizer.for(:sign_up) << :yahoojp_id
   end
 end
