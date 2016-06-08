@@ -65,11 +65,23 @@ FactoryGirl.define do
     end
 
     factory :already_confirmed_twitter_user_service4 do
-      twitter_id 12345
+      twitter_id 'twitter12345'
     end
 
     factory :already_confirmed_twitter_user_service2 do
-      id_twitter 12345
+      id_twitter 'twitter12345'
+    end
+
+    factory :already_confirmed_facebook_user_service4 do
+      facebook_id 'facebook12345'
+    end
+
+    factory :already_confirmed_facebook_user_service2 do
+      id_facebook 'facebook12345'
+    end
+
+    factory :already_confirmed_yahoojp_user_service4 do
+      yahoojp_id 'yahoojp12345'
     end
   end
 end

@@ -4,11 +4,11 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'database_rewinder'
 require 'json-schema'
+require 'simplecov'
 
+SimpleCov.start
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
-
 ActiveRecord::Migration.maintain_test_schema!
-
 OmniAuth.config.test_mode = true
 
 RSpec.configure do |config|
@@ -18,7 +18,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   config.include Devise::TestHelpers, type: :controller
   config.include Warden::Test::Helpers, type: :request
-
   config.include FactoryGirl::Syntax::Methods
 
   config.before(:suite) do
