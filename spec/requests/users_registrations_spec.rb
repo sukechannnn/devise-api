@@ -89,7 +89,7 @@ RSpec.describe 'Users Registrations', type: :request do
         it '正しい id_twitter が返ってくること' do
           get '/users/auth/twitter?service=2'
           get '/users/auth/twitter/callback'
-          expect(request.env['omniauth.params']['service'].to_i).to eq 2
+          expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.plus
           expect(response.body).to be_include 'id_twitter'
           expect(response.body).to be_include 'twitter12345'
         end
@@ -153,7 +153,7 @@ RSpec.describe 'Users Registrations', type: :request do
         it '正しい id_facebook が返ってくること' do
           get '/users/auth/facebook?service=2'
           get '/users/auth/facebook/callback'
-          expect(request.env['omniauth.params']['service'].to_i).to eq 2
+          expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.plus
           expect(response.body).to be_include 'id_facebook'
           expect(response.body).to be_include 'facebook12345'
         end
@@ -163,7 +163,7 @@ RSpec.describe 'Users Registrations', type: :request do
         it '正しい facebook_id が返ってくること' do
           get '/users/auth/facebook?service=4'
           get '/users/auth/facebook/callback'
-          expect(request.env['omniauth.params']['service'].to_i).to eq 4
+          expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.media
           expect(response.body).to be_include 'facebook_id'
           expect(response.body).to be_include 'facebook12345'
         end
@@ -220,7 +220,7 @@ RSpec.describe 'Users Registrations', type: :request do
         it 'アクセス出来ないこと' do
           get '/users/auth/yahoojp?service=2'
           get '/users/auth/yahoojp/callback'
-          expect(request.env['omniauth.params']['service'].to_i).to eq 2
+          expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.plus
           expect(response.status).to eq 403
           expect(response.body).to be_include I18n.t 'errors.messages.forbidden'
         end
