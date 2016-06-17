@@ -42,13 +42,24 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
       it 'FerretPLUS以外のとき登録完了' do
         post '/users', user_params.deep_merge(user: { twitter_id: '12345' })
         expect(User.first.twitter_id).to eq '12345'
+        session_data = decode_jwt response
+        expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
       end
 
-      it 'FerretPLUSのとき登録完了' do
+      it 'FerretPLUSのとき、メール認証が必要なこと' do
         post '/users', user_params.deep_merge(user: { service: 2, id_twitter: '12345' })
         expect(User.first.id_twitter).to eq '12345'
         expect(User.first.created_at).to be_nil
         expect(User.first.regdate).not_to be_nil
+        expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
+      end
+
+      it 'メール認証が通ること' do
+        ActionMailer::Base.deliveries.clear
+        post '/users', user_params.deep_merge(user: { service: 2, id_twitter: '12345' })
+        authenticate_url = URI.extract(ActionMailer::Base.deliveries.first.body.raw_source, ['http']).first.to_s
+        get authenticate_url
+        expect(flash[:notice]).to eq I18n.t 'devise.confirmations.confirmed'
       end
     end
 
@@ -125,9 +136,27 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
     end
 
     context 'facebook認証後に登録リクエストが来たとき' do
-      it '登録完了' do
+      it 'FerretPLUS以外のとき登録完了' do
         post '/users', user_params.deep_merge(user: { facebook_id: 'facebook12345' })
         expect(User.first.facebook_id).to eq 'facebook12345'
+        session_data = decode_jwt response
+        expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
+      end
+
+      it 'FerretPLUSのとき、メール認証が必要なこと' do
+        post '/users', user_params.deep_merge(user: { service: 2, id_facebook: '12345' })
+        expect(User.first.id_facebook).to eq '12345'
+        expect(User.first.created_at).to be_nil
+        expect(User.first.regdate).not_to be_nil
+        expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
+      end
+
+      it 'メール認証が通ること' do
+        ActionMailer::Base.deliveries.clear
+        post '/users', user_params.deep_merge(user: { service: 2, id_twitter: '12345' })
+        authenticate_url = URI.extract(ActionMailer::Base.deliveries.first.body.raw_source, ['http']).first.to_s
+        get authenticate_url
+        expect(flash[:notice]).to eq I18n.t 'devise.confirmations.confirmed'
       end
     end
 
@@ -207,6 +236,8 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
       it '登録完了' do
         post '/users', user_params.deep_merge(user: { yahoojp_id: 'yahoojp12345' })
         expect(User.first.yahoojp_id).to eq 'yahoojp12345'
+        session_data = decode_jwt response
+        expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
       end
     end
 
