@@ -10,7 +10,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super do
       if resource.persisted?
-        if resource.service == 2
+        if resource.service == Settings.ferret.plus
           create_ferret_plus_user(resource)
           unconfirmed_response && return
         elsif resource.active_for_authentication?

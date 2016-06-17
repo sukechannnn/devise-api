@@ -41,7 +41,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   alias yahoojp all
 
   def omniauth_exists?(auth, service_params)
-    if service_params == 2
+    if service_params == Settings.ferret.plus
       User.exists?("id_#{auth.provider}".to_sym => auth.uid)
     else
       User.exists?("#{auth.provider}_id".to_sym => auth.uid)
@@ -49,7 +49,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def response_omniauth(auth, service_params)
-    if service_params == 2
+    if service_params == Settings.ferret.plus
       render(json: { "id_#{auth.provider}".to_sym => auth.uid }, status: :ok) && return
     else
       render(json: { "#{auth.provider}_id".to_sym => auth.uid }, status: :ok) && return
@@ -58,7 +58,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   # oauth yahoojp_id 認証がferret mediaにのみ対応しているので、これだけ別メソッドに切り出し。
   def check_yahoojp(auth, service_params)
-    if service_params != 4
+    if service_params != Settings.ferret.media
       render(json: (t 'errors.messages.forbidden').to_s, status: :forbidden) && return
     elsif User.exists?(yahoojp_id: auth.uid)
       flash[:alert] = t 'errors.messages.already_confirmed'

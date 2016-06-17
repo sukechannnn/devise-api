@@ -24,7 +24,7 @@ RSpec.describe 'Users Registrations', type: :request do
     context 'FerretPLUSのとき' do
       it '登録日がregdateに入ってcreated_atに入らないこと' do
         post '/users', user_params.deep_merge(user: { service: 2 })
-        expect(User.first.service).to eq 2
+        expect(User.first.service).to eq Settings.ferret.plus
         expect(User.first.created_at).to be_nil
         expect(User.first.regdate).not_to be_nil
       end
@@ -35,7 +35,7 @@ RSpec.describe 'Users Registrations', type: :request do
         post '/users', user_params.deep_merge(user: { service: 2 })
         expect(response.status).to eq 200
         expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
-        expect(User.first.service).to eq 2
+        expect(User.first.service).to eq Settings.ferret.plus
         expect(User.first.confirmed_at.nil?).to eq true
         expect(User.first.created_at).to be_nil
         expect(User.first.regdate).not_to be_nil
@@ -85,21 +85,21 @@ RSpec.describe 'Users Registrations', type: :request do
         end
       end
 
-      context 'service == 2 のとき' do
+      context 'service が ferret plus のとき' do
         it '正しい id_twitter が返ってくること' do
           get '/users/auth/twitter?service=2'
           get '/users/auth/twitter/callback'
-          expect(request.env['omniauth.params']['service'].to_i).to eq 2
+          expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.plus
           expect(response.body).to be_include 'id_twitter'
           expect(response.body).to be_include 'twitter12345'
         end
       end
 
-      context 'service != 2 のとき' do
+      context 'service が ferret plus 以外のとき' do
         it '正しい twitter_id が返ってくること' do
           get '/users/auth/twitter?service=4'
           get '/users/auth/twitter/callback'
-          expect(request.env['omniauth.params']['service'].to_i).to eq 4
+          expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.media
           expect(response.body).to be_include 'twitter_id'
           expect(response.body).to be_include 'twitter12345'
         end
@@ -149,21 +149,21 @@ RSpec.describe 'Users Registrations', type: :request do
         end
       end
 
-      context 'service == 2 のとき' do
+      context 'service が ferret plus のとき' do
         it '正しい id_facebook が返ってくること' do
           get '/users/auth/facebook?service=2'
           get '/users/auth/facebook/callback'
-          expect(request.env['omniauth.params']['service'].to_i).to eq 2
+          expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.plus
           expect(response.body).to be_include 'id_facebook'
           expect(response.body).to be_include 'facebook12345'
         end
       end
 
-      context 'service != 2 のとき' do
+      context 'service が ferret plus 以外のとき' do
         it '正しい facebook_id が返ってくること' do
           get '/users/auth/facebook?service=4'
           get '/users/auth/facebook/callback'
-          expect(request.env['omniauth.params']['service'].to_i).to eq 4
+          expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.media
           expect(response.body).to be_include 'facebook_id'
           expect(response.body).to be_include 'facebook12345'
         end
@@ -206,23 +206,23 @@ RSpec.describe 'Users Registrations', type: :request do
         end
       end
 
-      context 'service != 4 のとき' do
-        it 'アクセス出来ないこと' do
-          get '/users/auth/yahoojp?service=2'
-          get '/users/auth/yahoojp/callback'
-          expect(request.env['omniauth.params']['service'].to_i).to eq 2
-          expect(response.status).to eq 403
-          expect(response.body).to be_include I18n.t 'errors.messages.forbidden'
-        end
-      end
-
-      context 'service == 4 のとき' do
+      context 'service が ferret media のとき' do
         it '正しい yahoojp_id が返ってくること' do
           get '/users/auth/yahoojp?service=4'
           get '/users/auth/yahoojp/callback'
-          expect(request.env['omniauth.params']['service'].to_i).to eq 4
+          expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.media
           expect(response.body).to be_include 'yahoojp_id'
           expect(response.body).to be_include 'yahoojp12345'
+        end
+      end
+
+      context 'service が ferret media 以外のとき' do
+        it 'アクセス出来ないこと' do
+          get '/users/auth/yahoojp?service=2'
+          get '/users/auth/yahoojp/callback'
+          expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.plus
+          expect(response.status).to eq 403
+          expect(response.body).to be_include I18n.t 'errors.messages.forbidden'
         end
       end
 
