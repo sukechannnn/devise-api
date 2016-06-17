@@ -10,17 +10,30 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super do
       if resource.persisted?
-        if resource.active_for_authentication?
+        if resource.service == Settings.ferret.plus
+          create_ferret_plus_user(resource)
+          unconfirmed_response && return
+        elsif resource.active_for_authentication?
           sign_up(resource_name, resource)
           generate_token = GenerateToken.new
           jwt = generate_token.generate_jwt_token(current_user.uid, current_user.email1)
           render(json: { token: jwt }.to_json) && return
         else
-          flash[:alert] = t 'devise.failure.unconfirmed'
-          render(json: flash.to_hash, status: :ok) && return
+          unconfirmed_response && return
         end
       end
     end
+  end
+
+  def create_ferret_plus_user(resource)
+    resource.regdate = resource.created_at
+    resource.created_at = nil
+    resource.save
+  end
+
+  def unconfirmed_response
+    flash[:alert] = t 'devise.failure.unconfirmed'
+    render(json: flash.to_hash, status: :ok)
   end
 
   # GET /resource/edit
