@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Users Registrations', type: :request do
   include_context 'api request authentication helper methods'
   include_context 'api request global before and after hooks'
+  include_context 'decode json web token'
 
   let(:user_params) do
     { user: { email: 'username+1@basicinc.jp', password: 'password', service: 4 } }
@@ -12,10 +13,8 @@ RSpec.describe 'Users Registrations', type: :request do
     context 'メール認証が不要なとき' do
       it '登録完了' do
         post '/users', user_params
-        rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
-        session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
         expect(response.status).to eq 200
-        p session_data.first.deep_symbolize_keys
+        session_data = decode_jwt response
         expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
         expect(response).to match_response_schema('/users')
       end
@@ -119,22 +118,44 @@ RSpec.describe 'Users Registrations', type: :request do
         end
       end
 
-      context 'twitter認証が既にされているとき' do
-        context 'twitter_idが既に存在するとき' do
-          before { create(:already_confirmed_twitter_user_service4) }
-          it 'should be invalid' do
+      context 'twitter_idが既に存在するとき' do
+        context '認証が完了していない場合' do
+          it 'ログインできないこと' do
             get '/users/auth/twitter?service=4'
             get '/users/auth/twitter/callback'
-            expect(response.body).to be_include I18n.t 'errors.messages.already_confirmed'
+            expect(response.body).to be_include 'twitter_id'
+            expect(response.body).to be_include 'twitter12345'
           end
         end
 
-        context 'id_twitterが既に存在するとき' do
-          before { create(:already_confirmed_twitter_user_service2) }
-          it 'should be invalid' do
+        context '認証が完了している場合' do
+          before { create(:already_confirmed_twitter_user_service4) }
+          it 'ログインされること' do
+            get '/users/auth/twitter?service=4'
+            get '/users/auth/twitter/callback'
+            session_data = decode_jwt response
+            expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
+          end
+        end
+      end
+
+      context 'id_twitterが既に存在するとき' do
+        context '認証が完了していない場合' do
+          it 'ログインできないこと' do
             get '/users/auth/twitter?service=2'
             get '/users/auth/twitter/callback'
-            expect(response.body).to be_include I18n.t 'errors.messages.already_confirmed'
+            expect(response.body).to be_include 'id_twitter'
+            expect(response.body).to be_include 'twitter12345'
+          end
+        end
+
+        context '認証が完了している場合' do
+          before { create(:already_confirmed_twitter_user_service2) }
+          it 'ログインされること' do
+            get '/users/auth/twitter?service=2'
+            get '/users/auth/twitter/callback'
+            session_data = decode_jwt response
+            expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
           end
         end
       end
@@ -176,22 +197,44 @@ RSpec.describe 'Users Registrations', type: :request do
         end
       end
 
-      context 'facebook認証が既にされているとき' do
-        context 'facebook_idが既に存在するとき' do
-          before { create(:already_confirmed_facebook_user_service4) }
-          it 'should be invalid' do
+      context 'facebook_idが既に存在するとき' do
+        context '認証が完了していない場合' do
+          it 'ログインできないこと' do
             get '/users/auth/facebook?service=4'
             get '/users/auth/facebook/callback'
-            expect(response.body).to be_include I18n.t 'errors.messages.already_confirmed'
+            expect(response.body).to be_include 'facebook_id'
+            expect(response.body).to be_include 'facebook12345'
           end
         end
 
-        context 'id_facebookが既に存在するとき' do
-          before { create(:already_confirmed_facebook_user_service2) }
-          it 'should be invalid' do
+        context '認証が完了している場合' do
+          before { create(:already_confirmed_facebook_user_service4) }
+          it 'ログインされること' do
+            get '/users/auth/facebook?service=4'
+            get '/users/auth/facebook/callback'
+            session_data = decode_jwt response
+            expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
+          end
+        end
+      end
+
+      context 'id_facebookが既に存在するとき' do
+        context '認証が完了していない場合' do
+          it 'ログインできないこと' do
             get '/users/auth/facebook?service=2'
             get '/users/auth/facebook/callback'
-            expect(response.body).to be_include I18n.t 'errors.messages.already_confirmed'
+            expect(response.body).to be_include 'id_facebook'
+            expect(response.body).to be_include 'facebook12345'
+          end
+        end
+
+        context '認証が完了している場合' do
+          before { create(:already_confirmed_facebook_user_service2) }
+          it 'ログインされること' do
+            get '/users/auth/facebook?service=2'
+            get '/users/auth/facebook/callback'
+            session_data = decode_jwt response
+            expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
           end
         end
       end
@@ -233,13 +276,23 @@ RSpec.describe 'Users Registrations', type: :request do
         end
       end
 
-      context 'yahoojp認証が既にされているとき' do
-        context 'yahoojp_idが既に存在するとき' do
-          before { create(:already_confirmed_yahoojp_user_service4) }
-          it 'should be invalid' do
+      context 'yahoojp_idが既に存在するとき' do
+        context '認証が完了していない場合' do
+          it 'ログインできないこと' do
             get '/users/auth/yahoojp?service=4'
             get '/users/auth/yahoojp/callback'
-            expect(response.body).to be_include I18n.t 'errors.messages.already_confirmed'
+            expect(response.body).to be_include 'yahoojp_id'
+            expect(response.body).to be_include 'yahoojp12345'
+          end
+        end
+
+        context '認証が完了している場合' do
+          before { create(:already_confirmed_yahoojp_user_service4) }
+          it 'ログインされること' do
+            get '/users/auth/yahoojp?service=4'
+            get '/users/auth/yahoojp/callback'
+            session_data = decode_jwt response
+            expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
           end
         end
       end
