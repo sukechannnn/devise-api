@@ -1,14 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   include ReturnJwt
-  # You should configure your model like this:
-  # devise :omniauthable, omniauth_providers: [:twitter]
-  # alias_method :twitter, :all
-  #
-  # def all
-  #   binding.pry
-  # end
 
-  # You should also create an action method in this controller like this:
   def all
     service_params = request.env['omniauth.params']['service'].to_i
     auth = request.env['omniauth.auth']
