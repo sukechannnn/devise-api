@@ -51,11 +51,26 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def return_omniauth_id(auth, service_params)
-    if service_params == Settings.ferret.plus
-      render(json: { "id_#{auth.provider}".to_sym => auth.uid }, status: :ok) && return
-    else
-      render(json: { "#{auth.provider}_id".to_sym => auth.uid }, status: :ok) && return
+    sns_id = make_sns_id(auth, service_params)
+    case service_params
+    when Settings.ferret.plus
+      redirect_after_oauth 'plus_url', sns_id
+    when Settings.ferret.media
+      redirect_after_oauth 'media_url', sns_id
+    when Settings.ferret.marketers_store
+      redirect_after_oauth 'marketers_store_url', sns_id
+    when Settings.ferret.contents_writing
+      redirect_after_oauth 'contents_writing_url', sns_id
     end
+  end
+
+  def redirect_after_oauth(service_url, sns_id)
+    redirect_to Settings.ferret.send(service_url), flash: sns_id
+  end
+
+  def make_sns_id(auth, service_params)
+    return { "id_#{auth.provider}".to_sym => auth.uid } if service_params == Settings.ferret.plus
+    { "#{auth.provider}_id".to_sym => auth.uid }
   end
 
   # oauth yahoojp_id 認証がferret mediaにのみ対応しているので、これだけ別メソッドに切り出し。
