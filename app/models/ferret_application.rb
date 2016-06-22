@@ -1,4 +1,4 @@
-class Application
+class FerretApplication
   class << self
     def plus_url
       'https://tool.ferret-plus.com'
