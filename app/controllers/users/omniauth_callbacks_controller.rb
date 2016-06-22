@@ -8,10 +8,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       check_yahoojp(auth, service_params)
     elsif omniauth_exists?(auth, service_params)
       current_user = current_user_data(auth, service_params)
-      return_omniauth_id(auth, service_params) if current_user.email1.blank? || current_user.passwd.blank?
+      return_omniauth(auth, service_params) if current_user.email1.blank? || current_user.passwd.blank?
       render(json: { token: return_jwt(current_user) }.to_json) && return
     else
-      return_omniauth_id(auth, service_params)
+      return_omniauth(auth, service_params)
     end
   end
 
@@ -35,27 +35,36 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   alias yahoojp all
 
   def omniauth_exists?(auth, service_params)
-    if service_params == Settings.ferret.plus
-      User.exists?("id_#{auth.provider}".to_sym => auth.uid)
-    else
-      User.exists?("#{auth.provider}_id".to_sym => auth.uid)
-    end
+    return User.exists?("id_#{auth.provider}".to_sym => auth.uid) if service_params == Settings.ferret.plus
+    User.exists?("#{auth.provider}_id".to_sym => auth.uid)
   end
 
   def current_user_data(auth, service_params)
-    if service_params == Settings.ferret.plus
-      User.find_by("id_#{auth.provider}".to_sym => auth.uid)
-    else
-      User.find_by("#{auth.provider}_id".to_sym => auth.uid)
+    return User.find_by("id_#{auth.provider}".to_sym => auth.uid) if service_params == Settings.ferret.plus
+    User.find_by("#{auth.provider}_id".to_sym => auth.uid)
+  end
+
+  def return_omniauth(auth, service_params)
+    sns_id = make_sns_id(auth, service_params)
+    case service_params
+    when Settings.ferret.plus
+      redirect_after_oauth 'plus_url', sns_id
+    when Settings.ferret.media
+      redirect_after_oauth 'media_url', sns_id
+    when Settings.ferret.marketers_store
+      redirect_after_oauth 'marketers_store_url', sns_id
+    when Settings.ferret.contents_writing
+      redirect_after_oauth 'contents_writing_url', sns_id
     end
   end
 
-  def return_omniauth_id(auth, service_params)
-    if service_params == Settings.ferret.plus
-      render(json: { "id_#{auth.provider}".to_sym => auth.uid }, status: :ok) && return
-    else
-      render(json: { "#{auth.provider}_id".to_sym => auth.uid }, status: :ok) && return
-    end
+  def redirect_after_oauth(service_url, sns_id)
+    redirect_to FerretApplication.send(service_url), flash: sns_id
+  end
+
+  def make_sns_id(auth, service_params)
+    return { "id_#{auth.provider}".to_sym => auth.uid } if service_params == Settings.ferret.plus
+    { "#{auth.provider}_id".to_sym => auth.uid }
   end
 
   # oauth yahoojp_id 認証がferret mediaにのみ対応しているので、これだけ別メソッドに切り出し。
@@ -64,10 +73,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       render(json: (t 'errors.messages.forbidden').to_s, status: :forbidden) && return
     elsif User.exists?(yahoojp_id: auth.uid)
       current_user = User.find_by(yahoojp_id: auth.uid)
-      return_omniauth_id(auth, service_params) if current_user.email1.blank? || current_user.passwd.blank?
+      return_omniauth(auth, service_params) if current_user.email1.blank? || current_user.passwd.blank?
       render(json: { token: return_jwt(current_user) }.to_json) && return
     else
-      return_omniauth_id(auth, service_params)
+      return_omniauth(auth, service_params)
     end
   end
 
