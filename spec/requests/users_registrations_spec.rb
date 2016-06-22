@@ -23,7 +23,7 @@ RSpec.describe 'Users Registrations', type: :request do
     context 'FerretPLUSのとき' do
       it '登録日がregdateに入ってcreated_atに入らないこと' do
         post '/users', user_params.deep_merge(user: { service: 2 })
-        expect(User.first.service).to eq Settings.ferret.plus
+        expect(User.first.service).to eq FerretApplication.plus
         expect(User.first.created_at).to be_nil
         expect(User.first.regdate).not_to be_nil
       end
@@ -34,7 +34,7 @@ RSpec.describe 'Users Registrations', type: :request do
         post '/users', user_params.deep_merge(user: { service: 2 })
         expect(response.status).to eq 200
         expect(flash[:alert]).to be_include I18n.t 'devise.failure.unconfirmed'
-        expect(User.first.service).to eq Settings.ferret.plus
+        expect(User.first.service).to eq FerretApplication.plus
         expect(User.first.confirmed_at.nil?).to eq true
         expect(User.first.created_at).to be_nil
         expect(User.first.regdate).not_to be_nil

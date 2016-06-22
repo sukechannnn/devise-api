@@ -22,7 +22,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
       it 'プラスにリダイレクトされ、正しい id_twitter が返ってくること' do
         get '/users/auth/twitter?service=2'
         get '/users/auth/twitter/callback'
-        expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.plus
+        expect(request.env['omniauth.params']['service'].to_i).to eq FerretApplication.plus
         expect(response.status).to eq 302
         expect(response.location).to eq FerretApplication.plus_url
         expect(flash[:id_twitter]).to eq 'twitter12345'
@@ -33,7 +33,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
       it 'メディアにリダイレクトされ、正しい twitter_id が返ってくること' do
         get '/users/auth/twitter?service=4'
         get '/users/auth/twitter/callback'
-        expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.media
+        expect(request.env['omniauth.params']['service'].to_i).to eq FerretApplication.media
         expect(response.status).to eq 302
         expect(response.location).to eq FerretApplication.media_url
         expect(flash[:twitter_id]).to eq 'twitter12345'
@@ -121,7 +121,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
       it '正しい id_facebook が返ってくること' do
         get '/users/auth/facebook?service=2'
         get '/users/auth/facebook/callback'
-        expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.plus
+        expect(request.env['omniauth.params']['service'].to_i).to eq FerretApplication.plus
         expect(response.status).to eq 302
         expect(response.location).to eq FerretApplication.plus_url
         expect(flash[:id_facebook]).to eq 'facebook12345'
@@ -229,7 +229,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
       it 'アクセス出来ないこと' do
         get '/users/auth/yahoojp?service=2'
         get '/users/auth/yahoojp/callback'
-        expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.plus
+        expect(request.env['omniauth.params']['service'].to_i).to eq FerretApplication.plus
         expect(response.status).to eq 403
         expect(response.body).to be_include I18n.t 'errors.messages.forbidden'
       end
