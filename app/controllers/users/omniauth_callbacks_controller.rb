@@ -59,7 +59,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def redirect_after_oauth(service_url, sns_id)
-    redirect_to Settings.ferret.send(service_url), flash: sns_id
+    redirect_to Application.send(service_url), flash: sns_id
   end
 
   def make_sns_id(auth, service_params)
