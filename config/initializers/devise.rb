@@ -274,6 +274,6 @@ Devise::Models::Confirmable.module_eval do
   end
 
   def confirmation_service
-    service != Settings.ferret.plus && service != Settings.ferret.contents_writing
+    service != FerretApplication.plus && service != FerretApplication.contents_writing
   end
 end

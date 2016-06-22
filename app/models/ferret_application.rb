@@ -1,5 +1,21 @@
 class FerretApplication
   class << self
+    def plus
+      2
+    end
+
+    def media
+      4
+    end
+
+    def marketers_store
+      6
+    end
+
+    def contents_writing
+      7
+    end
+
     def plus_url
       'https://tool.ferret-plus.com'
     end
