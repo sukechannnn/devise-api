@@ -24,7 +24,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         get '/users/auth/twitter/callback'
         expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.plus
         expect(response.status).to eq 302
-        expect(response.location).to eq Settings.ferret.plus_url
+        expect(response.location).to eq Application.plus_url
         expect(flash[:id_twitter]).to eq 'twitter12345'
       end
     end
@@ -35,7 +35,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         get '/users/auth/twitter/callback'
         expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.media
         expect(response.status).to eq 302
-        expect(response.location).to eq Settings.ferret.media_url
+        expect(response.location).to eq Application.media_url
         expect(flash[:twitter_id]).to eq 'twitter12345'
       end
     end
@@ -123,7 +123,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         get '/users/auth/facebook/callback'
         expect(request.env['omniauth.params']['service'].to_i).to eq Settings.ferret.plus
         expect(response.status).to eq 302
-        expect(response.location).to eq Settings.ferret.plus_url
+        expect(response.location).to eq Application.plus_url
         expect(flash[:id_facebook]).to eq 'facebook12345'
       end
     end
@@ -133,7 +133,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         get '/users/auth/facebook?service=4'
         get '/users/auth/facebook/callback'
         expect(response.status).to eq 302
-        expect(response.location).to eq Settings.ferret.media_url
+        expect(response.location).to eq Application.media_url
         expect(flash[:facebook_id]).to eq 'facebook12345'
       end
     end
@@ -220,7 +220,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         get '/users/auth/yahoojp?service=4'
         get '/users/auth/yahoojp/callback'
         expect(response.status).to eq 302
-        expect(response.location).to eq Settings.ferret.media_url
+        expect(response.location).to eq Application.media_url
         expect(flash[:yahoojp_id]).to eq 'yahoojp12345'
       end
     end
