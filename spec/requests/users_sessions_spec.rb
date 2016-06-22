@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Users Sessions', type: :request do
   include_context 'api request authentication helper methods'
   include_context 'api request global before and after hooks'
+  include_context 'decode json web token'
 
   let(:user_params) do
     { user: { email: 'username+1@basicinc.jp', password: 'password' } }
@@ -13,10 +14,8 @@ RSpec.describe 'Users Sessions', type: :request do
       before { create(:user) }
       it 'should be valid' do
         post '/users/sign_in', user_params.deep_merge(user: { remember_me: 0 })
-        rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
-        session_data = JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
         expect(response.status).to eq 200
-        p session_data.first.deep_symbolize_keys
+        session_data = decode_jwt response
         expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
         expect(response).to match_response_schema('/users/sign_in')
       end

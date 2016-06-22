@@ -1,4 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  include ReturnJwt
   # before_filter :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -15,9 +16,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
           unconfirmed_response && return
         elsif resource.active_for_authentication?
           sign_up(resource_name, resource)
-          generate_token = GenerateToken.new
-          jwt = generate_token.generate_jwt_token(current_user.uid, current_user.email1)
-          render(json: { token: jwt }.to_json) && return
+          render(json: { token: return_jwt(current_user) }.to_json) && return
         else
           unconfirmed_response && return
         end

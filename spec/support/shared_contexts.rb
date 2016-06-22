@@ -17,3 +17,10 @@ RSpec.shared_context 'api request authentication helper methods' do
     logout(:user)
   end
 end
+
+RSpec.shared_context 'decode json web token' do
+  def decode_jwt(response)
+    rsa_public = OpenSSL::PKey.read ENV['RSA_PUBLIC']
+    JWT.decode JSON.parse(response.body)['token'], rsa_public, true, algorithm: 'RS256'
+  end
+end
