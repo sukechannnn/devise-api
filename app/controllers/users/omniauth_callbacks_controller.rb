@@ -8,10 +8,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       check_yahoojp(auth, service_params)
     elsif omniauth_exists?(auth, service_params)
       current_user = current_user_data(auth, service_params)
-      return_omniauth(auth, service_params) if current_user.email1.blank? || current_user.passwd.blank?
-      render(json: { token: return_jwt(current_user) }.to_json) && return
+      return redirect_login_url(auth, service_params) if current_user.email1.blank? || current_user.passwd.blank?
+      session[:jwt] = return_jwt(current_user)
+      redirect_app_url(service_params) && return
     else
-      return_omniauth(auth, service_params)
+      redirect_login_url(auth, service_params)
     end
   end
 
@@ -44,21 +45,34 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     User.find_by("#{auth.provider}_id".to_sym => auth.uid)
   end
 
-  def return_omniauth(auth, service_params)
+  def redirect_login_url(auth, service_params)
     sns_id = make_sns_id(auth, service_params)
     case service_params
     when FerretApplication.plus
-      redirect_after_oauth 'plus_url', sns_id
+      redirect_after_oauth 'plus_login_url', sns_id
     when FerretApplication.media
-      redirect_after_oauth 'media_url', sns_id
+      redirect_after_oauth 'media_login_url', sns_id
     when FerretApplication.marketers_store
-      redirect_after_oauth 'marketers_store_url', sns_id
+      redirect_after_oauth 'marketers_store_login_url', sns_id
     when FerretApplication.contents_writing
-      redirect_after_oauth 'contents_writing_url', sns_id
+      redirect_after_oauth 'contents_writing_login_url', sns_id
     end
   end
 
-  def redirect_after_oauth(service_url, sns_id)
+  def redirect_app_url(service_params)
+    case service_params
+    when FerretApplication.plus
+      redirect_after_oauth 'plus_url'
+    when FerretApplication.media
+      redirect_after_oauth 'media_url'
+    when FerretApplication.marketers_store
+      redirect_after_oauth 'marketers_store_url'
+    when FerretApplication.contents_writing
+      redirect_after_oauth 'contents_writing_url'
+    end
+  end
+
+  def redirect_after_oauth(service_url, sns_id=nil)
     redirect_to FerretApplication.send(service_url), flash: sns_id
   end
 
@@ -73,10 +87,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       render(json: (t 'errors.messages.forbidden').to_s, status: :forbidden) && return
     elsif User.exists?(yahoojp_id: auth.uid)
       current_user = User.find_by(yahoojp_id: auth.uid)
-      return_omniauth(auth, service_params) if current_user.email1.blank? || current_user.passwd.blank?
-      render(json: { token: return_jwt(current_user) }.to_json) && return
+      return redirect_login_url(auth, service_params) if current_user.email1.blank? || current_user.passwd.blank?
+      session[:jwt] = return_jwt(current_user)
+      redirect_app_url(service_params) && return
     else
-      return_omniauth(auth, service_params)
+      redirect_login_url(auth, service_params)
     end
   end
 
