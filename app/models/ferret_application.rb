@@ -21,7 +21,7 @@ class FerretApplication
     end
 
     def media_url
-      'https://ferret-plus.com'
+      'http://localhost:3000/login'
     end
 
     def marketers_store_url
