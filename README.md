@@ -7,6 +7,12 @@
 - 正しくない場合は、正しくないということをjsonで返す
 - 詳しくはrspecのテストを参照
 
+### OAuth
+- SNSで認証する場合は、直接リンクを叩く('/users/auth/twitter?service=4' という感じ)
+- そうすると各SNSの認証ページにリダイレクトされて、認証が完了すると各アプリケーションの認証ページにSNSのIDのメッセージ(flash)付きでリダイレクトされる
+- 各アプリケーションはSNSのIDを受け取った状態で、普通に認証の処理を行う
+- ログインの際にはSNSのIDが保存されていればログイン出来る
+
 ## Doc
 - 環境構築: https://github.com/basicinc/ferret-oauth-api-dev
 - json-schemaドキュメント(未完成):  https://github.com/basicinc/ferret-oauth-api/blob/master/docs/schema/schema.md
