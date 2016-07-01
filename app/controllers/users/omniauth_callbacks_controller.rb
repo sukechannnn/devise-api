@@ -1,4 +1,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  require 'net/http'
+  require 'uri'
   include ReturnJwt
 
   def all
@@ -9,25 +11,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     elsif omniauth_exists?(auth, service_params)
       current_user = current_user_data(auth, service_params)
       return redirect_login_url(auth, service_params) if current_user.email1.blank? || current_user.passwd.blank?
-      session[:jwt] = return_jwt(current_user)
-      redirect_app_url(service_params) && return
+      redirect_app_url(return_jwt(current_user), service_params) && return
     else
       redirect_login_url(auth, service_params)
     end
   end
-
-  # More info at:
-  # https://github.com/plataformatec/devise#omniauth
-
-  # GET|POST /resource/auth/twitter
-  # def passthru
-  #   super
-  # end
-
-  # GET|POST /users/auth/twitter/callback
-  # def failure
-  #   super
-  # end
 
   private
 
@@ -59,21 +47,25 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
-  def redirect_app_url(service_params)
+  def redirect_after_oauth(service_url, sns_id = nil)
+    redirect_to FerretApplication.send(service_url), flash: sns_id
+  end
+
+  def redirect_app_url(jwt, service_params)
     case service_params
     when FerretApplication.plus
-      redirect_after_oauth 'plus_url'
+      redirect_app jwt, 'plus_url'
     when FerretApplication.media
-      redirect_after_oauth 'media_url'
+      redirect_app jwt, 'media_url'
     when FerretApplication.marketers_store
-      redirect_after_oauth 'marketers_store_url'
+      redirect_app jwt, 'marketers_store_url'
     when FerretApplication.contents_writing
-      redirect_after_oauth 'contents_writing_url'
+      redirect_app jwt, 'contents_writing_url'
     end
   end
 
-  def redirect_after_oauth(service_url, sns_id=nil)
-    redirect_to FerretApplication.send(service_url), flash: sns_id
+  def redirect_app(jwt, service_url)
+    redirect_to "#{FerretApplication.send(service_url)}?#{jwt}"
   end
 
   def make_sns_id(auth, service_params)
@@ -94,11 +86,4 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_login_url(auth, service_params)
     end
   end
-
-  # protected
-
-  # The path used when OmniAuth fails
-  # def after_omniauth_failure_path_for(scope)
-  #   super(scope)
-  # end
 end
