@@ -24,7 +24,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         get '/users/auth/twitter/callback'
         expect(request.env['omniauth.params']['service'].to_i).to eq FerretApplication.plus
         expect(response.status).to eq 302
-        expect(response.location).to eq FerretApplication.plus_url
+        expect(response.location).to eq FerretApplication.plus_login_url
         expect(flash[:id_twitter]).to eq 'twitter12345'
       end
     end
@@ -35,7 +35,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         get '/users/auth/twitter/callback'
         expect(request.env['omniauth.params']['service'].to_i).to eq FerretApplication.media
         expect(response.status).to eq 302
-        expect(response.location).to eq FerretApplication.media_url
+        expect(response.location).to eq FerretApplication.media_login_url
         expect(flash[:twitter_id]).to eq 'twitter12345'
       end
     end
@@ -79,9 +79,9 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         it 'ログインされること' do
           get '/users/auth/twitter?service=4'
           get '/users/auth/twitter/callback'
-          expect(response.status).to eq 200
-          session_data = decode_jwt response
-          expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
+          expect(response.status).to eq 302
+          expect(session[:jwt]).to be_include 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9'
+          expect(response.location).to eq FerretApplication.media_url
         end
       end
     end
@@ -100,9 +100,9 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         it 'ログインされること' do
           get '/users/auth/twitter?service=2'
           get '/users/auth/twitter/callback'
-          expect(response.status).to eq 200
-          session_data = decode_jwt response
-          expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
+          expect(response.status).to eq 302
+          expect(session[:jwt]).to be_include 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9'
+          expect(response.location).to eq FerretApplication.plus_url
         end
       end
     end
@@ -123,7 +123,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         get '/users/auth/facebook/callback'
         expect(request.env['omniauth.params']['service'].to_i).to eq FerretApplication.plus
         expect(response.status).to eq 302
-        expect(response.location).to eq FerretApplication.plus_url
+        expect(response.location).to eq FerretApplication.plus_login_url
         expect(flash[:id_facebook]).to eq 'facebook12345'
       end
     end
@@ -133,7 +133,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         get '/users/auth/facebook?service=4'
         get '/users/auth/facebook/callback'
         expect(response.status).to eq 302
-        expect(response.location).to eq FerretApplication.media_url
+        expect(response.location).to eq FerretApplication.media_login_url
         expect(flash[:facebook_id]).to eq 'facebook12345'
       end
     end
@@ -177,9 +177,9 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         it 'ログインされること' do
           get '/users/auth/facebook?service=4'
           get '/users/auth/facebook/callback'
-          expect(response.status).to eq 200
-          session_data = decode_jwt response
-          expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
+          expect(response.status).to eq 302
+          expect(session[:jwt]).to be_include 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9'
+          expect(response.location).to eq FerretApplication.media_url
         end
       end
     end
@@ -198,9 +198,9 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         it 'ログインされること' do
           get '/users/auth/facebook?service=2'
           get '/users/auth/facebook/callback'
-          expect(response.status).to eq 200
-          session_data = decode_jwt response
-          expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
+          expect(response.status).to eq 302
+          expect(session[:jwt]).to be_include 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9'
+          expect(response.location).to eq FerretApplication.plus_url
         end
       end
     end
@@ -220,7 +220,7 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         get '/users/auth/yahoojp?service=4'
         get '/users/auth/yahoojp/callback'
         expect(response.status).to eq 302
-        expect(response.location).to eq FerretApplication.media_url
+        expect(response.location).to eq FerretApplication.media_login_url
         expect(flash[:yahoojp_id]).to eq 'yahoojp12345'
       end
     end
@@ -258,9 +258,9 @@ RSpec.describe 'Users Omniauth Callbacks', type: :request do
         it 'ログインされること' do
           get '/users/auth/yahoojp?service=4'
           get '/users/auth/yahoojp/callback'
-          expect(response.status).to eq 200
-          session_data = decode_jwt response
-          expect(session_data.first.deep_symbolize_keys[:email]).to eq user_params[:user][:email]
+          expect(response.status).to eq 302
+          expect(session[:jwt]).to be_include 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9'
+          expect(response.location).to eq FerretApplication.media_url
         end
       end
     end
